@@ -1,31 +1,14 @@
-import * as Admin from "./admin";
-import * as Branch from "./branch";
-import * as Brand from "./brand";
-import * as Category from "./category";
-import * as GroceryList from "./grocery-list";
-import * as List from "./list";
-import * as Metadata from "./metadata";
-import * as Price from "./price";
-import * as ProductNutrition from "./product-nutrition";
-import * as Product from "./product";
-import * as Search from "./search";
-import * as Stock from "./stock";
-import * as Store from "./store";
-import * as User from "./user";
-
-export {
-  Admin,
-  Branch,
-  Brand,
-  Category,
-  GroceryList,
-  List,
-  Metadata,
-  Price,
-  ProductNutrition,
-  Product,
-  Search,
-  Stock,
-  Store,
-  User,
-};
+export * from "./admin";
+export * from "./branch";
+export * from "./brand";
+export * from "./category";
+export * from "./grocery-list";
+export * from "./list";
+export * from "./metadata";
+export * from "./price";
+export * from "./product-nutrition";
+export * from "./product";
+export * from "./search";
+export * from "./stock";
+export * from "./store";
+export * from "./user";
