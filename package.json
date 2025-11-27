@@ -1,6 +1,6 @@
 {
   "name": "graphql-utils",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "scripts": {
     "gql-codegen": "graphql-codegen --config codegen.ts",
     "bump-version": "node bumpVersion.js",
@@ -14,6 +14,9 @@
     "@graphql-codegen/cli": "6.0.0",
     "@graphql-codegen/client-preset": "5.1.0",
     "@graphql-codegen/introspection": "5.0.0",
+    "@graphql-typed-document-node/core": "^3.2.0",
+    "i": "^0.3.7",
+    "npm": "^11.6.4",
     "typescript": "^5.9.3"
   },
   "repository": {
