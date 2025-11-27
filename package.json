@@ -7,6 +7,9 @@
     "bump-version:minor": "node bumpVersion.js minor",
     "bump-version:major": "node bumpVersion.js major"
   },
+  "dependencies": {
+    "@apollo/client": "^4.0.7"
+  },
   "devDependencies": {
     "@graphql-codegen/cli": "6.0.0",
     "@graphql-codegen/client-preset": "5.1.0",
