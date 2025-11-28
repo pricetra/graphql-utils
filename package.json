@@ -6,16 +6,19 @@
   "types": "dist/index.d.ts",
   "exports": {
     ".": {
+      "types": "./dist/index.d.ts",
       "import": "./dist/index.mjs",
       "require": "./dist/index.js"
     },
     "./types/*": {
-      "import": "./dist/types/*",
-      "require": "./dist/types/*"
+      "types": "./dist/types/*.d.ts",
+      "import": "./dist/types/*.mjs",
+      "require": "./dist/types/*.js"
     },
     "./documents/*": {
-      "import": "./dist/documents/*",
-      "require": "./dist/documents/*"
+      "types": "./dist/documents/*.d.ts",
+      "import": "./dist/documents/*.mjs",
+      "require": "./dist/documents/*.js"
     }
   },
   "files": [
