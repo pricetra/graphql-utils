@@ -1,11 +1,23 @@
 import { TypedDocumentNode, DocumentTypeDecoration, ResultOf } from '@graphql-typed-document-node/core';
 import * as graphql$1 from 'graphql';
 
+type Maybe<T> = T | null;
 type InputMaybe<T> = T | null | undefined;
 type Exact<T extends {
     [key: string]: unknown;
 }> = {
     [K in keyof T]: T[K];
+};
+type MakeOptional<T, K extends keyof T> = Omit<T, K> & {
+    [SubKey in K]?: Maybe<T[SubKey]>;
+};
+type MakeMaybe<T, K extends keyof T> = Omit<T, K> & {
+    [SubKey in K]: Maybe<T[SubKey]>;
+};
+type MakeEmpty<T extends {
+    [key: string]: unknown;
+}, K extends keyof T> = {
+    [_ in K]?: never;
 };
 type Incremental<T> = T | {
     [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never;
@@ -49,6 +61,34 @@ type Scalars = {
         output: any;
     };
 };
+type Address = {
+    __typename?: 'Address';
+    administrativeDivision: Scalars['String']['output'];
+    city: Scalars['String']['output'];
+    country?: Maybe<Scalars['String']['output']>;
+    countryCode: Scalars['String']['output'];
+    createdAt: Scalars['Time']['output'];
+    distance?: Maybe<Scalars['Float']['output']>;
+    fullAddress: Scalars['String']['output'];
+    id: Scalars['ID']['output'];
+    latitude: Scalars['Float']['output'];
+    longitude: Scalars['Float']['output'];
+    mapsLink: Scalars['String']['output'];
+    street?: Maybe<Scalars['String']['output']>;
+    updatedAt: Scalars['Time']['output'];
+    zipCode: Scalars['String']['output'];
+};
+type AdministrativeDivision = {
+    __typename?: 'AdministrativeDivision';
+    cities: Scalars['String']['output'];
+    name: Scalars['String']['output'];
+};
+type Auth = {
+    __typename?: 'Auth';
+    isNewUser?: Maybe<Scalars['Boolean']['output']>;
+    token: Scalars['String']['output'];
+    user: User;
+};
 declare enum AuthDeviceType {
     Android = "android",
     Ios = "ios",
@@ -61,6 +101,75 @@ declare enum AuthPlatformType {
     Google = "GOOGLE",
     Internal = "INTERNAL"
 }
+type Branch = {
+    __typename?: 'Branch';
+    address: Address;
+    addressId: Scalars['ID']['output'];
+    id: Scalars['ID']['output'];
+    name: Scalars['String']['output'];
+    products?: Maybe<Array<ProductSimple>>;
+    slug: Scalars['String']['output'];
+    store?: Maybe<Store>;
+    storeId: Scalars['ID']['output'];
+    storeSlug?: Maybe<Scalars['String']['output']>;
+};
+type BranchFlat = {
+    __typename?: 'BranchFlat';
+    address: Address;
+    addressId: Scalars['ID']['output'];
+    id: Scalars['ID']['output'];
+    name: Scalars['String']['output'];
+    slug: Scalars['String']['output'];
+    storeId: Scalars['ID']['output'];
+    storeSlug?: Maybe<Scalars['String']['output']>;
+};
+type BranchList = {
+    __typename?: 'BranchList';
+    branch?: Maybe<Branch>;
+    branchId: Scalars['ID']['output'];
+    createdAt: Scalars['Time']['output'];
+    id: Scalars['ID']['output'];
+    listId: Scalars['ID']['output'];
+    userId: Scalars['ID']['output'];
+};
+type BranchListWithPrices = {
+    __typename?: 'BranchListWithPrices';
+    approximatePrice?: Maybe<Scalars['Float']['output']>;
+    branch?: Maybe<Branch>;
+    branchId: Scalars['ID']['output'];
+    createdAt: Scalars['Time']['output'];
+    id: Scalars['ID']['output'];
+    stock?: Maybe<Stock>;
+};
+type Brand = {
+    __typename?: 'Brand';
+    brand: Scalars['String']['output'];
+    products: Scalars['Int64']['output'];
+};
+type Category = {
+    __typename?: 'Category';
+    categoryAlias?: Maybe<Scalars['String']['output']>;
+    depth?: Maybe<Scalars['Int']['output']>;
+    expandedPathname: Scalars['String']['output'];
+    id: Scalars['ID']['output'];
+    name: Scalars['String']['output'];
+    path: Scalars['String']['output'];
+};
+type Country = {
+    __typename?: 'Country';
+    administrativeDivisions: Array<AdministrativeDivision>;
+    callingCode?: Maybe<Scalars['String']['output']>;
+    code: Scalars['String']['output'];
+    currency?: Maybe<Currency>;
+    language?: Maybe<Scalars['String']['output']>;
+    name: Scalars['String']['output'];
+};
+type CreateAccountInput = {
+    email: Scalars['String']['input'];
+    name: Scalars['String']['input'];
+    password: Scalars['String']['input'];
+    phoneNumber?: InputMaybe<Scalars['String']['input']>;
+};
 type CreateAddress = {
     administrativeDivision: Scalars['String']['input'];
     city: Scalars['String']['input'];
@@ -80,6 +189,9 @@ type CreateBranch = {
 type CreateCategory = {
     name: Scalars['String']['input'];
     parentPath: Array<Scalars['Int']['input']>;
+};
+type CreateGroceryListInput = {
+    name: Scalars['String']['input'];
 };
 type CreateGroceryListItemInput = {
     category?: InputMaybe<Scalars['String']['input']>;
@@ -118,15 +230,71 @@ type CreateProduct = {
     quantityValue?: InputMaybe<Scalars['Int']['input']>;
     weight?: InputMaybe<Scalars['String']['input']>;
 };
+type CreateStock = {
+    branchId: Scalars['ID']['input'];
+    productId: Scalars['ID']['input'];
+    storeId: Scalars['ID']['input'];
+};
 type CreateStore = {
     logoBase64?: InputMaybe<Scalars['String']['input']>;
     logoFile?: InputMaybe<Scalars['Upload']['input']>;
     name: Scalars['String']['input'];
     website: Scalars['String']['input'];
 };
+type CreatedByUser = {
+    __typename?: 'CreatedByUser';
+    active?: Maybe<Scalars['Boolean']['output']>;
+    avatar?: Maybe<Scalars['String']['output']>;
+    id: Scalars['ID']['output'];
+    name: Scalars['String']['output'];
+};
+type Currency = {
+    __typename?: 'Currency';
+    currencyCode: Scalars['String']['output'];
+    decimals: Scalars['Int']['output'];
+    name: Scalars['String']['output'];
+    numToBasic?: Maybe<Scalars['Int']['output']>;
+    symbol: Scalars['String']['output'];
+    symbolNative: Scalars['String']['output'];
+};
+type GroceryList = {
+    __typename?: 'GroceryList';
+    createdAt: Scalars['Time']['output'];
+    default: Scalars['Boolean']['output'];
+    groceryListItems?: Maybe<Array<GroceryListItem>>;
+    id: Scalars['ID']['output'];
+    name: Scalars['String']['output'];
+    updatedAt: Scalars['Time']['output'];
+    userId: Scalars['ID']['output'];
+};
+type GroceryListItem = {
+    __typename?: 'GroceryListItem';
+    category?: Maybe<Scalars['String']['output']>;
+    completed: Scalars['Boolean']['output'];
+    createdAt: Scalars['Time']['output'];
+    groceryList?: Maybe<GroceryList>;
+    groceryListId: Scalars['ID']['output'];
+    id: Scalars['ID']['output'];
+    product?: Maybe<Product>;
+    productId?: Maybe<Scalars['ID']['output']>;
+    quantity: Scalars['Int']['output'];
+    unit?: Maybe<Scalars['String']['output']>;
+    updatedAt: Scalars['Time']['output'];
+    weight?: Maybe<Scalars['String']['output']>;
+};
 type GroceryListItemsFilters = {
     completed?: InputMaybe<Scalars['Boolean']['input']>;
     sortByCreation?: InputMaybe<Scalars['String']['input']>;
+};
+type List = {
+    __typename?: 'List';
+    branchList?: Maybe<Array<BranchList>>;
+    createdAt: Scalars['Time']['output'];
+    id: Scalars['ID']['output'];
+    name: Scalars['String']['output'];
+    productList?: Maybe<Array<ProductList>>;
+    type: ListType;
+    userId: Scalars['ID']['output'];
 };
 declare enum ListType {
     Favorites = "FAVORITES",
@@ -138,16 +306,422 @@ type LocationInput = {
     longitude: Scalars['Float']['input'];
     radiusMeters?: InputMaybe<Scalars['Int']['input']>;
 };
+type Mutation = {
+    __typename?: 'Mutation';
+    addBranchToList: BranchList;
+    addGroceryListItem: GroceryListItem;
+    addToList: ProductList;
+    bulkAddBranchesToList: Array<BranchList>;
+    clearSearchHistory: Scalars['Boolean']['output'];
+    createAccount: User;
+    createBranch: Branch;
+    createBranchWithFullAddress: Branch;
+    createCategory: Category;
+    createList: List;
+    createPrice: Price;
+    createProduct: Product;
+    createStore: Store;
+    deleteGroceryListItem: GroceryListItem;
+    deleteList: List;
+    deleteSearchById: Scalars['Boolean']['output'];
+    extractAndCreateProduct: Product;
+    logout: Scalars['Boolean']['output'];
+    markGroceryListItem: GroceryListItem;
+    registerExpoPushToken: User;
+    removeBranchFromList: BranchList;
+    removeFromList: ProductList;
+    removeFromListWithProductId: ProductList;
+    requestPasswordReset: Scalars['Boolean']['output'];
+    resendEmailVerificationCode: Scalars['Boolean']['output'];
+    sanitizeProduct: Product;
+    saveProductsFromUPCItemDb: SearchResult;
+    updateGroceryListItem: GroceryListItem;
+    updatePasswordWithResetCode: Scalars['Boolean']['output'];
+    updateProduct: Product;
+    updateProductNutritionData: ProductNutrition;
+    updateProfile: User;
+    updateUserById: User;
+    verifyEmail: User;
+};
+type MutationAddBranchToListArgs = {
+    branchId: Scalars['ID']['input'];
+    listId: Scalars['ID']['input'];
+};
+type MutationAddGroceryListItemArgs = {
+    groceryListId?: InputMaybe<Scalars['ID']['input']>;
+    input: CreateGroceryListItemInput;
+};
+type MutationAddToListArgs = {
+    listId: Scalars['ID']['input'];
+    productId: Scalars['ID']['input'];
+    stockId?: InputMaybe<Scalars['ID']['input']>;
+};
+type MutationBulkAddBranchesToListArgs = {
+    branchIds: Array<Scalars['ID']['input']>;
+    listId: Scalars['ID']['input'];
+};
+type MutationCreateAccountArgs = {
+    input: CreateAccountInput;
+};
+type MutationCreateBranchArgs = {
+    input: CreateBranch;
+};
+type MutationCreateBranchWithFullAddressArgs = {
+    fullAddress: Scalars['String']['input'];
+    storeId: Scalars['ID']['input'];
+};
+type MutationCreateCategoryArgs = {
+    input: CreateCategory;
+};
+type MutationCreateListArgs = {
+    name: Scalars['String']['input'];
+};
+type MutationCreatePriceArgs = {
+    input: CreatePrice;
+};
+type MutationCreateProductArgs = {
+    input: CreateProduct;
+};
+type MutationCreateStoreArgs = {
+    input: CreateStore;
+};
+type MutationDeleteGroceryListItemArgs = {
+    groceryListItemId: Scalars['ID']['input'];
+};
+type MutationDeleteListArgs = {
+    listId: Scalars['ID']['input'];
+};
+type MutationDeleteSearchByIdArgs = {
+    id: Scalars['ID']['input'];
+};
+type MutationExtractAndCreateProductArgs = {
+    barcode: Scalars['String']['input'];
+    base64Image: Scalars['String']['input'];
+};
+type MutationMarkGroceryListItemArgs = {
+    completed: Scalars['Boolean']['input'];
+    groceryListItemId: Scalars['ID']['input'];
+};
+type MutationRegisterExpoPushTokenArgs = {
+    expoPushToken: Scalars['String']['input'];
+};
+type MutationRemoveBranchFromListArgs = {
+    branchListId: Scalars['ID']['input'];
+    listId: Scalars['ID']['input'];
+};
+type MutationRemoveFromListArgs = {
+    listId: Scalars['ID']['input'];
+    productListId: Scalars['ID']['input'];
+};
+type MutationRemoveFromListWithProductIdArgs = {
+    listId: Scalars['ID']['input'];
+    productId: Scalars['ID']['input'];
+    stockId?: InputMaybe<Scalars['ID']['input']>;
+};
+type MutationRequestPasswordResetArgs = {
+    email: Scalars['String']['input'];
+};
+type MutationResendEmailVerificationCodeArgs = {
+    email: Scalars['String']['input'];
+};
+type MutationSanitizeProductArgs = {
+    id: Scalars['ID']['input'];
+};
+type MutationSaveProductsFromUpcItemDbArgs = {
+    input: SaveExternalProductInput;
+};
+type MutationUpdateGroceryListItemArgs = {
+    groceryListItemId: Scalars['ID']['input'];
+    input: CreateGroceryListItemInput;
+};
+type MutationUpdatePasswordWithResetCodeArgs = {
+    code: Scalars['String']['input'];
+    email: Scalars['String']['input'];
+    newPassword: Scalars['String']['input'];
+};
+type MutationUpdateProductArgs = {
+    id: Scalars['ID']['input'];
+    input: UpdateProduct;
+};
+type MutationUpdateProductNutritionDataArgs = {
+    productId: Scalars['ID']['input'];
+};
+type MutationUpdateProfileArgs = {
+    input: UpdateUser;
+};
+type MutationUpdateUserByIdArgs = {
+    input: UpdateUserFull;
+    userId: Scalars['ID']['input'];
+};
+type MutationVerifyEmailArgs = {
+    verificationCode: Scalars['String']['input'];
+};
 declare enum OrderByType {
     Asc = "ASC",
     Desc = "DESC"
 }
+type PaginatedBranches = {
+    __typename?: 'PaginatedBranches';
+    branches: Array<Branch>;
+    paginator: Paginator;
+};
+type PaginatedPriceHistory = {
+    __typename?: 'PaginatedPriceHistory';
+    paginator: Paginator;
+    prices: Array<Price>;
+};
+type PaginatedProductBilling = {
+    __typename?: 'PaginatedProductBilling';
+    data: Array<ProductBilling>;
+    paginator: Paginator;
+};
+type PaginatedProducts = {
+    __typename?: 'PaginatedProducts';
+    paginator: Paginator;
+    products: Array<Product>;
+};
+type PaginatedSearch = {
+    __typename?: 'PaginatedSearch';
+    paginator: Paginator;
+    searches: Array<SearchHistory>;
+};
+type PaginatedStocks = {
+    __typename?: 'PaginatedStocks';
+    paginator: Paginator;
+    stocks: Array<Stock>;
+};
+type PaginatedStores = {
+    __typename?: 'PaginatedStores';
+    paginator: Paginator;
+    stores: Array<Store>;
+};
+type PaginatedUsers = {
+    __typename?: 'PaginatedUsers';
+    paginator: Paginator;
+    users: Array<User>;
+};
+type Paginator = {
+    __typename?: 'Paginator';
+    limit: Scalars['Int']['output'];
+    next?: Maybe<Scalars['Int']['output']>;
+    numPages: Scalars['Int']['output'];
+    page: Scalars['Int']['output'];
+    prev?: Maybe<Scalars['Int']['output']>;
+    total: Scalars['Int']['output'];
+};
 type PaginatorInput = {
     limit: Scalars['Int']['input'];
     page: Scalars['Int']['input'];
 };
+type Price = {
+    __typename?: 'Price';
+    amount: Scalars['Float']['output'];
+    branchId: Scalars['ID']['output'];
+    condition?: Maybe<Scalars['String']['output']>;
+    createdAt: Scalars['Time']['output'];
+    createdBy?: Maybe<CreatedByUser>;
+    createdById?: Maybe<Scalars['ID']['output']>;
+    currencyCode: Scalars['String']['output'];
+    expiresAt?: Maybe<Scalars['Time']['output']>;
+    id: Scalars['ID']['output'];
+    imageId?: Maybe<Scalars['String']['output']>;
+    originalPrice?: Maybe<Scalars['Float']['output']>;
+    productId: Scalars['ID']['output'];
+    sale: Scalars['Boolean']['output'];
+    stockId: Scalars['ID']['output'];
+    storeId: Scalars['ID']['output'];
+    unitType: Scalars['String']['output'];
+};
 type PriceHistoryFilter = {
     orderBy?: InputMaybe<OrderByType>;
+};
+type Product = {
+    __typename?: 'Product';
+    approximateWeight: Scalars['Boolean']['output'];
+    brand: Scalars['String']['output'];
+    category?: Maybe<Category>;
+    categoryId: Scalars['ID']['output'];
+    code: Scalars['String']['output'];
+    createdAt: Scalars['Time']['output'];
+    description: Scalars['String']['output'];
+    id: Scalars['ID']['output'];
+    image: Scalars['String']['output'];
+    model?: Maybe<Scalars['String']['output']>;
+    name: Scalars['String']['output'];
+    netWeight: Scalars['Boolean']['output'];
+    productList: Array<ProductList>;
+    quantityType: Scalars['String']['output'];
+    quantityValue: Scalars['Int']['output'];
+    stock?: Maybe<Stock>;
+    updatedAt: Scalars['Time']['output'];
+    views: Scalars['Int']['output'];
+    weightType?: Maybe<Scalars['String']['output']>;
+    weightValue?: Maybe<Scalars['Float']['output']>;
+};
+type ProductBilling = {
+    __typename?: 'ProductBilling';
+    billingRateType: Scalars['String']['output'];
+    createdAt: Scalars['Time']['output'];
+    id: Scalars['ID']['output'];
+    paidAt?: Maybe<Scalars['Time']['output']>;
+    product?: Maybe<Product>;
+    productId: Scalars['ID']['output'];
+    rate: Scalars['Float']['output'];
+    user?: Maybe<UserShallow>;
+    userId: Scalars['ID']['output'];
+};
+type ProductExtractionFields = {
+    __typename?: 'ProductExtractionFields';
+    brand: Scalars['String']['output'];
+    category: Scalars['String']['output'];
+    description: Scalars['String']['output'];
+    netWeight?: Maybe<Scalars['Boolean']['output']>;
+    productName: Scalars['String']['output'];
+    quantity?: Maybe<Scalars['Int']['output']>;
+    weight?: Maybe<Scalars['String']['output']>;
+};
+type ProductExtractionResponse = {
+    __typename?: 'ProductExtractionResponse';
+    brand: Scalars['String']['output'];
+    category?: Maybe<Category>;
+    categoryId?: Maybe<Scalars['ID']['output']>;
+    description: Scalars['String']['output'];
+    name: Scalars['String']['output'];
+    netWeight?: Maybe<Scalars['Boolean']['output']>;
+    quantity?: Maybe<Scalars['Int']['output']>;
+    weight?: Maybe<Scalars['String']['output']>;
+};
+type ProductList = {
+    __typename?: 'ProductList';
+    createdAt: Scalars['Time']['output'];
+    id: Scalars['ID']['output'];
+    listId: Scalars['ID']['output'];
+    product?: Maybe<Product>;
+    productId: Scalars['ID']['output'];
+    stock?: Maybe<Stock>;
+    stockId?: Maybe<Scalars['ID']['output']>;
+    type?: Maybe<ListType>;
+    userId: Scalars['ID']['output'];
+};
+type ProductNutriment = {
+    __typename?: 'ProductNutriment';
+    alcohol?: Maybe<Scalars['Float']['output']>;
+    alcohol100g?: Maybe<Scalars['Float']['output']>;
+    alcoholServing?: Maybe<Scalars['Float']['output']>;
+    alcoholUnit?: Maybe<Scalars['String']['output']>;
+    alcoholValue?: Maybe<Scalars['Float']['output']>;
+    calcium?: Maybe<Scalars['Float']['output']>;
+    calcium100g?: Maybe<Scalars['Float']['output']>;
+    calciumLabel?: Maybe<Scalars['String']['output']>;
+    calciumServing?: Maybe<Scalars['Float']['output']>;
+    calciumUnit?: Maybe<Scalars['String']['output']>;
+    calciumValue?: Maybe<Scalars['Float']['output']>;
+    carbohydrates?: Maybe<Scalars['Float']['output']>;
+    carbohydrates100g?: Maybe<Scalars['Float']['output']>;
+    carbohydratesServing?: Maybe<Scalars['Float']['output']>;
+    carbohydratesUnit?: Maybe<Scalars['String']['output']>;
+    carbohydratesValue?: Maybe<Scalars['Float']['output']>;
+    cholesterol100g?: Maybe<Scalars['Float']['output']>;
+    energy?: Maybe<Scalars['Float']['output']>;
+    energy100g?: Maybe<Scalars['Float']['output']>;
+    energyKcal?: Maybe<Scalars['Float']['output']>;
+    energyKcal100g?: Maybe<Scalars['Float']['output']>;
+    energyKcalServing?: Maybe<Scalars['Float']['output']>;
+    energyKcalUnit?: Maybe<Scalars['String']['output']>;
+    energyKcalValue?: Maybe<Scalars['Float']['output']>;
+    energyServing?: Maybe<Scalars['Float']['output']>;
+    energyUnit?: Maybe<Scalars['String']['output']>;
+    energyValue?: Maybe<Scalars['Float']['output']>;
+    fat?: Maybe<Scalars['Float']['output']>;
+    fat100g?: Maybe<Scalars['Float']['output']>;
+    fatServing?: Maybe<Scalars['Float']['output']>;
+    fatUnit?: Maybe<Scalars['String']['output']>;
+    fatValue?: Maybe<Scalars['Float']['output']>;
+    fiber?: Maybe<Scalars['Float']['output']>;
+    fiber100g?: Maybe<Scalars['Float']['output']>;
+    fiberServing?: Maybe<Scalars['Float']['output']>;
+    fiberUnit?: Maybe<Scalars['String']['output']>;
+    fiberValue?: Maybe<Scalars['Float']['output']>;
+    iron?: Maybe<Scalars['Float']['output']>;
+    iron100g?: Maybe<Scalars['Float']['output']>;
+    ironLabel?: Maybe<Scalars['String']['output']>;
+    ironServing?: Maybe<Scalars['Float']['output']>;
+    ironUnit?: Maybe<Scalars['String']['output']>;
+    ironValue?: Maybe<Scalars['Float']['output']>;
+    monounsaturatedFat100g?: Maybe<Scalars['Float']['output']>;
+    novaGroup?: Maybe<Scalars['Float']['output']>;
+    novaGroup100g?: Maybe<Scalars['Float']['output']>;
+    novaGroupServing?: Maybe<Scalars['Float']['output']>;
+    nutritionScoreFr?: Maybe<Scalars['Float']['output']>;
+    nutritionScoreFr100g?: Maybe<Scalars['Float']['output']>;
+    nutritionScoreFrServing?: Maybe<Scalars['Float']['output']>;
+    nutritionScoreUk?: Maybe<Scalars['Float']['output']>;
+    nutritionScoreUk100g?: Maybe<Scalars['Float']['output']>;
+    nutritionScoreUkServing?: Maybe<Scalars['Float']['output']>;
+    polyunsaturatedFat100g?: Maybe<Scalars['Float']['output']>;
+    potassium100g?: Maybe<Scalars['Float']['output']>;
+    proteins?: Maybe<Scalars['Float']['output']>;
+    proteins100g?: Maybe<Scalars['Float']['output']>;
+    proteinsServing?: Maybe<Scalars['Float']['output']>;
+    proteinsUnit?: Maybe<Scalars['String']['output']>;
+    proteinsValue?: Maybe<Scalars['Float']['output']>;
+    salt?: Maybe<Scalars['Float']['output']>;
+    salt100g?: Maybe<Scalars['Float']['output']>;
+    saltServing?: Maybe<Scalars['Float']['output']>;
+    saltUnit?: Maybe<Scalars['String']['output']>;
+    saltValue?: Maybe<Scalars['Float']['output']>;
+    saturatedFat?: Maybe<Scalars['Float']['output']>;
+    saturatedFat100g?: Maybe<Scalars['Float']['output']>;
+    saturatedFatServing?: Maybe<Scalars['Float']['output']>;
+    saturatedFatUnit?: Maybe<Scalars['String']['output']>;
+    saturatedFatValue?: Maybe<Scalars['Float']['output']>;
+    sodium?: Maybe<Scalars['Float']['output']>;
+    sodium100g?: Maybe<Scalars['Float']['output']>;
+    sodiumServing?: Maybe<Scalars['Float']['output']>;
+    sodiumUnit?: Maybe<Scalars['String']['output']>;
+    sodiumValue?: Maybe<Scalars['Float']['output']>;
+    sugars?: Maybe<Scalars['Float']['output']>;
+    sugars100g?: Maybe<Scalars['Float']['output']>;
+    sugarsServing?: Maybe<Scalars['Float']['output']>;
+    sugarsUnit?: Maybe<Scalars['String']['output']>;
+    sugarsValue?: Maybe<Scalars['Float']['output']>;
+    transFat?: Maybe<Scalars['Float']['output']>;
+    transFat100g?: Maybe<Scalars['Float']['output']>;
+    transFatLabel?: Maybe<Scalars['String']['output']>;
+    transFatServing?: Maybe<Scalars['Float']['output']>;
+    transFatUnit?: Maybe<Scalars['String']['output']>;
+    transFatValue?: Maybe<Scalars['Float']['output']>;
+    vitaminA?: Maybe<Scalars['Float']['output']>;
+    vitaminA100g?: Maybe<Scalars['Float']['output']>;
+    vitaminALabel?: Maybe<Scalars['String']['output']>;
+    vitaminAServing?: Maybe<Scalars['Float']['output']>;
+    vitaminAUnit?: Maybe<Scalars['String']['output']>;
+    vitaminAValue?: Maybe<Scalars['Float']['output']>;
+    vitaminC?: Maybe<Scalars['Float']['output']>;
+    vitaminC100g?: Maybe<Scalars['Float']['output']>;
+    vitaminCLabel?: Maybe<Scalars['String']['output']>;
+    vitaminCServing?: Maybe<Scalars['Float']['output']>;
+    vitaminCUnit?: Maybe<Scalars['String']['output']>;
+    vitaminCValue?: Maybe<Scalars['Float']['output']>;
+};
+type ProductNutrition = {
+    __typename?: 'ProductNutrition';
+    createdAt: Scalars['Time']['output'];
+    glutenFree?: Maybe<Scalars['Boolean']['output']>;
+    halal?: Maybe<Scalars['Boolean']['output']>;
+    ingredientList?: Maybe<Array<Scalars['String']['output']>>;
+    ingredientText?: Maybe<Scalars['String']['output']>;
+    kosher?: Maybe<Scalars['Boolean']['output']>;
+    lactoseFree?: Maybe<Scalars['Boolean']['output']>;
+    nutriments?: Maybe<ProductNutriment>;
+    openfoodfactsUpdatedAt: Scalars['String']['output'];
+    productId: Scalars['ID']['output'];
+    servingSize?: Maybe<Scalars['String']['output']>;
+    servingSizeUnit?: Maybe<Scalars['String']['output']>;
+    servingSizeValue?: Maybe<Scalars['Float']['output']>;
+    updatedAt: Scalars['Time']['output'];
+    vegan?: Maybe<Scalars['Boolean']['output']>;
+    vegetarian?: Maybe<Scalars['Boolean']['output']>;
 };
 type ProductSearch = {
     branchId?: InputMaybe<Scalars['ID']['input']>;
@@ -162,6 +736,307 @@ type ProductSearch = {
     sortByPrice?: InputMaybe<Scalars['String']['input']>;
     storeId?: InputMaybe<Scalars['ID']['input']>;
     weight?: InputMaybe<Scalars['String']['input']>;
+};
+type ProductSimple = {
+    __typename?: 'ProductSimple';
+    approximateWeight: Scalars['Boolean']['output'];
+    brand: Scalars['String']['output'];
+    category?: Maybe<Category>;
+    categoryId: Scalars['ID']['output'];
+    code: Scalars['String']['output'];
+    createdAt: Scalars['Time']['output'];
+    description: Scalars['String']['output'];
+    id: Scalars['ID']['output'];
+    image: Scalars['String']['output'];
+    model?: Maybe<Scalars['String']['output']>;
+    name: Scalars['String']['output'];
+    netWeight: Scalars['Boolean']['output'];
+    quantityType: Scalars['String']['output'];
+    quantityValue: Scalars['Int']['output'];
+    stock?: Maybe<StockSimple>;
+    updatedAt: Scalars['Time']['output'];
+    views: Scalars['Int']['output'];
+    weightType?: Maybe<Scalars['String']['output']>;
+    weightValue?: Maybe<Scalars['Float']['output']>;
+};
+type ProductSummary = {
+    __typename?: 'ProductSummary';
+    brand: Scalars['String']['output'];
+    code: Scalars['String']['output'];
+    description?: Maybe<Scalars['String']['output']>;
+    id: Scalars['ID']['output'];
+    image: Scalars['String']['output'];
+    name: Scalars['String']['output'];
+};
+type ProductWeightComponents = {
+    __typename?: 'ProductWeightComponents';
+    weightType: Scalars['String']['output'];
+    weightValue: Scalars['Float']['output'];
+};
+type Query = {
+    __typename?: 'Query';
+    allBranches: PaginatedBranches;
+    allBrands: Array<Brand>;
+    allProducts: PaginatedProducts;
+    allStores: PaginatedStores;
+    barcodeScan: Product;
+    branchesWithProducts: PaginatedBranches;
+    categorySearch: Array<Category>;
+    checkAppVersion: Scalars['Boolean']['output'];
+    countGroceryListItems: Scalars['Int']['output'];
+    defaultGroceryListItems: Array<GroceryListItem>;
+    extractProductFields: ProductExtractionResponse;
+    findBranch: Branch;
+    findBranchesByDistance: Array<Branch>;
+    findStore: Store;
+    getAllBranchListsByListId: Array<BranchList>;
+    getAllCountries: Array<Country>;
+    getAllLists: Array<List>;
+    getAllProductListsByListId: Array<ProductList>;
+    getAllUsers: PaginatedUsers;
+    getCategories: Array<Category>;
+    getCategory: Category;
+    getFavoriteBranchesWithPrices: Array<BranchListWithPrices>;
+    getProductNutritionData: ProductNutrition;
+    getProductStocks: PaginatedStocks;
+    getStockFromProductAndBranchId: Stock;
+    googleOAuth: Auth;
+    groceryList: GroceryList;
+    groceryListItems: Array<GroceryListItem>;
+    groceryLists: Array<GroceryList>;
+    ipToAddress: Address;
+    login: Auth;
+    me: User;
+    myProductBillingData: PaginatedProductBilling;
+    myProductViewHistory: PaginatedProducts;
+    mySearchHistory: PaginatedSearch;
+    priceChangeHistory: PaginatedPriceHistory;
+    product: Product;
+    productBillingDataByUserId: PaginatedProductBilling;
+    productSearch: PaginatedProducts;
+    productSummary: ProductSummary;
+    stock: Stock;
+    verifyPasswordResetCode: Scalars['Boolean']['output'];
+    weightComponentsFromCategoryId: Array<ProductWeightComponents>;
+};
+type QueryAllBranchesArgs = {
+    location?: InputMaybe<LocationInput>;
+    paginator: PaginatorInput;
+    search?: InputMaybe<Scalars['String']['input']>;
+    storeId?: InputMaybe<Scalars['ID']['input']>;
+    storeSlug?: InputMaybe<Scalars['String']['input']>;
+};
+type QueryAllBrandsArgs = {
+    joinStock?: InputMaybe<Scalars['Boolean']['input']>;
+};
+type QueryAllProductsArgs = {
+    paginator: PaginatorInput;
+    search?: InputMaybe<ProductSearch>;
+};
+type QueryAllStoresArgs = {
+    paginator: PaginatorInput;
+    search?: InputMaybe<Scalars['String']['input']>;
+};
+type QueryBarcodeScanArgs = {
+    barcode: Scalars['String']['input'];
+    location?: InputMaybe<LocationInput>;
+    searchMode?: InputMaybe<Scalars['Boolean']['input']>;
+};
+type QueryBranchesWithProductsArgs = {
+    filters?: InputMaybe<ProductSearch>;
+    paginator: PaginatorInput;
+    productLimit: Scalars['Int']['input'];
+};
+type QueryCategorySearchArgs = {
+    quickSearchMode?: InputMaybe<Scalars['Boolean']['input']>;
+    search: Scalars['String']['input'];
+};
+type QueryCheckAppVersionArgs = {
+    platform: AuthDeviceType;
+    version: Scalars['String']['input'];
+};
+type QueryCountGroceryListItemsArgs = {
+    groceryListId?: InputMaybe<Scalars['ID']['input']>;
+    includeCompleted?: InputMaybe<Scalars['Boolean']['input']>;
+};
+type QueryDefaultGroceryListItemsArgs = {
+    filters?: InputMaybe<GroceryListItemsFilters>;
+};
+type QueryExtractProductFieldsArgs = {
+    base64Image: Scalars['String']['input'];
+};
+type QueryFindBranchArgs = {
+    id?: InputMaybe<Scalars['ID']['input']>;
+    slug?: InputMaybe<Scalars['String']['input']>;
+    storeId?: InputMaybe<Scalars['ID']['input']>;
+    storeSlug?: InputMaybe<Scalars['String']['input']>;
+};
+type QueryFindBranchesByDistanceArgs = {
+    lat: Scalars['Float']['input'];
+    lon: Scalars['Float']['input'];
+    radiusMeters: Scalars['Int']['input'];
+};
+type QueryFindStoreArgs = {
+    id?: InputMaybe<Scalars['ID']['input']>;
+    slug?: InputMaybe<Scalars['String']['input']>;
+};
+type QueryGetAllBranchListsByListIdArgs = {
+    listId: Scalars['ID']['input'];
+};
+type QueryGetAllListsArgs = {
+    listType?: InputMaybe<ListType>;
+};
+type QueryGetAllProductListsByListIdArgs = {
+    listId: Scalars['ID']['input'];
+};
+type QueryGetAllUsersArgs = {
+    filters?: InputMaybe<UserFilter>;
+    paginator: PaginatorInput;
+};
+type QueryGetCategoriesArgs = {
+    depth?: InputMaybe<Scalars['Int']['input']>;
+    parentId?: InputMaybe<Scalars['ID']['input']>;
+    search?: InputMaybe<Scalars['String']['input']>;
+};
+type QueryGetCategoryArgs = {
+    id: Scalars['ID']['input'];
+};
+type QueryGetFavoriteBranchesWithPricesArgs = {
+    productId: Scalars['ID']['input'];
+};
+type QueryGetProductNutritionDataArgs = {
+    productId: Scalars['ID']['input'];
+};
+type QueryGetProductStocksArgs = {
+    location?: InputMaybe<LocationInput>;
+    paginator: PaginatorInput;
+    productId: Scalars['ID']['input'];
+};
+type QueryGetStockFromProductAndBranchIdArgs = {
+    branchId: Scalars['ID']['input'];
+    productId: Scalars['ID']['input'];
+};
+type QueryGoogleOAuthArgs = {
+    accessToken: Scalars['String']['input'];
+    device?: InputMaybe<AuthDeviceType>;
+    ipAddress?: InputMaybe<Scalars['String']['input']>;
+};
+type QueryGroceryListArgs = {
+    groceryListId: Scalars['ID']['input'];
+};
+type QueryGroceryListItemsArgs = {
+    filters?: InputMaybe<GroceryListItemsFilters>;
+    groceryListId: Scalars['ID']['input'];
+};
+type QueryIpToAddressArgs = {
+    ipAddress: Scalars['String']['input'];
+};
+type QueryLoginArgs = {
+    device?: InputMaybe<AuthDeviceType>;
+    email: Scalars['String']['input'];
+    ipAddress?: InputMaybe<Scalars['String']['input']>;
+    password: Scalars['String']['input'];
+};
+type QueryMyProductBillingDataArgs = {
+    paginator: PaginatorInput;
+};
+type QueryMyProductViewHistoryArgs = {
+    paginator: PaginatorInput;
+};
+type QueryMySearchHistoryArgs = {
+    paginator: PaginatorInput;
+};
+type QueryPriceChangeHistoryArgs = {
+    filters?: InputMaybe<PriceHistoryFilter>;
+    paginator: PaginatorInput;
+    productId: Scalars['ID']['input'];
+    stockId: Scalars['ID']['input'];
+};
+type QueryProductArgs = {
+    id: Scalars['ID']['input'];
+    viewerTrail?: InputMaybe<ViewerTrailInput>;
+};
+type QueryProductBillingDataByUserIdArgs = {
+    paginator: PaginatorInput;
+    userId: Scalars['ID']['input'];
+};
+type QueryProductSearchArgs = {
+    paginator: PaginatorInput;
+    search: Scalars['String']['input'];
+};
+type QueryProductSummaryArgs = {
+    id: Scalars['ID']['input'];
+};
+type QueryStockArgs = {
+    stockId: Scalars['ID']['input'];
+};
+type QueryVerifyPasswordResetCodeArgs = {
+    code: Scalars['String']['input'];
+    email: Scalars['String']['input'];
+};
+type QueryWeightComponentsFromCategoryIdArgs = {
+    categoryId: Scalars['ID']['input'];
+};
+type SaveExternalProductInput = {
+    brand?: InputMaybe<Scalars['String']['input']>;
+    category?: InputMaybe<Scalars['String']['input']>;
+    numPagesToQuery: Scalars['Int']['input'];
+    offset?: InputMaybe<Scalars['Int']['input']>;
+    search: Scalars['String']['input'];
+    upc?: InputMaybe<Scalars['String']['input']>;
+};
+type SearchHistory = {
+    __typename?: 'SearchHistory';
+    createdAt: Scalars['Time']['output'];
+    id: Scalars['ID']['output'];
+    searchTerm: Scalars['String']['output'];
+};
+type SearchResult = {
+    __typename?: 'SearchResult';
+    added: Scalars['Int']['output'];
+    failed: Scalars['Int']['output'];
+    total: Scalars['Int']['output'];
+};
+type Stock = {
+    __typename?: 'Stock';
+    branch?: Maybe<BranchFlat>;
+    branchId: Scalars['ID']['output'];
+    createdAt: Scalars['Time']['output'];
+    createdBy?: Maybe<CreatedByUser>;
+    createdById?: Maybe<Scalars['ID']['output']>;
+    id: Scalars['ID']['output'];
+    latestPrice?: Maybe<Price>;
+    latestPriceId: Scalars['ID']['output'];
+    product?: Maybe<Product>;
+    productId: Scalars['ID']['output'];
+    store?: Maybe<Store>;
+    storeId: Scalars['ID']['output'];
+    updatedAt: Scalars['Time']['output'];
+    updatedBy?: Maybe<UpdatedByUser>;
+    updatedById?: Maybe<Scalars['ID']['output']>;
+};
+type StockSimple = {
+    __typename?: 'StockSimple';
+    branchId: Scalars['ID']['output'];
+    createdAt: Scalars['Time']['output'];
+    createdBy?: Maybe<CreatedByUser>;
+    createdById?: Maybe<Scalars['ID']['output']>;
+    id: Scalars['ID']['output'];
+    latestPrice?: Maybe<Price>;
+    latestPriceId: Scalars['ID']['output'];
+    productId: Scalars['ID']['output'];
+    storeId: Scalars['ID']['output'];
+    updatedAt: Scalars['Time']['output'];
+    updatedBy?: Maybe<UpdatedByUser>;
+    updatedById?: Maybe<Scalars['ID']['output']>;
+};
+type Store = {
+    __typename?: 'Store';
+    id: Scalars['ID']['output'];
+    logo: Scalars['String']['output'];
+    name: Scalars['String']['output'];
+    slug: Scalars['String']['output'];
+    website: Scalars['String']['output'];
 };
 type UpdateProduct = {
     approximateWeight?: InputMaybe<Scalars['Boolean']['input']>;
@@ -198,6 +1073,33 @@ type UpdateUserFull = {
     phoneNumber?: InputMaybe<Scalars['String']['input']>;
     role?: InputMaybe<UserRole>;
 };
+type UpdatedByUser = {
+    __typename?: 'UpdatedByUser';
+    active?: Maybe<Scalars['Boolean']['output']>;
+    avatar?: Maybe<Scalars['String']['output']>;
+    id: Scalars['ID']['output'];
+    name: Scalars['String']['output'];
+};
+type User = {
+    __typename?: 'User';
+    active: Scalars['Boolean']['output'];
+    address?: Maybe<Address>;
+    addressId?: Maybe<Scalars['ID']['output']>;
+    authDevice?: Maybe<AuthDeviceType>;
+    authPlatform?: Maybe<AuthPlatformType>;
+    authStateId?: Maybe<Scalars['String']['output']>;
+    avatar?: Maybe<Scalars['String']['output']>;
+    bio?: Maybe<Scalars['String']['output']>;
+    birthDate?: Maybe<Scalars['Time']['output']>;
+    createdAt: Scalars['Time']['output'];
+    email: Scalars['String']['output'];
+    expoPushToken?: Maybe<Scalars['String']['output']>;
+    id: Scalars['ID']['output'];
+    name: Scalars['String']['output'];
+    phoneNumber?: Maybe<Scalars['String']['output']>;
+    role: UserRole;
+    updatedAt: Scalars['Time']['output'];
+};
 type UserFilter = {
     email?: InputMaybe<Scalars['String']['input']>;
     id?: InputMaybe<Scalars['ID']['input']>;
@@ -210,6 +1112,13 @@ declare enum UserRole {
     Contributor = "CONTRIBUTOR",
     SuperAdmin = "SUPER_ADMIN"
 }
+type UserShallow = {
+    __typename?: 'UserShallow';
+    active?: Maybe<Scalars['Boolean']['output']>;
+    avatar?: Maybe<Scalars['String']['output']>;
+    id: Scalars['ID']['output'];
+    name: Scalars['String']['output'];
+};
 type ViewerTrailInput = {
     origin?: InputMaybe<Scalars['String']['input']>;
     stockId?: InputMaybe<Scalars['ID']['input']>;
@@ -3175,4 +4084,4 @@ declare const REQUEST_RESET_PASSWORD_MUTATION: graphql$1.DocumentNode;
 declare const UPDATE_PASSWORD_WITH_RESET_CODE_MUTATION: graphql$1.DocumentNode;
 declare const REGISTER_EXPO_PUSH_TOKEN: graphql$1.DocumentNode;
 
-export { ADD_BRANCH_TO_LIST_MUTATION, ADD_GROCERY_LIST_ITEMS_MUTATION, ADD_TO_LIST_MUTATION, ALL_BRANCHES_QUERY, ALL_BRANDS_QUERY, ALL_PRODUCTS_QUERY, ALL_STORES_QUERY, BARCODE_SCAN_QUERY, BRANCHES_WITH_PRODUCTS_QUERY, BRANCH_QUERY, BULK_ADD_BRANCHES_TO_LIST_MUTATION, CATEGORY_SEARCH_QUERY, CHECK_APP_VERSION_QUERY, COUNT_GROCERY_LIST_ITEMS_QUERY, CREATE_BRANCH_MUTATION, CREATE_BRANCH_WITH_FULL_ADDRESS_MUTATION, CREATE_CATEGORY_MUTATION, CREATE_PRICE_MUTATION, CREATE_PRODUCT_MUTATION, CREATE_STORE_MUTATION, CREATE_USER_MUTATION, DEFAULT_GROCERY_LIST_ITEMS_QUERY, DELETE_GROCERY_LIST_ITEMS_MUTATION, type DocumentType, EXTRACT_AND_CREATE_PRODUCT_FIELDS_QUERY, EXTRACT_PRODUCT_FIELDS_QUERY, FIND_BRANCHES_BY_DISTANCE_QUERY, FIND_BRANCH_QUERY, FIND_STORE_QUERY, type FragmentType, GET_ALL_BRANCH_LISTS_BY_LIST_ID, GET_ALL_COUNTRIES_QUERY, GET_ALL_LISTS, GET_ALL_PRODUCT_LISTS_BY_LIST_ID, GET_ALL_USERS_QUERY, GET_CATEGORIES_QUERY, GET_CATEGORY_QUERY, GET_FAVORITE_BRANCHES_WITH_PRICE_DATA_QUERY, GET_GROCERY_LIST_ITEMS_QUERY, GET_PRODUCT_NUTRITION_DATA_QUERY, GET_PRODUCT_STOCKS_QUERY, GET_STOCK_BY_ID, GET_STOCK_FROM_PRODUCT_AND_BRANCH_ID_QUERY, GOOGLE_OAUTH_QUERY, GROCERY_LISTS_QUERY, IP_TO_ADDRESS_QUERY, LOGIN_INTERNAL_QUERY, LOGOUT_MUTATION, MARK_GROCERY_ITEM_MUTATION, ME_QUERY, MY_PRODUCT_BILLING_DATA_QUERY, MY_PRODUCT_VIEW_HISTORY_QUERY, MY_SEARCH_HISTORY_QUERY, POST_AUTH_USER_DATA_QUERIES, PRICE_CHANGE_HISTORY_QUERY, PRODUCT_BILLING_DATA_BY_USER_ID_QUERY, PRODUCT_BY_ID_QUERY, PRODUCT_SEARCH_QUERY, PRODUCT_SUMMARY_QUERY, REGISTER_EXPO_PUSH_TOKEN, REMOVE_BRANCH_FROM_LIST_MUTATION, REMOVE_FROM_LIST_BY_PRODUCT_ID_MUTATION, REMOVE_FROM_LIST_MUTATION, REQUEST_RESET_PASSWORD_MUTATION, RESEND_VERIFICATION_MUTATION, SANITIZE_PRODUCT_MUTATION, UPDATE_GROCERY_LIST_ITEMS_MUTATION, UPDATE_PASSWORD_WITH_RESET_CODE_MUTATION, UPDATE_PRODUCT_MUTATION, UPDATE_PRODUCT_NUTRITION_MUTATION, UPDATE_PROFILE_MUTATION, UPDATE_USER_BY_ID_MUTATION, UserFragment, VERIFY_EMAIL_MUTATION, VERIFY_PASSWORD_RESET_CODE_QUERY, WEIGHT_COMPONENTS_FROM_CATEGORY_ID_QUERY, graphql, isFragmentReady, makeFragmentData, useFragment };
+export { ADD_BRANCH_TO_LIST_MUTATION, ADD_GROCERY_LIST_ITEMS_MUTATION, ADD_TO_LIST_MUTATION, ALL_BRANCHES_QUERY, ALL_BRANDS_QUERY, ALL_PRODUCTS_QUERY, ALL_STORES_QUERY, AddBranchToListDocument, type AddBranchToListMutation, type AddBranchToListMutationVariables, AddGroceryListItemDocument, type AddGroceryListItemMutation, type AddGroceryListItemMutationVariables, AddToListDocument, type AddToListMutation, type AddToListMutationVariables, type Address, type AdministrativeDivision, AllBranchesDocument, type AllBranchesQuery, type AllBranchesQueryVariables, AllBrandsDocument, type AllBrandsQuery, type AllBrandsQueryVariables, AllProductsDocument, type AllProductsQuery, type AllProductsQueryVariables, AllStoresDocument, type AllStoresQuery, type AllStoresQueryVariables, type Auth, AuthDeviceType, AuthPlatformType, BARCODE_SCAN_QUERY, BRANCHES_WITH_PRODUCTS_QUERY, BRANCH_QUERY, BULK_ADD_BRANCHES_TO_LIST_MUTATION, BarcodeScanDocument, type BarcodeScanQuery, type BarcodeScanQueryVariables, type Branch, BranchDocument, type BranchFlat, type BranchList, type BranchListWithPrices, type BranchQuery, type BranchQueryVariables, BranchesWithProductsDocument, type BranchesWithProductsQuery, type BranchesWithProductsQueryVariables, type Brand, BulkAddBranchesToListDocument, type BulkAddBranchesToListMutation, type BulkAddBranchesToListMutationVariables, CATEGORY_SEARCH_QUERY, CHECK_APP_VERSION_QUERY, COUNT_GROCERY_LIST_ITEMS_QUERY, CREATE_BRANCH_MUTATION, CREATE_BRANCH_WITH_FULL_ADDRESS_MUTATION, CREATE_CATEGORY_MUTATION, CREATE_PRICE_MUTATION, CREATE_PRODUCT_MUTATION, CREATE_STORE_MUTATION, CREATE_USER_MUTATION, type Category, CategorySearchDocument, type CategorySearchQuery, type CategorySearchQueryVariables, CheckAppVersionDocument, type CheckAppVersionQuery, type CheckAppVersionQueryVariables, CountGroceryListItemsDocument, type CountGroceryListItemsQuery, type CountGroceryListItemsQueryVariables, type Country, CreateAccountDocument, type CreateAccountInput, type CreateAccountMutation, type CreateAccountMutationVariables, type CreateAddress, type CreateBranch, CreateBranchDocument, CreateBranchFromFullAddressDocument, type CreateBranchFromFullAddressMutation, type CreateBranchFromFullAddressMutationVariables, type CreateBranchMutation, type CreateBranchMutationVariables, type CreateCategory, CreateCategoryDocument, type CreateCategoryMutation, type CreateCategoryMutationVariables, type CreateGroceryListInput, type CreateGroceryListItemInput, type CreatePrice, CreatePriceDocument, type CreatePriceMutation, type CreatePriceMutationVariables, type CreateProduct, CreateProductDocument, type CreateProductMutation, type CreateProductMutationVariables, type CreateStock, type CreateStore, CreateStoreDocument, type CreateStoreMutation, type CreateStoreMutationVariables, type CreatedByUser, type Currency, DEFAULT_GROCERY_LIST_ITEMS_QUERY, DELETE_GROCERY_LIST_ITEMS_MUTATION, DefaultGroceryListItemsDocument, type DefaultGroceryListItemsQuery, type DefaultGroceryListItemsQueryVariables, DeleteGroceryListItemDocument, type DeleteGroceryListItemMutation, type DeleteGroceryListItemMutationVariables, type DocumentType, EXTRACT_AND_CREATE_PRODUCT_FIELDS_QUERY, EXTRACT_PRODUCT_FIELDS_QUERY, type Exact, ExtractAndCreateProductDocument, type ExtractAndCreateProductMutation, type ExtractAndCreateProductMutationVariables, ExtractProductFieldsDocument, type ExtractProductFieldsQuery, type ExtractProductFieldsQueryVariables, FIND_BRANCHES_BY_DISTANCE_QUERY, FIND_BRANCH_QUERY, FIND_STORE_QUERY, FavoriteBranchesWithPricesDocument, type FavoriteBranchesWithPricesQuery, type FavoriteBranchesWithPricesQueryVariables, FindBranchDocument, type FindBranchQuery, type FindBranchQueryVariables, FindBranchesByDistanceDocument, type FindBranchesByDistanceQuery, type FindBranchesByDistanceQueryVariables, FindStoreDocument, type FindStoreQuery, type FindStoreQueryVariables, type FragmentType, GET_ALL_BRANCH_LISTS_BY_LIST_ID, GET_ALL_COUNTRIES_QUERY, GET_ALL_LISTS, GET_ALL_PRODUCT_LISTS_BY_LIST_ID, GET_ALL_USERS_QUERY, GET_CATEGORIES_QUERY, GET_CATEGORY_QUERY, GET_FAVORITE_BRANCHES_WITH_PRICE_DATA_QUERY, GET_GROCERY_LIST_ITEMS_QUERY, GET_PRODUCT_NUTRITION_DATA_QUERY, GET_PRODUCT_STOCKS_QUERY, GET_STOCK_BY_ID, GET_STOCK_FROM_PRODUCT_AND_BRANCH_ID_QUERY, GOOGLE_OAUTH_QUERY, GROCERY_LISTS_QUERY, GetAllBranchListsByListIdDocument, type GetAllBranchListsByListIdQuery, type GetAllBranchListsByListIdQueryVariables, GetAllCountriesDocument, type GetAllCountriesQuery, type GetAllCountriesQueryVariables, GetAllListsDocument, type GetAllListsQuery, type GetAllListsQueryVariables, GetAllProductListsByListIdDocument, type GetAllProductListsByListIdQuery, type GetAllProductListsByListIdQueryVariables, GetAllUsersDocument, type GetAllUsersQuery, type GetAllUsersQueryVariables, GetCategoriesDocument, type GetCategoriesQuery, type GetCategoriesQueryVariables, GetCategoryDocument, type GetCategoryQuery, type GetCategoryQueryVariables, GetProductNutritionDataDocument, type GetProductNutritionDataQuery, type GetProductNutritionDataQueryVariables, GetProductStocksDocument, type GetProductStocksQuery, type GetProductStocksQueryVariables, GetStockFromProductAndBranchIdDocument, type GetStockFromProductAndBranchIdQuery, type GetStockFromProductAndBranchIdQueryVariables, GoogleOAuthDocument, type GoogleOAuthQuery, type GoogleOAuthQueryVariables, type GroceryList, type GroceryListItem, GroceryListItemsDocument, type GroceryListItemsFilters, type GroceryListItemsQuery, type GroceryListItemsQueryVariables, GroceryListsDocument, type GroceryListsQuery, type GroceryListsQueryVariables, IP_TO_ADDRESS_QUERY, type Incremental, type InputMaybe, IpToAddressDocument, type IpToAddressQuery, type IpToAddressQueryVariables, LOGIN_INTERNAL_QUERY, LOGOUT_MUTATION, type List, ListType, type LocationInput, LoginInternalDocument, type LoginInternalQuery, type LoginInternalQueryVariables, LogoutDocument, type LogoutMutation, type LogoutMutationVariables, MARK_GROCERY_ITEM_MUTATION, ME_QUERY, MY_PRODUCT_BILLING_DATA_QUERY, MY_PRODUCT_VIEW_HISTORY_QUERY, MY_SEARCH_HISTORY_QUERY, type MakeEmpty, type MakeMaybe, type MakeOptional, MarkGroceryListItemDocument, type MarkGroceryListItemMutation, type MarkGroceryListItemMutationVariables, type Maybe, MeDocument, type MeQuery, type MeQueryVariables, type Mutation, type MutationAddBranchToListArgs, type MutationAddGroceryListItemArgs, type MutationAddToListArgs, type MutationBulkAddBranchesToListArgs, type MutationCreateAccountArgs, type MutationCreateBranchArgs, type MutationCreateBranchWithFullAddressArgs, type MutationCreateCategoryArgs, type MutationCreateListArgs, type MutationCreatePriceArgs, type MutationCreateProductArgs, type MutationCreateStoreArgs, type MutationDeleteGroceryListItemArgs, type MutationDeleteListArgs, type MutationDeleteSearchByIdArgs, type MutationExtractAndCreateProductArgs, type MutationMarkGroceryListItemArgs, type MutationRegisterExpoPushTokenArgs, type MutationRemoveBranchFromListArgs, type MutationRemoveFromListArgs, type MutationRemoveFromListWithProductIdArgs, type MutationRequestPasswordResetArgs, type MutationResendEmailVerificationCodeArgs, type MutationSanitizeProductArgs, type MutationSaveProductsFromUpcItemDbArgs, type MutationUpdateGroceryListItemArgs, type MutationUpdatePasswordWithResetCodeArgs, type MutationUpdateProductArgs, type MutationUpdateProductNutritionDataArgs, type MutationUpdateProfileArgs, type MutationUpdateUserByIdArgs, type MutationVerifyEmailArgs, MyProductBillingDataDocument, type MyProductBillingDataQuery, type MyProductBillingDataQueryVariables, MyProductViewHistoryDocument, type MyProductViewHistoryQuery, type MyProductViewHistoryQueryVariables, MySearchHistoryDocument, type MySearchHistoryQuery, type MySearchHistoryQueryVariables, OrderByType, POST_AUTH_USER_DATA_QUERIES, PRICE_CHANGE_HISTORY_QUERY, PRODUCT_BILLING_DATA_BY_USER_ID_QUERY, PRODUCT_BY_ID_QUERY, PRODUCT_SEARCH_QUERY, PRODUCT_SUMMARY_QUERY, type PaginatedBranches, type PaginatedPriceHistory, type PaginatedProductBilling, type PaginatedProducts, type PaginatedSearch, type PaginatedStocks, type PaginatedStores, type PaginatedUsers, type Paginator, type PaginatorInput, PostAuthUserDataDocument, type PostAuthUserDataQuery, type PostAuthUserDataQueryVariables, type Price, PriceChangeHistoryDocument, type PriceChangeHistoryQuery, type PriceChangeHistoryQueryVariables, type PriceHistoryFilter, type Product, type ProductBilling, ProductBillingDataByUserIdDocument, type ProductBillingDataByUserIdQuery, type ProductBillingDataByUserIdQueryVariables, ProductDocument, type ProductExtractionFields, type ProductExtractionResponse, type ProductList, type ProductNutriment, type ProductNutrition, type ProductQuery, type ProductQueryVariables, type ProductSearch, ProductSearchDocument, type ProductSearchQuery, type ProductSearchQueryVariables, type ProductSimple, type ProductSummary, ProductSummaryDocument, type ProductSummaryQuery, type ProductSummaryQueryVariables, type ProductWeightComponents, type Query, type QueryAllBranchesArgs, type QueryAllBrandsArgs, type QueryAllProductsArgs, type QueryAllStoresArgs, type QueryBarcodeScanArgs, type QueryBranchesWithProductsArgs, type QueryCategorySearchArgs, type QueryCheckAppVersionArgs, type QueryCountGroceryListItemsArgs, type QueryDefaultGroceryListItemsArgs, type QueryExtractProductFieldsArgs, type QueryFindBranchArgs, type QueryFindBranchesByDistanceArgs, type QueryFindStoreArgs, type QueryGetAllBranchListsByListIdArgs, type QueryGetAllListsArgs, type QueryGetAllProductListsByListIdArgs, type QueryGetAllUsersArgs, type QueryGetCategoriesArgs, type QueryGetCategoryArgs, type QueryGetFavoriteBranchesWithPricesArgs, type QueryGetProductNutritionDataArgs, type QueryGetProductStocksArgs, type QueryGetStockFromProductAndBranchIdArgs, type QueryGoogleOAuthArgs, type QueryGroceryListArgs, type QueryGroceryListItemsArgs, type QueryIpToAddressArgs, type QueryLoginArgs, type QueryMyProductBillingDataArgs, type QueryMyProductViewHistoryArgs, type QueryMySearchHistoryArgs, type QueryPriceChangeHistoryArgs, type QueryProductArgs, type QueryProductBillingDataByUserIdArgs, type QueryProductSearchArgs, type QueryProductSummaryArgs, type QueryStockArgs, type QueryVerifyPasswordResetCodeArgs, type QueryWeightComponentsFromCategoryIdArgs, REGISTER_EXPO_PUSH_TOKEN, REMOVE_BRANCH_FROM_LIST_MUTATION, REMOVE_FROM_LIST_BY_PRODUCT_ID_MUTATION, REMOVE_FROM_LIST_MUTATION, REQUEST_RESET_PASSWORD_MUTATION, RESEND_VERIFICATION_MUTATION, RegisterExpoPushTokenDocument, type RegisterExpoPushTokenMutation, type RegisterExpoPushTokenMutationVariables, RemoveBranchFromListDocument, type RemoveBranchFromListMutation, type RemoveBranchFromListMutationVariables, RemoveFromListDocument, type RemoveFromListMutation, type RemoveFromListMutationVariables, RemoveFromListWithProductIdDocument, type RemoveFromListWithProductIdMutation, type RemoveFromListWithProductIdMutationVariables, RequestResetPasswordDocument, type RequestResetPasswordMutation, type RequestResetPasswordMutationVariables, ResendVerificationDocument, type ResendVerificationMutation, type ResendVerificationMutationVariables, SANITIZE_PRODUCT_MUTATION, SanitizeProductDocument, type SanitizeProductMutation, type SanitizeProductMutationVariables, type SaveExternalProductInput, type Scalars, type SearchHistory, type SearchResult, type Stock, StockDocument, type StockQuery, type StockQueryVariables, type StockSimple, type Store, UPDATE_GROCERY_LIST_ITEMS_MUTATION, UPDATE_PASSWORD_WITH_RESET_CODE_MUTATION, UPDATE_PRODUCT_MUTATION, UPDATE_PRODUCT_NUTRITION_MUTATION, UPDATE_PROFILE_MUTATION, UPDATE_USER_BY_ID_MUTATION, UpdateGroceryListItemDocument, type UpdateGroceryListItemMutation, type UpdateGroceryListItemMutationVariables, UpdatePasswordWithResetCodeDocument, type UpdatePasswordWithResetCodeMutation, type UpdatePasswordWithResetCodeMutationVariables, type UpdateProduct, UpdateProductDocument, type UpdateProductMutation, type UpdateProductMutationVariables, UpdateProductNutritionDataDocument, type UpdateProductNutritionDataMutation, type UpdateProductNutritionDataMutationVariables, UpdateProfileDocument, type UpdateProfileMutation, type UpdateProfileMutationVariables, type UpdateUser, UpdateUserByIdDocument, type UpdateUserByIdMutation, type UpdateUserByIdMutationVariables, type UpdateUserFull, type UpdatedByUser, type User, type UserFieldsFragment, UserFieldsFragmentDoc, type UserFilter, UserFragment, UserRole, type UserShallow, VERIFY_EMAIL_MUTATION, VERIFY_PASSWORD_RESET_CODE_QUERY, VerifyEmailDocument, type VerifyEmailMutation, type VerifyEmailMutationVariables, VerifyPasswordResetCodeDocument, type VerifyPasswordResetCodeQuery, type VerifyPasswordResetCodeQueryVariables, type ViewerTrailInput, WEIGHT_COMPONENTS_FROM_CATEGORY_ID_QUERY, WeightComponentsFromCategoryIdDocument, type WeightComponentsFromCategoryIdQuery, type WeightComponentsFromCategoryIdQueryVariables, graphql, isFragmentReady, makeFragmentData, useFragment };
