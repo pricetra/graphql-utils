@@ -1,36 +1,20 @@
-// types/graphql.ts
-var AuthDeviceType = /* @__PURE__ */ ((AuthDeviceType2) => {
-  AuthDeviceType2["Android"] = "android";
-  AuthDeviceType2["Ios"] = "ios";
-  AuthDeviceType2["Other"] = "other";
-  AuthDeviceType2["Unknown"] = "unknown";
-  AuthDeviceType2["Web"] = "web";
-  return AuthDeviceType2;
-})(AuthDeviceType || {});
-var AuthPlatformType = /* @__PURE__ */ ((AuthPlatformType2) => {
-  AuthPlatformType2["Apple"] = "APPLE";
-  AuthPlatformType2["Google"] = "GOOGLE";
-  AuthPlatformType2["Internal"] = "INTERNAL";
-  return AuthPlatformType2;
-})(AuthPlatformType || {});
-var ListType = /* @__PURE__ */ ((ListType2) => {
-  ListType2["Favorites"] = "FAVORITES";
-  ListType2["Personal"] = "PERSONAL";
-  ListType2["WatchList"] = "WATCH_LIST";
-  return ListType2;
-})(ListType || {});
-var OrderByType = /* @__PURE__ */ ((OrderByType2) => {
-  OrderByType2["Asc"] = "ASC";
-  OrderByType2["Desc"] = "DESC";
-  return OrderByType2;
-})(OrderByType || {});
-var UserRole = /* @__PURE__ */ ((UserRole2) => {
-  UserRole2["Admin"] = "ADMIN";
-  UserRole2["Consumer"] = "CONSUMER";
-  UserRole2["Contributor"] = "CONTRIBUTOR";
-  UserRole2["SuperAdmin"] = "SUPER_ADMIN";
-  return UserRole2;
-})(UserRole || {});
+// src/types/fragment-masking.ts
+function useFragment(_documentNode, fragmentType) {
+  return fragmentType;
+}
+function makeFragmentData(data, _fragment) {
+  return data;
+}
+function isFragmentReady(queryNode, fragmentNode, data) {
+  const deferredFields = queryNode.__meta__?.deferredFields;
+  if (!deferredFields) return true;
+  const fragDef = fragmentNode.definitions[0];
+  const fragName = fragDef?.name?.value;
+  const fields = fragName && deferredFields[fragName] || [];
+  return fields.length > 0 && fields.every((field) => data && field in data);
+}
+
+// src/types/graphql.ts
 var UserFieldsFragmentDoc = { "kind": "Document", "definitions": [{ "kind": "FragmentDefinition", "name": { "kind": "Name", "value": "UserFields" }, "typeCondition": { "kind": "NamedType", "name": { "kind": "Name", "value": "User" } }, "selectionSet": { "kind": "SelectionSet", "selections": [{ "kind": "Field", "name": { "kind": "Name", "value": "id" } }, { "kind": "Field", "name": { "kind": "Name", "value": "name" } }, { "kind": "Field", "name": { "kind": "Name", "value": "email" } }, { "kind": "Field", "name": { "kind": "Name", "value": "avatar" } }, { "kind": "Field", "name": { "kind": "Name", "value": "createdAt" } }, { "kind": "Field", "name": { "kind": "Name", "value": "updatedAt" } }, { "kind": "Field", "name": { "kind": "Name", "value": "active" } }, { "kind": "Field", "name": { "kind": "Name", "value": "authDevice" } }, { "kind": "Field", "name": { "kind": "Name", "value": "authPlatform" } }, { "kind": "Field", "name": { "kind": "Name", "value": "authStateId" } }, { "kind": "Field", "name": { "kind": "Name", "value": "role" } }] } }] };
 var UpdateUserByIdDocument = { "kind": "Document", "definitions": [{ "kind": "OperationDefinition", "operation": "mutation", "name": { "kind": "Name", "value": "UpdateUserById" }, "variableDefinitions": [{ "kind": "VariableDefinition", "variable": { "kind": "Variable", "name": { "kind": "Name", "value": "userId" } }, "type": { "kind": "NonNullType", "type": { "kind": "NamedType", "name": { "kind": "Name", "value": "ID" } } } }, { "kind": "VariableDefinition", "variable": { "kind": "Variable", "name": { "kind": "Name", "value": "input" } }, "type": { "kind": "NonNullType", "type": { "kind": "NamedType", "name": { "kind": "Name", "value": "UpdateUserFull" } } } }], "selectionSet": { "kind": "SelectionSet", "selections": [{ "kind": "Field", "name": { "kind": "Name", "value": "updateUserById" }, "arguments": [{ "kind": "Argument", "name": { "kind": "Name", "value": "userId" }, "value": { "kind": "Variable", "name": { "kind": "Name", "value": "userId" } } }, { "kind": "Argument", "name": { "kind": "Name", "value": "input" }, "value": { "kind": "Variable", "name": { "kind": "Name", "value": "input" } } }], "selectionSet": { "kind": "SelectionSet", "selections": [{ "kind": "Field", "name": { "kind": "Name", "value": "id" } }, { "kind": "Field", "name": { "kind": "Name", "value": "email" } }, { "kind": "Field", "name": { "kind": "Name", "value": "phoneNumber" } }, { "kind": "Field", "name": { "kind": "Name", "value": "name" } }, { "kind": "Field", "name": { "kind": "Name", "value": "avatar" } }, { "kind": "Field", "name": { "kind": "Name", "value": "birthDate" } }, { "kind": "Field", "name": { "kind": "Name", "value": "bio" } }, { "kind": "Field", "name": { "kind": "Name", "value": "active" } }, { "kind": "Field", "name": { "kind": "Name", "value": "role" } }, { "kind": "Field", "name": { "kind": "Name", "value": "createdAt" } }, { "kind": "Field", "name": { "kind": "Name", "value": "updatedAt" } }] } }] } }] };
 var CreateBranchFromFullAddressDocument = { "kind": "Document", "definitions": [{ "kind": "OperationDefinition", "operation": "mutation", "name": { "kind": "Name", "value": "CreateBranchFromFullAddress" }, "variableDefinitions": [{ "kind": "VariableDefinition", "variable": { "kind": "Variable", "name": { "kind": "Name", "value": "storeId" } }, "type": { "kind": "NonNullType", "type": { "kind": "NamedType", "name": { "kind": "Name", "value": "ID" } } } }, { "kind": "VariableDefinition", "variable": { "kind": "Variable", "name": { "kind": "Name", "value": "fullAddress" } }, "type": { "kind": "NonNullType", "type": { "kind": "NamedType", "name": { "kind": "Name", "value": "String" } } } }], "selectionSet": { "kind": "SelectionSet", "selections": [{ "kind": "Field", "name": { "kind": "Name", "value": "createBranchWithFullAddress" }, "arguments": [{ "kind": "Argument", "name": { "kind": "Name", "value": "storeId" }, "value": { "kind": "Variable", "name": { "kind": "Name", "value": "storeId" } } }, { "kind": "Argument", "name": { "kind": "Name", "value": "fullAddress" }, "value": { "kind": "Variable", "name": { "kind": "Name", "value": "fullAddress" } } }], "selectionSet": { "kind": "SelectionSet", "selections": [{ "kind": "Field", "name": { "kind": "Name", "value": "id" } }, { "kind": "Field", "name": { "kind": "Name", "value": "name" } }, { "kind": "Field", "name": { "kind": "Name", "value": "addressId" } }, { "kind": "Field", "name": { "kind": "Name", "value": "storeId" } }, { "kind": "Field", "name": { "kind": "Name", "value": "address" }, "selectionSet": { "kind": "SelectionSet", "selections": [{ "kind": "Field", "name": { "kind": "Name", "value": "id" } }, { "kind": "Field", "name": { "kind": "Name", "value": "latitude" } }, { "kind": "Field", "name": { "kind": "Name", "value": "longitude" } }, { "kind": "Field", "name": { "kind": "Name", "value": "mapsLink" } }, { "kind": "Field", "name": { "kind": "Name", "value": "fullAddress" } }, { "kind": "Field", "name": { "kind": "Name", "value": "street" } }, { "kind": "Field", "name": { "kind": "Name", "value": "city" } }, { "kind": "Field", "name": { "kind": "Name", "value": "administrativeDivision" } }, { "kind": "Field", "name": { "kind": "Name", "value": "countryCode" } }, { "kind": "Field", "name": { "kind": "Name", "value": "country" } }, { "kind": "Field", "name": { "kind": "Name", "value": "zipCode" } }] } }] } }] } }] };
@@ -105,84 +89,2234 @@ var VerifyPasswordResetCodeDocument = { "kind": "Document", "definitions": [{ "k
 var MeDocument = { "kind": "Document", "definitions": [{ "kind": "OperationDefinition", "operation": "query", "name": { "kind": "Name", "value": "Me" }, "selectionSet": { "kind": "SelectionSet", "selections": [{ "kind": "Field", "name": { "kind": "Name", "value": "me" }, "selectionSet": { "kind": "SelectionSet", "selections": [{ "kind": "Field", "name": { "kind": "Name", "value": "id" } }, { "kind": "Field", "name": { "kind": "Name", "value": "name" } }, { "kind": "Field", "name": { "kind": "Name", "value": "email" } }, { "kind": "Field", "name": { "kind": "Name", "value": "avatar" } }, { "kind": "Field", "name": { "kind": "Name", "value": "createdAt" } }, { "kind": "Field", "name": { "kind": "Name", "value": "updatedAt" } }, { "kind": "Field", "name": { "kind": "Name", "value": "active" } }, { "kind": "Field", "name": { "kind": "Name", "value": "authDevice" } }, { "kind": "Field", "name": { "kind": "Name", "value": "authPlatform" } }, { "kind": "Field", "name": { "kind": "Name", "value": "authStateId" } }, { "kind": "Field", "name": { "kind": "Name", "value": "expoPushToken" } }, { "kind": "Field", "name": { "kind": "Name", "value": "role" } }, { "kind": "Field", "name": { "kind": "Name", "value": "addressId" } }, { "kind": "Field", "name": { "kind": "Name", "value": "address" }, "selectionSet": { "kind": "SelectionSet", "selections": [{ "kind": "Field", "name": { "kind": "Name", "value": "id" } }, { "kind": "Field", "name": { "kind": "Name", "value": "latitude" } }, { "kind": "Field", "name": { "kind": "Name", "value": "longitude" } }, { "kind": "Field", "name": { "kind": "Name", "value": "mapsLink" } }, { "kind": "Field", "name": { "kind": "Name", "value": "fullAddress" } }, { "kind": "Field", "name": { "kind": "Name", "value": "street" } }, { "kind": "Field", "name": { "kind": "Name", "value": "city" } }, { "kind": "Field", "name": { "kind": "Name", "value": "administrativeDivision" } }, { "kind": "Field", "name": { "kind": "Name", "value": "countryCode" } }, { "kind": "Field", "name": { "kind": "Name", "value": "country" } }, { "kind": "Field", "name": { "kind": "Name", "value": "zipCode" } }] } }, { "kind": "Field", "name": { "kind": "Name", "value": "birthDate" } }, { "kind": "Field", "name": { "kind": "Name", "value": "phoneNumber" } }, { "kind": "Field", "name": { "kind": "Name", "value": "bio" } }] } }] } }] };
 var MyProductBillingDataDocument = { "kind": "Document", "definitions": [{ "kind": "OperationDefinition", "operation": "query", "name": { "kind": "Name", "value": "MyProductBillingData" }, "variableDefinitions": [{ "kind": "VariableDefinition", "variable": { "kind": "Variable", "name": { "kind": "Name", "value": "paginator" } }, "type": { "kind": "NonNullType", "type": { "kind": "NamedType", "name": { "kind": "Name", "value": "PaginatorInput" } } } }], "selectionSet": { "kind": "SelectionSet", "selections": [{ "kind": "Field", "name": { "kind": "Name", "value": "myProductBillingData" }, "arguments": [{ "kind": "Argument", "name": { "kind": "Name", "value": "paginator" }, "value": { "kind": "Variable", "name": { "kind": "Name", "value": "paginator" } } }], "selectionSet": { "kind": "SelectionSet", "selections": [{ "kind": "Field", "name": { "kind": "Name", "value": "data" }, "selectionSet": { "kind": "SelectionSet", "selections": [{ "kind": "Field", "name": { "kind": "Name", "value": "id" } }, { "kind": "Field", "name": { "kind": "Name", "value": "rate" } }, { "kind": "Field", "name": { "kind": "Name", "value": "userId" } }, { "kind": "Field", "name": { "kind": "Name", "value": "user" }, "selectionSet": { "kind": "SelectionSet", "selections": [{ "kind": "Field", "name": { "kind": "Name", "value": "id" } }, { "kind": "Field", "name": { "kind": "Name", "value": "name" } }, { "kind": "Field", "name": { "kind": "Name", "value": "avatar" } }, { "kind": "Field", "name": { "kind": "Name", "value": "active" } }] } }, { "kind": "Field", "name": { "kind": "Name", "value": "productId" } }, { "kind": "Field", "name": { "kind": "Name", "value": "product" }, "selectionSet": { "kind": "SelectionSet", "selections": [{ "kind": "Field", "name": { "kind": "Name", "value": "id" } }, { "kind": "Field", "name": { "kind": "Name", "value": "name" } }, { "kind": "Field", "name": { "kind": "Name", "value": "image" } }, { "kind": "Field", "name": { "kind": "Name", "value": "brand" } }, { "kind": "Field", "name": { "kind": "Name", "value": "code" } }, { "kind": "Field", "name": { "kind": "Name", "value": "category" }, "selectionSet": { "kind": "SelectionSet", "selections": [{ "kind": "Field", "name": { "kind": "Name", "value": "id" } }, { "kind": "Field", "name": { "kind": "Name", "value": "name" } }, { "kind": "Field", "name": { "kind": "Name", "value": "expandedPathname" } }, { "kind": "Field", "name": { "kind": "Name", "value": "path" } }] } }, { "kind": "Field", "name": { "kind": "Name", "value": "createdAt" } }, { "kind": "Field", "name": { "kind": "Name", "value": "updatedAt" } }] } }, { "kind": "Field", "name": { "kind": "Name", "value": "createdAt" } }, { "kind": "Field", "name": { "kind": "Name", "value": "paidAt" } }, { "kind": "Field", "name": { "kind": "Name", "value": "billingRateType" } }] } }, { "kind": "Field", "name": { "kind": "Name", "value": "paginator" }, "selectionSet": { "kind": "SelectionSet", "selections": [{ "kind": "Field", "name": { "kind": "Name", "value": "next" } }, { "kind": "Field", "name": { "kind": "Name", "value": "page" } }, { "kind": "Field", "name": { "kind": "Name", "value": "prev" } }, { "kind": "Field", "name": { "kind": "Name", "value": "limit" } }, { "kind": "Field", "name": { "kind": "Name", "value": "total" } }, { "kind": "Field", "name": { "kind": "Name", "value": "numPages" } }] } }] } }] } }] };
 var PostAuthUserDataDocument = { "kind": "Document", "definitions": [{ "kind": "OperationDefinition", "operation": "query", "name": { "kind": "Name", "value": "PostAuthUserData" }, "variableDefinitions": [{ "kind": "VariableDefinition", "variable": { "kind": "Variable", "name": { "kind": "Name", "value": "listType" } }, "type": { "kind": "NamedType", "name": { "kind": "Name", "value": "ListType" } } }], "selectionSet": { "kind": "SelectionSet", "selections": [{ "kind": "Field", "name": { "kind": "Name", "value": "getAllLists" }, "arguments": [{ "kind": "Argument", "name": { "kind": "Name", "value": "listType" }, "value": { "kind": "Variable", "name": { "kind": "Name", "value": "listType" } } }], "selectionSet": { "kind": "SelectionSet", "selections": [{ "kind": "Field", "name": { "kind": "Name", "value": "id" } }, { "kind": "Field", "name": { "kind": "Name", "value": "name" } }, { "kind": "Field", "name": { "kind": "Name", "value": "type" } }, { "kind": "Field", "name": { "kind": "Name", "value": "userId" } }, { "kind": "Field", "name": { "kind": "Name", "value": "createdAt" } }, { "kind": "Field", "name": { "kind": "Name", "value": "productList" }, "selectionSet": { "kind": "SelectionSet", "selections": [{ "kind": "Field", "name": { "kind": "Name", "value": "id" } }, { "kind": "Field", "name": { "kind": "Name", "value": "listId" } }, { "kind": "Field", "name": { "kind": "Name", "value": "productId" } }, { "kind": "Field", "name": { "kind": "Name", "value": "stockId" } }, { "kind": "Field", "name": { "kind": "Name", "value": "createdAt" } }] } }, { "kind": "Field", "name": { "kind": "Name", "value": "branchList" }, "selectionSet": { "kind": "SelectionSet", "selections": [{ "kind": "Field", "name": { "kind": "Name", "value": "id" } }, { "kind": "Field", "name": { "kind": "Name", "value": "listId" } }, { "kind": "Field", "name": { "kind": "Name", "value": "branchId" } }, { "kind": "Field", "name": { "kind": "Name", "value": "createdAt" } }] } }] } }, { "kind": "Field", "name": { "kind": "Name", "value": "groceryLists" }, "selectionSet": { "kind": "SelectionSet", "selections": [{ "kind": "Field", "name": { "kind": "Name", "value": "id" } }, { "kind": "Field", "name": { "kind": "Name", "value": "name" } }, { "kind": "Field", "name": { "kind": "Name", "value": "default" } }, { "kind": "Field", "name": { "kind": "Name", "value": "createdAt" } }] } }] } }] };
+
+// src/types/gql.ts
+var documents = {
+  "\n  mutation UpdateUserById($userId: ID!, $input: UpdateUserFull!) {\n    updateUserById(userId: $userId, input: $input) {\n      id\n      email\n      phoneNumber\n      name\n      avatar\n      birthDate\n      bio\n      active\n      role\n      createdAt\n      updatedAt\n    }\n  }\n": UpdateUserByIdDocument,
+  "\n  mutation CreateBranchFromFullAddress($storeId: ID!, $fullAddress: String!) {\n    createBranchWithFullAddress(storeId: $storeId, fullAddress: $fullAddress) {\n      id\n      name\n      addressId\n      storeId\n      address {\n        id\n        latitude\n        longitude\n        mapsLink\n        fullAddress\n        street\n        city\n        administrativeDivision\n        countryCode\n        country\n        zipCode\n      }\n    }\n  }\n": CreateBranchFromFullAddressDocument,
+  "\n  mutation CreateBranch($input: CreateBranch!) {\n    createBranch(input: $input) {\n      id\n      name\n      addressId\n      storeId\n      address {\n        id\n        latitude\n        longitude\n        mapsLink\n        fullAddress\n        street\n        city\n        administrativeDivision\n        countryCode\n        country\n        zipCode\n      }\n    }\n  }\n": CreateBranchDocument,
+  "\n  mutation CreateCategory($input: CreateCategory!) {\n    createCategory(input:$input) {\n      id\n      name\n      path\n      expandedPathname\n      categoryAlias\n      depth\n    }\n  }\n": CreateCategoryDocument,
+  "\n  mutation AddGroceryListItem($groceryListId: ID!, $input: CreateGroceryListItemInput!) {\n    addGroceryListItem(groceryListId: $groceryListId, input: $input) {\n      id\n    }\n  }\n": AddGroceryListItemDocument,
+  "\n  mutation UpdateGroceryListItem($groceryListItemId: ID!, $input: CreateGroceryListItemInput!) {\n    updateGroceryListItem(groceryListItemId: $groceryListItemId, input: $input) {\n      id\n    }\n  }\n": UpdateGroceryListItemDocument,
+  "\n  mutation DeleteGroceryListItem($groceryListItemId: ID!) {\n    deleteGroceryListItem(groceryListItemId: $groceryListItemId) {\n      id\n    }\n  }\n": DeleteGroceryListItemDocument,
+  "\n  mutation MarkGroceryListItem($groceryListItemId: ID!, $completed: Boolean!) {\n    markGroceryListItem(groceryListItemId: $groceryListItemId, completed:$completed) {\n      id\n      completed\n    }\n  }\n": MarkGroceryListItemDocument,
+  "\n  mutation AddToList($listId: ID!, $productId: ID!, $stockId: ID) {\n    addToList(listId: $listId, productId: $productId, stockId: $stockId) {\n      id\n      userId\n      listId\n      productId\n      stockId\n      createdAt\n    }\n  }\n": AddToListDocument,
+  "\n  mutation RemoveFromList($listId: ID!, $productListId: ID!) {\n    removeFromList(listId: $listId, productListId: $productListId) {\n      id\n      userId\n      listId\n      productId\n      stockId\n      createdAt\n    }\n  }\n": RemoveFromListDocument,
+  "\n  mutation RemoveFromListWithProductId($listId: ID!, $productId: ID!, $stockId: ID) {\n    removeFromListWithProductId(listId: $listId, productId: $productId, stockId: $stockId) {\n      id\n      userId\n      listId\n      productId\n      stockId\n      createdAt\n    }\n  }\n": RemoveFromListWithProductIdDocument,
+  "\n  mutation AddBranchToList($listId: ID!, $branchId: ID!) {\n    addBranchToList(listId: $listId, branchId: $branchId) {\n      id\n      userId\n      listId\n      branchId\n      createdAt\n    }\n  }\n": AddBranchToListDocument,
+  "\n  mutation BulkAddBranchesToList($listId: ID!, $branchIds: [ID!]!) {\n    bulkAddBranchesToList(listId: $listId, branchIds: $branchIds) {\n      id\n      userId\n      listId\n      branchId\n      createdAt\n    }\n  }\n": BulkAddBranchesToListDocument,
+  "\n  mutation RemoveBranchFromList($listId: ID!, $branchListId: ID!) {\n    removeBranchFromList(listId: $listId, branchListId: $branchListId) {\n      id\n      userId\n      listId\n      branchId\n      createdAt\n    }\n  }\n": RemoveBranchFromListDocument,
+  "\n  mutation CreatePrice($input: CreatePrice!) {\n    createPrice(input: $input) {\n      id\n      amount\n      currencyCode\n      productId\n      storeId\n      stockId\n      branchId\n    }\n  }\n": CreatePriceDocument,
+  "\n  mutation UpdateProductNutritionData($productId: ID!) {\n    updateProductNutritionData(productId: $productId) {\n      productId\n      openfoodfactsUpdatedAt\n      createdAt\n      updatedAt\n    }\n  }\n": UpdateProductNutritionDataDocument,
+  "\n  mutation CreateProduct($input: CreateProduct!) {\n    createProduct(input: $input) {\n      id\n      name\n      image\n      description\n      brand\n      code\n      model\n      categoryId\n      category {\n        id\n        name\n        expandedPathname\n        path\n      }\n      weightValue\n      weightType\n      createdAt\n      updatedAt\n    }\n  }\n": CreateProductDocument,
+  "\n  mutation UpdateProduct($id: ID!, $input: UpdateProduct!) {\n    updateProduct(id: $id, input: $input) {\n      id\n      name\n      image\n      description\n      brand\n      code\n      model\n      categoryId\n      category {\n        id\n        name\n        expandedPathname\n        path\n      }\n      weightValue\n      weightType\n      createdAt\n      updatedAt\n    }\n  }\n": UpdateProductDocument,
+  "\n  mutation ExtractAndCreateProduct($barcode: String!, $base64Image: String!) {\n    extractAndCreateProduct(barcode: $barcode, base64Image: $base64Image) {\n      id\n      code\n      brand\n      name\n      categoryId\n      weightValue\n      weightType\n      quantityValue\n      quantityType\n      description\n    }\n  }\n": ExtractAndCreateProductDocument,
+  "\n  mutation SanitizeProduct($id: ID!) {\n    sanitizeProduct(id: $id) {\n      id\n      name\n      image\n      description\n      brand\n      code\n      model\n      categoryId\n      category {\n        id\n        name\n        categoryAlias\n        expandedPathname\n        path\n      }\n      approximateWeight\n      netWeight\n      weightValue\n      weightType\n      quantityValue\n      quantityType\n      createdAt\n      updatedAt\n      views\n    }\n  }\n": SanitizeProductDocument,
+  "\n  mutation CreateStore($input: CreateStore!) {\n    createStore(input: $input) {\n      id\n      name\n      logo\n      website\n    }\n  }\n": CreateStoreDocument,
+  "\n  mutation CreateAccount($email: String!, $name: String!, $password: String!) {\n    createAccount(input: { email: $email, name: $name, password: $password }) {\n      id\n      name\n      email\n      phoneNumber\n      createdAt\n      updatedAt\n      authPlatform\n      role\n    }\n  }\n": CreateAccountDocument,
+  "\n  mutation VerifyEmail($verificationCode: String!) {\n    verifyEmail(verificationCode: $verificationCode) {\n      id\n      name\n      email\n      avatar\n      createdAt\n      updatedAt\n      active\n      authPlatform\n      authStateId\n      role\n    }\n  }\n": VerifyEmailDocument,
+  "\n  mutation ResendVerification($email: String!) {\n    resendEmailVerificationCode(email: $email)\n  }\n": ResendVerificationDocument,
+  "\n  mutation Logout {\n    logout\n  }\n": LogoutDocument,
+  "\n  mutation UpdateProfile($input: UpdateUser!) {\n    updateProfile(input: $input) {\n      id\n      name\n      email\n      avatar\n      createdAt\n      updatedAt\n      active\n      authPlatform\n      authStateId\n      role\n      addressId\n      address {\n        id\n        latitude\n        longitude\n        mapsLink\n        fullAddress\n        street\n        city\n        administrativeDivision\n        countryCode\n        country\n        zipCode\n      }\n      birthDate\n      phoneNumber\n      bio\n    }\n  }\n": UpdateProfileDocument,
+  "\n  mutation RequestResetPassword($email: String!) {\n    requestPasswordReset(email: $email)\n  }\n": RequestResetPasswordDocument,
+  "\n  mutation UpdatePasswordWithResetCode($email: String!, $code: String!, $newPassword: String!) {\n    updatePasswordWithResetCode(\n      email: $email\n      code: $code\n      newPassword: $newPassword\n    )\n  }\n": UpdatePasswordWithResetCodeDocument,
+  "\n  mutation RegisterExpoPushToken($expoPushToken: String!) {\n    registerExpoPushToken(expoPushToken: $expoPushToken) {\n      id\n      name\n      email\n      avatar\n      createdAt\n      updatedAt\n      active\n      authPlatform\n      authStateId\n      expoPushToken\n      role\n      addressId\n      address {\n        id\n        latitude\n        longitude\n        mapsLink\n        fullAddress\n        street\n        city\n        administrativeDivision\n        countryCode\n        country\n        zipCode\n      }\n    }\n  }\n": RegisterExpoPushTokenDocument,
+  "\n  query GetAllUsers($paginator: PaginatorInput!, $filters: UserFilter) {\n    getAllUsers(paginator:$paginator, filters:$filters) {\n      users {\n        id\n        email\n        phoneNumber\n        name\n        avatar\n        birthDate\n        bio\n        active\n        role\n        createdAt\n        updatedAt\n      }\n      paginator {\n        next\n        page\n        prev\n        limit\n        total\n        numPages\n      }\n    }\n  }\n": GetAllUsersDocument,
+  "\n  query ProductBillingDataByUserId($userId: ID!, $paginator: PaginatorInput!) {\n    productBillingDataByUserId(userId: $userId, paginator: $paginator) {\n      data {\n        id\n        rate\n        userId\n        user {\n          id\n          name\n          avatar\n          active\n        }\n        productId\n        product {\n          id\n          name\n          image\n          brand\n          code\n          category {\n            id\n            name\n            expandedPathname\n            path\n          }\n          createdAt\n          updatedAt\n        }\n        createdAt\n        paidAt\n        billingRateType\n      }\n      paginator {\n        next\n        page\n        prev\n        limit\n        total\n        numPages\n      }\n    }\n  }\n": ProductBillingDataByUserIdDocument,
+  "\n  query AllBranches($storeId: ID, $storeSlug: String, $paginator: PaginatorInput!, $search: String, $location: LocationInput) {\n    allBranches(storeId: $storeId, storeSlug: $storeSlug, paginator: $paginator, search: $search, location: $location) {\n      branches {\n        id\n        slug\n        name\n        addressId\n        storeId\n        storeSlug\n        address {\n          id\n          latitude\n          longitude\n          mapsLink\n          fullAddress\n          street\n          city\n          administrativeDivision\n          countryCode\n          country\n          zipCode\n          distance\n        }\n      }\n      paginator {\n        next\n        page\n        prev\n        limit\n        total\n        numPages\n      }\n    }\n  }\n": AllBranchesDocument,
+  "\n  query Branch($branchId: ID, $branchSlug: String, $storeId: ID, $storeSlug: String) {\n    findBranch(id: $branchId, slug: $branchSlug, storeId: $storeId, storeSlug: $storeSlug) {\n      id\n      slug\n      name\n      addressId\n      storeId\n      storeSlug\n      address {\n        id\n        latitude\n        longitude\n        mapsLink\n        fullAddress\n        street\n        city\n        administrativeDivision\n        countryCode\n        country\n        zipCode\n      }\n    }\n\n    findStore(id: $storeId, slug: $storeSlug) {\n      id\n      slug\n      name\n      logo\n      website\n    }\n  }\n": BranchDocument,
+  "\n  query FindBranch($branchId: ID, $branchSlug: String, $storeId: ID, $storeSlug: String) {\n    findBranch(id: $branchId, slug: $branchSlug, storeId: $storeId, storeSlug: $storeSlug) {\n      id\n      slug\n      name\n      addressId\n      storeId\n      storeSlug\n      address {\n        id\n        latitude\n        longitude\n        mapsLink\n        fullAddress\n        street\n        city\n        administrativeDivision\n        countryCode\n        country\n        zipCode\n      }\n    }\n  }\n": FindBranchDocument,
+  "\n  query FindBranchesByDistance($lat: Float!, $lon: Float!, $radiusMeters: Int!) {\n    findBranchesByDistance(lat: $lat, lon: $lon, radiusMeters: $radiusMeters) {\n      id\n      slug\n      name\n      storeId\n      storeSlug\n      store {\n        id\n        slug\n        name\n        website\n        logo\n      }\n      addressId\n      address {\n        id\n        distance\n        latitude\n        longitude\n        mapsLink\n        fullAddress\n        street\n        city\n        administrativeDivision\n        countryCode\n        country\n        zipCode\n      }\n    }\n  }\n": FindBranchesByDistanceDocument,
+  "\n  query FavoriteBranchesWithPrices($productId: ID!) {\n    getFavoriteBranchesWithPrices(productId: $productId) {\n      id\n      branchId\n      branch {\n        id\n        slug\n        name\n        storeId\n        storeSlug\n        store {\n          id\n          slug\n          name\n          logo\n        }\n        addressId\n        address {\n          id\n          distance\n          latitude\n          longitude\n          mapsLink\n          fullAddress\n          street\n          city\n          administrativeDivision\n          countryCode\n          country\n          zipCode\n        }\n      }\n      stock {\n        id\n        productId\n        storeId\n        branchId\n        latestPriceId\n        latestPrice {\n          id\n          productId\n          branchId\n          storeId\n          amount\n          currencyCode\n          createdAt\n          sale\n          originalPrice\n          condition\n          expiresAt\n          unitType\n          createdBy {\n            id\n            name\n            avatar\n          }\n        }\n      }\n      approximatePrice\n    }\n  }\n": FavoriteBranchesWithPricesDocument,
+  "\n  query AllBrands($joinStock: Boolean) {\n    allBrands(joinStock: $joinStock) {\n      brand\n      products\n    }\n  }\n": AllBrandsDocument,
+  "\n  query GetCategories($depth: Int, $parentId: ID) {\n    getCategories(depth: $depth, parentId: $parentId) {\n      id\n      name\n      path\n      expandedPathname\n      categoryAlias\n      depth\n    }\n  }\n": GetCategoriesDocument,
+  "\n  query CategorySearch($search: String!, $quickSearchMode: Boolean) {\n    categorySearch(search: $search, quickSearchMode: $quickSearchMode) {\n      id\n      name\n    }\n  }\n": CategorySearchDocument,
+  "\n  query GetCategory($id: ID!) {\n    getCategory(id: $id) {\n      id\n      name\n      path\n      expandedPathname\n      categoryAlias\n    }\n  }\n": GetCategoryDocument,
+  "\n  query GroceryLists {\n    groceryLists {\n      id\n      name\n      default\n      createdAt\n    }\n  }\n": GroceryListsDocument,
+  "\n  query GroceryListItems($groceryListId: ID!, $filters: GroceryListItemsFilters) {\n    groceryListItems(groceryListId: $groceryListId, filters: $filters) {\n      id\n      groceryListId\n      productId\n      product {\n        id\n        code\n        name\n        image\n        category {\n          id\n          name\n        }\n        weightValue\n        weightType\n        quantityValue\n        quantityType\n      }\n      category\n      weight\n      quantity\n      unit\n      completed\n      createdAt\n    }\n  }\n": GroceryListItemsDocument,
+  "\n  query DefaultGroceryListItems($filters: GroceryListItemsFilters) {\n    defaultGroceryListItems(filters: $filters) {\n      id\n      groceryListId\n      productId\n      product {\n        id\n        code\n        name\n        image\n        category {\n          id\n          name\n        }\n        weightValue\n        weightType\n        quantityValue\n        quantityType\n      }\n      category\n      weight\n      quantity\n      unit\n      completed\n      createdAt\n    }\n  }\n": DefaultGroceryListItemsDocument,
+  "\n  query CountGroceryListItems($groceryListId: ID, $includeCompleted: Boolean) {\n    countGroceryListItems(groceryListId: $groceryListId, includeCompleted: $includeCompleted)\n  }\n": CountGroceryListItemsDocument,
+  "\n  query GetAllLists($listType: ListType) {\n    getAllLists(listType: $listType) {\n      id\n      name\n      type\n      userId\n      createdAt\n      productList {\n        id\n        listId\n        productId\n        stockId\n        createdAt\n      }\n      branchList {\n        id\n        listId\n        branchId\n        createdAt\n      }\n    }\n  }\n": GetAllListsDocument,
+  "\n  query GetAllProductListsByListId($listId: ID!) {\n    getAllProductListsByListId(listId: $listId) {\n      id\n      listId\n      userId\n      productId\n      type\n      stockId\n      createdAt\n      product {\n        id\n        name\n        image\n        description\n        brand\n        code\n        model\n        categoryId\n        category {\n          id\n          name\n          expandedPathname\n          path\n        }\n        approximateWeight\n        netWeight\n        weightValue\n        weightType\n        quantityValue\n        quantityType\n        createdAt\n        updatedAt\n      }\n      stock {\n        id\n        productId\n        storeId\n        store {\n          id\n          slug\n          name\n          logo\n        }\n        branchId\n        branch {\n          id\n          slug\n          name\n          addressId\n          address {\n            id\n            latitude\n            longitude\n            mapsLink\n            fullAddress\n            street\n            city\n            administrativeDivision\n            countryCode\n            country\n            zipCode\n          }\n        }\n        latestPriceId\n        latestPrice {\n          id\n          productId\n          branchId\n          storeId\n          amount\n          currencyCode\n          createdAt\n          sale\n          originalPrice\n          condition\n          expiresAt\n          unitType\n        }\n      }\n    }\n  }\n": GetAllProductListsByListIdDocument,
+  "\n  query GetAllBranchListsByListId($listId: ID!) {\n    getAllBranchListsByListId(listId: $listId) {\n      id\n      listId\n      branchId\n      branch {\n        id\n        slug\n        name\n        addressId\n        address {\n          id\n          latitude\n          longitude\n          mapsLink\n          fullAddress\n          street\n          city\n          administrativeDivision\n          countryCode\n          country\n          zipCode\n        }\n        storeId\n        storeSlug\n        store {\n          id\n          slug\n          name\n          logo\n        }\n      }\n      createdAt\n    }\n  }\n": GetAllBranchListsByListIdDocument,
+  "\n  query GetAllCountries {\n    getAllCountries {\n      code\n      name\n      administrativeDivisions {\n        name\n        cities\n      }\n      currency {\n        currencyCode\n        name\n        symbol\n        symbolNative\n        decimals\n        numToBasic\n      }\n      callingCode\n      language\n    }\n  }\n": GetAllCountriesDocument,
+  "\n  query CheckAppVersion($platform: AuthDeviceType!, $version: String!) {\n    checkAppVersion(platform: $platform, version: $version)\n  }\n": CheckAppVersionDocument,
+  "\n  query IpToAddress($ipAddress: String!) {\n    ipToAddress(ipAddress: $ipAddress) {\n      id\n      latitude\n      longitude\n      mapsLink\n      fullAddress\n      street\n      city\n      administrativeDivision\n      zipCode\n      countryCode\n      country\n    }\n  }\n": IpToAddressDocument,
+  "\n  query PriceChangeHistory($productId: ID!, $stockId: ID!, $paginator: PaginatorInput!, $filters: PriceHistoryFilter) {\n    priceChangeHistory(\n      productId: $productId\n      stockId: $stockId\n      paginator: $paginator\n      filters: $filters\n    ) {\n      prices {\n        id\n        productId\n        stockId\n        branchId\n        storeId\n        amount\n        originalPrice\n        sale\n        expiresAt\n        condition\n        unitType\n        currencyCode\n        createdBy {\n          id\n          name\n          avatar\n        }\n        createdAt\n      }\n      paginator {\n        next\n        page\n        prev\n        limit\n        total\n        numPages\n      }\n    }\n  }\n": PriceChangeHistoryDocument,
+  "\n  query GetProductNutritionData($productId: ID!) {\n    getProductNutritionData(productId: $productId) {\n      productId\n      servingSize\n      servingSizeUnit\n      servingSizeValue\n      ingredientText\n      ingredientList\n      nutriments {\n        salt\n        salt100g\n        saltValue\n        saltServing\n        saltUnit\n        sugars\n        sugars100g\n        sugarsValue\n        sugarsServing\n        sugarsUnit\n        iron\n        iron100g\n        ironValue\n        ironServing\n        ironUnit\n        ironLabel\n        calcium\n        calcium100g\n        calciumValue\n        calciumServing\n        calciumUnit\n        calciumLabel\n        cholesterol100g\n        saturatedFat\n        saturatedFat100g\n        saturatedFatValue\n        saturatedFatServing\n        saturatedFatUnit\n        fat\n        fat100g\n        fatValue\n        fatServing\n        fatUnit\n        transFat\n        transFat100g\n        transFatValue\n        transFatServing\n        transFatUnit\n        transFatLabel\n        vitaminA\n        vitaminA100g\n        vitaminAValue\n        vitaminAServing\n        vitaminAUnit\n        vitaminALabel\n        vitaminC\n        vitaminC100g\n        vitaminCValue\n        vitaminCServing\n        vitaminCUnit\n        vitaminCLabel\n        proteins\n        proteins100g\n        proteinsValue\n        proteinsServing\n        proteinsUnit\n        fiber\n        fiber100g\n        fiberValue\n        fiberServing\n        fiberUnit\n        carbohydrates\n        carbohydrates100g\n        carbohydratesValue\n        carbohydratesServing\n        carbohydratesUnit\n        alcohol\n        alcohol100g\n        alcoholValue\n        alcoholServing\n        alcoholUnit\n        sodium\n        sodium100g\n        sodiumValue\n        sodiumServing\n        sodiumUnit\n        potassium100g\n        polyunsaturatedFat100g\n        monounsaturatedFat100g\n        novaGroup\n        novaGroup100g\n        novaGroupServing\n        energy\n        energy100g\n        energyValue\n        energyServing\n        energyUnit\n        energyKcal\n        energyKcal100g\n        energyKcalValue\n        energyKcalServing\n        energyKcalUnit\n        nutritionScoreFr\n        nutritionScoreFr100g\n        nutritionScoreFrServing\n        nutritionScoreUk\n        nutritionScoreUk100g\n        nutritionScoreUkServing\n      }\n      vegan\n      vegetarian\n      glutenFree\n      lactoseFree\n      halal\n      kosher\n      createdAt\n      updatedAt\n    }\n  }\n": GetProductNutritionDataDocument,
+  "\n  query BarcodeScan($barcode: String!, $searchMode: Boolean, $location: LocationInput) {\n    barcodeScan(barcode: $barcode, searchMode: $searchMode, location: $location) {\n      id\n      name\n      image\n      description\n      brand\n      code\n      model\n      categoryId\n      category {\n        id\n        name\n        expandedPathname\n        path\n      }\n      approximateWeight\n      netWeight\n      weightValue\n      weightType\n      quantityValue\n      quantityType\n      createdAt\n      updatedAt\n      stock {\n        id\n        productId\n        storeId\n        branchId\n        latestPriceId\n      }\n    }\n  }\n": BarcodeScanDocument,
+  "\n  query Product($productId: ID!, $viewerTrail: ViewerTrailInput) {\n    product(id: $productId, viewerTrail: $viewerTrail) {\n      id\n      name\n      image\n      description\n      brand\n      code\n      model\n      categoryId\n      category {\n        id\n        name\n        categoryAlias\n        expandedPathname\n        path\n      }\n      approximateWeight\n      netWeight\n      weightValue\n      weightType\n      quantityValue\n      quantityType\n      createdAt\n      updatedAt\n      views\n      productList {\n        id\n        listId\n        userId\n        productId\n        type\n        stockId\n        createdAt\n      }\n    }\n  }\n": ProductDocument,
+  "\n  query AllProducts($paginator: PaginatorInput!, $search: ProductSearch) {\n    allProducts(paginator: $paginator, search: $search) {\n      products {\n        id\n        name\n        image\n        description\n        brand\n        code\n        model\n        categoryId\n        category {\n          id\n          name\n          expandedPathname\n          path\n        }\n        stock {\n          id\n          productId\n          storeId\n          store {\n            id\n            slug\n            name\n            logo\n          }\n          branchId\n          branch {\n            id\n            slug\n            name\n            addressId\n            address {\n              id\n              latitude\n              longitude\n              mapsLink\n              fullAddress\n              street\n              city\n              administrativeDivision\n              countryCode\n              country\n              zipCode\n              distance\n            }\n          }\n          latestPriceId\n          latestPrice {\n            id\n            productId\n            branchId\n            storeId\n            amount\n            currencyCode\n            createdAt\n            sale\n            originalPrice\n            condition\n            expiresAt\n            unitType\n            createdBy {\n              id\n              name\n              avatar\n            }\n          }\n          createdBy {\n            id\n            name\n            avatar\n          }\n          updatedBy {\n            id\n            name\n            avatar\n          }\n        }\n        approximateWeight\n        netWeight\n        weightValue\n        weightType\n        quantityValue\n        quantityType\n        createdAt\n        updatedAt\n        views\n      }\n      paginator {\n        next\n        page\n        prev\n        limit\n        total\n        numPages\n      }\n    }\n  }\n": AllProductsDocument,
+  "\n  query BranchesWithProducts($paginator: PaginatorInput!, $productLimit: Int!, $filters: ProductSearch) {\n    branchesWithProducts(\n      paginator: $paginator\n      productLimit: $productLimit\n      filters: $filters\n    ) {\n      branches {\n        id\n        slug\n        name\n        storeId\n        storeSlug\n        store {\n          id\n          slug\n          name\n          logo\n        }\n        addressId\n        address {\n          id\n          distance\n          latitude\n          longitude\n          mapsLink\n          fullAddress\n          street\n          city\n          administrativeDivision\n          countryCode\n          country\n          zipCode\n        }\n        products {\n          id\n          name\n          image\n          description\n          brand\n          code\n          model\n          categoryId\n          category {\n            id\n            name\n            expandedPathname\n            path\n          }\n          stock {\n            id\n            productId\n            storeId\n            branchId\n            latestPriceId\n            latestPrice {\n              id\n              productId\n              branchId\n              storeId\n              amount\n              currencyCode\n              createdAt\n              sale\n              originalPrice\n              condition\n              expiresAt\n              unitType\n            }\n            createdBy {\n              id\n              name\n              avatar\n            }\n            updatedBy {\n              id\n              name\n              avatar\n            }\n          }\n          approximateWeight\n          netWeight\n          weightValue\n          weightType\n          quantityValue\n          quantityType\n          createdAt\n          updatedAt\n          views\n        }\n      }\n      paginator {\n        next\n        page\n        prev\n        limit\n        total\n        numPages\n      }\n    }\n  }\n": BranchesWithProductsDocument,
+  "\n  query ProductSummary($productId: ID!) {\n    productSummary(id: $productId) {\n      id\n      name\n      image\n      description\n      brand\n      code\n    }\n  }\n": ProductSummaryDocument,
+  "\n  query ProductSearch($paginator: PaginatorInput!, $search: String!) {\n    productSearch(search: $search, paginator: $paginator) {\n      products {\n        id\n        code\n        brand\n        name\n        category {\n          id\n          name\n          expandedPathname\n        }\n        quantityValue\n        quantityType\n        approximateWeight\n        netWeight\n        weightValue\n        weightType\n      }\n      paginator {\n        next\n        page\n        prev\n        limit\n        total\n        numPages\n      }\n    }\n  }\n": ProductSearchDocument,
+  "\n  query ExtractProductFields($base64Image: String!) {\n    extractProductFields(base64Image: $base64Image) {\n      brand\n      name\n      description\n      netWeight\n      weight\n      quantity\n      categoryId\n      category {\n        id\n        name\n        expandedPathname\n        path\n      }\n    }\n  }\n": ExtractProductFieldsDocument,
+  "\n  query MyProductViewHistory($paginator: PaginatorInput!) {\n    myProductViewHistory(paginator: $paginator) {\n      products {\n        id\n        name\n        image\n        description\n        brand\n        code\n        model\n        categoryId\n        category {\n          id\n          name\n          expandedPathname\n          path\n        }\n        stock {\n          id\n          productId\n          storeId\n          store {\n            id\n            slug\n            name\n            logo\n          }\n          branchId\n          branch {\n            id\n            slug\n            name\n            addressId\n            address {\n              id\n              latitude\n              longitude\n              mapsLink\n              fullAddress\n              street\n              city\n              administrativeDivision\n              countryCode\n              country\n              zipCode\n              distance\n            }\n          }\n          latestPriceId\n          latestPrice {\n            id\n            productId\n            branchId\n            storeId\n            amount\n            currencyCode\n            createdAt\n            sale\n            originalPrice\n            condition\n            expiresAt\n            unitType\n          }\n          createdBy {\n            id\n            name\n            avatar\n          }\n          updatedBy {\n            id\n            name\n            avatar\n          }\n        }\n        approximateWeight\n        netWeight\n        weightValue\n        weightType\n        quantityValue\n        quantityType\n        createdAt\n        updatedAt\n        views\n      }\n      paginator {\n        next\n        page\n        prev\n        limit\n        total\n        numPages\n      }\n    }\n  }\n": MyProductViewHistoryDocument,
+  "\n  query WeightComponentsFromCategoryId($categoryId: ID!) {\n    weightComponentsFromCategoryId(categoryId: $categoryId) {\n      weightValue\n      weightType\n    }\n  }\n": WeightComponentsFromCategoryIdDocument,
+  "\n  query MySearchHistory($paginator: PaginatorInput!) {\n    mySearchHistory(paginator:$paginator) {\n      searches {\n        id\n        searchTerm\n      }\n      paginator {\n        next\n        page\n        prev\n        limit\n        total\n        numPages\n      }\n    }\n  }\n": MySearchHistoryDocument,
+  "\n  query Stock($stockId: ID!) {\n    stock(stockId: $stockId) {\n      id\n      productId\n      storeId\n      store {\n        slug\n        id\n        name\n        logo\n      }\n      branchId\n      branch {\n        id\n        slug\n        name\n        addressId\n        address {\n          id\n          latitude\n          longitude\n          mapsLink\n          fullAddress\n          street\n          city\n          administrativeDivision\n          countryCode\n          country\n          zipCode\n          distance\n        }\n      }\n      latestPriceId\n      latestPrice {\n        id\n        productId\n        branchId\n        storeId\n        amount\n        currencyCode\n        sale\n        originalPrice\n        condition\n        expiresAt\n        createdAt\n        unitType\n      }\n      createdAt\n      updatedAt\n      createdBy {\n        id\n        name\n        avatar\n      }\n      updatedBy {\n        id\n        name\n        avatar\n      }\n    }\n  }\n": StockDocument,
+  "\n  query GetStockFromProductAndBranchId($productId: ID!, $branchId: ID!) {\n    getStockFromProductAndBranchId(productId: $productId, branchId: $branchId) {\n      id\n      productId\n      storeId\n      branchId\n      latestPriceId\n      latestPrice {\n        id\n        productId\n        branchId\n        storeId\n        amount\n        currencyCode\n        sale\n        originalPrice\n        condition\n        expiresAt\n        createdAt\n        unitType\n      }\n      createdAt\n      updatedAt\n    }\n  }\n": GetStockFromProductAndBranchIdDocument,
+  "\n  query GetProductStocks($paginator: PaginatorInput!, $productId: ID!, $location: LocationInput) {\n    getProductStocks(paginator: $paginator, productId: $productId, location: $location) {\n      stocks {\n        id\n        productId\n        storeId\n        store {\n          id\n          slug\n          name\n          logo\n        }\n        branchId\n        branch {\n          id\n          slug\n          name\n          address {\n            id\n            latitude\n            longitude\n            mapsLink\n            fullAddress\n            street\n            city\n            administrativeDivision\n            countryCode\n            country\n            zipCode\n            distance\n          }\n        }\n        latestPriceId\n        latestPrice {\n          id\n          productId\n          branchId\n          storeId\n          amount\n          currencyCode\n          sale\n          originalPrice\n          condition\n          expiresAt\n          unitType\n        }\n        createdAt\n        updatedAt\n        createdBy {\n          id\n          name\n          avatar\n        }\n        updatedBy {\n          id\n          name\n          avatar\n        }\n      }\n      paginator {\n        next\n        page\n        prev\n        limit\n        total\n        numPages\n      }\n    }\n  }\n": GetProductStocksDocument,
+  "\n  query AllStores($paginator: PaginatorInput!, $search: String) {\n    allStores(paginator: $paginator, search: $search) {\n      stores {\n        id\n        slug\n        name\n        logo\n        website\n      }\n      paginator {\n        next\n        page\n        prev\n        limit\n        total\n        numPages\n      }\n    }\n  }\n": AllStoresDocument,
+  "\n  query FindStore($storeId: ID, $storeSlug: String) {\n    findStore(id: $storeId, slug: $storeSlug) {\n      id\n      slug\n      name\n      logo\n      website\n    }\n  }\n": FindStoreDocument,
+  "\n  fragment UserFields on User {\n    id\n    name\n    email\n    avatar\n    createdAt\n    updatedAt\n    active\n    authDevice\n    authPlatform\n    authStateId\n    role\n  }\n": UserFieldsFragmentDoc,
+  "\n  query LoginInternal(\n    $email: String!\n    $password: String!\n    $ipAddress: String\n    $device: AuthDeviceType\n  ) {\n    login(email: $email, password: $password, ipAddress: $ipAddress, device: $device) {\n      token\n      user {\n        id\n        name\n        email\n        avatar\n        createdAt\n        updatedAt\n        active\n        authDevice\n        authPlatform\n        authStateId\n        expoPushToken\n        role\n        addressId\n        address {\n          id\n          latitude\n          longitude\n          mapsLink\n          fullAddress\n          street\n          city\n          administrativeDivision\n          countryCode\n          country\n          zipCode\n        }\n      }\n    }\n  }\n": LoginInternalDocument,
+  "\n  query GoogleOAuth($accessToken: String!, $ipAddress: String, $device: AuthDeviceType) {\n    googleOAuth(accessToken: $accessToken, ipAddress: $ipAddress, device: $device) {\n      token\n      user {\n        id\n        name\n        email\n        avatar\n        createdAt\n        updatedAt\n        active\n        authDevice\n        authPlatform\n        authStateId\n        expoPushToken\n        role\n        addressId\n        address {\n          id\n          latitude\n          longitude\n          mapsLink\n          fullAddress\n          street\n          city\n          administrativeDivision\n          countryCode\n          country\n          zipCode\n        }\n      }\n      isNewUser\n    }\n  }\n": GoogleOAuthDocument,
+  "\n  query VerifyPasswordResetCode($email: String!, $code: String!) {\n    verifyPasswordResetCode(email: $email, code: $code)\n  }\n": VerifyPasswordResetCodeDocument,
+  "\n  query Me {\n    me {\n      id\n      name\n      email\n      avatar\n      createdAt\n      updatedAt\n      active\n      authDevice\n      authPlatform\n      authStateId\n      expoPushToken\n      role\n      addressId\n      address {\n        id\n        latitude\n        longitude\n        mapsLink\n        fullAddress\n        street\n        city\n        administrativeDivision\n        countryCode\n        country\n        zipCode\n      }\n      birthDate\n      phoneNumber\n      bio\n    }\n  }\n": MeDocument,
+  "\n  query MyProductBillingData($paginator: PaginatorInput!) {\n    myProductBillingData(paginator: $paginator) {\n      data {\n        id\n        rate\n        userId\n        user {\n          id\n          name\n          avatar\n          active\n        }\n        productId\n        product {\n          id\n          name\n          image\n          brand\n          code\n          category {\n            id\n            name\n            expandedPathname\n            path\n          }\n          createdAt\n          updatedAt\n        }\n        createdAt\n        paidAt\n        billingRateType\n      }\n      paginator {\n        next\n        page\n        prev\n        limit\n        total\n        numPages\n      }\n    }\n  }\n": MyProductBillingDataDocument,
+  "\n  query PostAuthUserData($listType: ListType) {\n    getAllLists(listType: $listType) {\n      id\n      name\n      type\n      userId\n      createdAt\n      productList {\n        id\n        listId\n        productId\n        stockId\n        createdAt\n      }\n      branchList {\n        id\n        listId\n        branchId\n        createdAt\n      }\n    }\n\n    groceryLists {\n      id\n      name\n      default\n      createdAt\n    }\n  }\n": PostAuthUserDataDocument
+};
+function graphql(source) {
+  return documents[source] ?? {};
+}
+
+// src/documents/queries/admin.ts
+import { gql } from "@apollo/client";
+var GET_ALL_USERS_QUERY = gql(`
+  query GetAllUsers($paginator: PaginatorInput!, $filters: UserFilter) {
+    getAllUsers(paginator:$paginator, filters:$filters) {
+      users {
+        id
+        email
+        phoneNumber
+        name
+        avatar
+        birthDate
+        bio
+        active
+        role
+        createdAt
+        updatedAt
+      }
+      paginator {
+        next
+        page
+        prev
+        limit
+        total
+        numPages
+      }
+    }
+  }
+`);
+var PRODUCT_BILLING_DATA_BY_USER_ID_QUERY = gql(`
+  query ProductBillingDataByUserId($userId: ID!, $paginator: PaginatorInput!) {
+    productBillingDataByUserId(userId: $userId, paginator: $paginator) {
+      data {
+        id
+        rate
+        userId
+        user {
+          id
+          name
+          avatar
+          active
+        }
+        productId
+        product {
+          id
+          name
+          image
+          brand
+          code
+          category {
+            id
+            name
+            expandedPathname
+            path
+          }
+          createdAt
+          updatedAt
+        }
+        createdAt
+        paidAt
+        billingRateType
+      }
+      paginator {
+        next
+        page
+        prev
+        limit
+        total
+        numPages
+      }
+    }
+  }
+`);
+
+// src/documents/queries/branch.ts
+import { gql as gql2 } from "@apollo/client";
+var ALL_BRANCHES_QUERY = gql2(`
+  query AllBranches($storeId: ID, $storeSlug: String, $paginator: PaginatorInput!, $search: String, $location: LocationInput) {
+    allBranches(storeId: $storeId, storeSlug: $storeSlug, paginator: $paginator, search: $search, location: $location) {
+      branches {
+        id
+        slug
+        name
+        addressId
+        storeId
+        storeSlug
+        address {
+          id
+          latitude
+          longitude
+          mapsLink
+          fullAddress
+          street
+          city
+          administrativeDivision
+          countryCode
+          country
+          zipCode
+          distance
+        }
+      }
+      paginator {
+        next
+        page
+        prev
+        limit
+        total
+        numPages
+      }
+    }
+  }
+`);
+var BRANCH_QUERY = gql2(`
+  query Branch($branchId: ID, $branchSlug: String, $storeId: ID, $storeSlug: String) {
+    findBranch(id: $branchId, slug: $branchSlug, storeId: $storeId, storeSlug: $storeSlug) {
+      id
+      slug
+      name
+      addressId
+      storeId
+      storeSlug
+      address {
+        id
+        latitude
+        longitude
+        mapsLink
+        fullAddress
+        street
+        city
+        administrativeDivision
+        countryCode
+        country
+        zipCode
+      }
+    }
+
+    findStore(id: $storeId, slug: $storeSlug) {
+      id
+      slug
+      name
+      logo
+      website
+    }
+  }
+`);
+var FIND_BRANCH_QUERY = gql2(`
+  query FindBranch($branchId: ID, $branchSlug: String, $storeId: ID, $storeSlug: String) {
+    findBranch(id: $branchId, slug: $branchSlug, storeId: $storeId, storeSlug: $storeSlug) {
+      id
+      slug
+      name
+      addressId
+      storeId
+      storeSlug
+      address {
+        id
+        latitude
+        longitude
+        mapsLink
+        fullAddress
+        street
+        city
+        administrativeDivision
+        countryCode
+        country
+        zipCode
+      }
+    }
+  }
+`);
+var FIND_BRANCHES_BY_DISTANCE_QUERY = gql2(`
+  query FindBranchesByDistance($lat: Float!, $lon: Float!, $radiusMeters: Int!) {
+    findBranchesByDistance(lat: $lat, lon: $lon, radiusMeters: $radiusMeters) {
+      id
+      slug
+      name
+      storeId
+      storeSlug
+      store {
+        id
+        slug
+        name
+        website
+        logo
+      }
+      addressId
+      address {
+        id
+        distance
+        latitude
+        longitude
+        mapsLink
+        fullAddress
+        street
+        city
+        administrativeDivision
+        countryCode
+        country
+        zipCode
+      }
+    }
+  }
+`);
+var GET_FAVORITE_BRANCHES_WITH_PRICE_DATA_QUERY = gql2(`
+  query FavoriteBranchesWithPrices($productId: ID!) {
+    getFavoriteBranchesWithPrices(productId: $productId) {
+      id
+      branchId
+      branch {
+        id
+        slug
+        name
+        storeId
+        storeSlug
+        store {
+          id
+          slug
+          name
+          logo
+        }
+        addressId
+        address {
+          id
+          distance
+          latitude
+          longitude
+          mapsLink
+          fullAddress
+          street
+          city
+          administrativeDivision
+          countryCode
+          country
+          zipCode
+        }
+      }
+      stock {
+        id
+        productId
+        storeId
+        branchId
+        latestPriceId
+        latestPrice {
+          id
+          productId
+          branchId
+          storeId
+          amount
+          currencyCode
+          createdAt
+          sale
+          originalPrice
+          condition
+          expiresAt
+          unitType
+          createdBy {
+            id
+            name
+            avatar
+          }
+        }
+      }
+      approximatePrice
+    }
+  }
+`);
+
+// src/documents/queries/brand.ts
+import { gql as gql3 } from "@apollo/client";
+var ALL_BRANDS_QUERY = gql3(`
+  query AllBrands($joinStock: Boolean) {
+    allBrands(joinStock: $joinStock) {
+      brand
+      products
+    }
+  }
+`);
+
+// src/documents/queries/category.ts
+import { gql as gql4 } from "@apollo/client";
+var GET_CATEGORIES_QUERY = gql4(`
+  query GetCategories($depth: Int, $parentId: ID) {
+    getCategories(depth: $depth, parentId: $parentId) {
+      id
+      name
+      path
+      expandedPathname
+      categoryAlias
+      depth
+    }
+  }
+`);
+var CATEGORY_SEARCH_QUERY = gql4(`
+  query CategorySearch($search: String!, $quickSearchMode: Boolean) {
+    categorySearch(search: $search, quickSearchMode: $quickSearchMode) {
+      id
+      name
+    }
+  }
+`);
+var GET_CATEGORY_QUERY = gql4(`
+  query GetCategory($id: ID!) {
+    getCategory(id: $id) {
+      id
+      name
+      path
+      expandedPathname
+      categoryAlias
+    }
+  }
+`);
+
+// src/documents/queries/grocery-list.ts
+import { gql as gql5 } from "@apollo/client";
+var GROCERY_LISTS_QUERY = gql5(`
+  query GroceryLists {
+    groceryLists {
+      id
+      name
+      default
+      createdAt
+    }
+  }
+`);
+var GET_GROCERY_LIST_ITEMS_QUERY = gql5(`
+  query GroceryListItems($groceryListId: ID!, $filters: GroceryListItemsFilters) {
+    groceryListItems(groceryListId: $groceryListId, filters: $filters) {
+      id
+      groceryListId
+      productId
+      product {
+        id
+        code
+        name
+        image
+        category {
+          id
+          name
+        }
+        weightValue
+        weightType
+        quantityValue
+        quantityType
+      }
+      category
+      weight
+      quantity
+      unit
+      completed
+      createdAt
+    }
+  }
+`);
+var DEFAULT_GROCERY_LIST_ITEMS_QUERY = gql5(`
+  query DefaultGroceryListItems($filters: GroceryListItemsFilters) {
+    defaultGroceryListItems(filters: $filters) {
+      id
+      groceryListId
+      productId
+      product {
+        id
+        code
+        name
+        image
+        category {
+          id
+          name
+        }
+        weightValue
+        weightType
+        quantityValue
+        quantityType
+      }
+      category
+      weight
+      quantity
+      unit
+      completed
+      createdAt
+    }
+  }
+`);
+var COUNT_GROCERY_LIST_ITEMS_QUERY = gql5(`
+  query CountGroceryListItems($groceryListId: ID, $includeCompleted: Boolean) {
+    countGroceryListItems(groceryListId: $groceryListId, includeCompleted: $includeCompleted)
+  }
+`);
+
+// src/documents/queries/list.ts
+import { gql as gql6 } from "@apollo/client";
+var GET_ALL_LISTS = gql6`
+  query GetAllLists($listType: ListType) {
+    getAllLists(listType: $listType) {
+      id
+      name
+      type
+      userId
+      createdAt
+      productList {
+        id
+        listId
+        productId
+        stockId
+        createdAt
+      }
+      branchList {
+        id
+        listId
+        branchId
+        createdAt
+      }
+    }
+  }
+`;
+var GET_ALL_PRODUCT_LISTS_BY_LIST_ID = gql6(`
+  query GetAllProductListsByListId($listId: ID!) {
+    getAllProductListsByListId(listId: $listId) {
+      id
+      listId
+      userId
+      productId
+      type
+      stockId
+      createdAt
+      product {
+        id
+        name
+        image
+        description
+        brand
+        code
+        model
+        categoryId
+        category {
+          id
+          name
+          expandedPathname
+          path
+        }
+        approximateWeight
+        netWeight
+        weightValue
+        weightType
+        quantityValue
+        quantityType
+        createdAt
+        updatedAt
+      }
+      stock {
+        id
+        productId
+        storeId
+        store {
+          id
+          slug
+          name
+          logo
+        }
+        branchId
+        branch {
+          id
+          slug
+          name
+          addressId
+          address {
+            id
+            latitude
+            longitude
+            mapsLink
+            fullAddress
+            street
+            city
+            administrativeDivision
+            countryCode
+            country
+            zipCode
+          }
+        }
+        latestPriceId
+        latestPrice {
+          id
+          productId
+          branchId
+          storeId
+          amount
+          currencyCode
+          createdAt
+          sale
+          originalPrice
+          condition
+          expiresAt
+          unitType
+        }
+      }
+    }
+  }
+`);
+var GET_ALL_BRANCH_LISTS_BY_LIST_ID = gql6(`
+  query GetAllBranchListsByListId($listId: ID!) {
+    getAllBranchListsByListId(listId: $listId) {
+      id
+      listId
+      branchId
+      branch {
+        id
+        slug
+        name
+        addressId
+        address {
+          id
+          latitude
+          longitude
+          mapsLink
+          fullAddress
+          street
+          city
+          administrativeDivision
+          countryCode
+          country
+          zipCode
+        }
+        storeId
+        storeSlug
+        store {
+          id
+          slug
+          name
+          logo
+        }
+      }
+      createdAt
+    }
+  }
+`);
+
+// src/documents/queries/metadata.ts
+import { gql as gql7 } from "@apollo/client";
+var GET_ALL_COUNTRIES_QUERY = gql7`
+  query GetAllCountries {
+    getAllCountries {
+      code
+      name
+      administrativeDivisions {
+        name
+        cities
+      }
+      currency {
+        currencyCode
+        name
+        symbol
+        symbolNative
+        decimals
+        numToBasic
+      }
+      callingCode
+      language
+    }
+  }
+`;
+var CHECK_APP_VERSION_QUERY = gql7(`
+  query CheckAppVersion($platform: AuthDeviceType!, $version: String!) {
+    checkAppVersion(platform: $platform, version: $version)
+  }
+`);
+var IP_TO_ADDRESS_QUERY = gql7(`
+  query IpToAddress($ipAddress: String!) {
+    ipToAddress(ipAddress: $ipAddress) {
+      id
+      latitude
+      longitude
+      mapsLink
+      fullAddress
+      street
+      city
+      administrativeDivision
+      zipCode
+      countryCode
+      country
+    }
+  }
+`);
+
+// src/documents/queries/price.ts
+import { gql as gql8 } from "@apollo/client";
+var PRICE_CHANGE_HISTORY_QUERY = gql8(`
+  query PriceChangeHistory($productId: ID!, $stockId: ID!, $paginator: PaginatorInput!, $filters: PriceHistoryFilter) {
+    priceChangeHistory(
+      productId: $productId
+      stockId: $stockId
+      paginator: $paginator
+      filters: $filters
+    ) {
+      prices {
+        id
+        productId
+        stockId
+        branchId
+        storeId
+        amount
+        originalPrice
+        sale
+        expiresAt
+        condition
+        unitType
+        currencyCode
+        createdBy {
+          id
+          name
+          avatar
+        }
+        createdAt
+      }
+      paginator {
+        next
+        page
+        prev
+        limit
+        total
+        numPages
+      }
+    }
+  }
+`);
+
+// src/documents/queries/product-nutrition.ts
+import { gql as gql9 } from "@apollo/client";
+var GET_PRODUCT_NUTRITION_DATA_QUERY = gql9(`
+  query GetProductNutritionData($productId: ID!) {
+    getProductNutritionData(productId: $productId) {
+      productId
+      servingSize
+      servingSizeUnit
+      servingSizeValue
+      ingredientText
+      ingredientList
+      nutriments {
+        salt
+        salt100g
+        saltValue
+        saltServing
+        saltUnit
+        sugars
+        sugars100g
+        sugarsValue
+        sugarsServing
+        sugarsUnit
+        iron
+        iron100g
+        ironValue
+        ironServing
+        ironUnit
+        ironLabel
+        calcium
+        calcium100g
+        calciumValue
+        calciumServing
+        calciumUnit
+        calciumLabel
+        cholesterol100g
+        saturatedFat
+        saturatedFat100g
+        saturatedFatValue
+        saturatedFatServing
+        saturatedFatUnit
+        fat
+        fat100g
+        fatValue
+        fatServing
+        fatUnit
+        transFat
+        transFat100g
+        transFatValue
+        transFatServing
+        transFatUnit
+        transFatLabel
+        vitaminA
+        vitaminA100g
+        vitaminAValue
+        vitaminAServing
+        vitaminAUnit
+        vitaminALabel
+        vitaminC
+        vitaminC100g
+        vitaminCValue
+        vitaminCServing
+        vitaminCUnit
+        vitaminCLabel
+        proteins
+        proteins100g
+        proteinsValue
+        proteinsServing
+        proteinsUnit
+        fiber
+        fiber100g
+        fiberValue
+        fiberServing
+        fiberUnit
+        carbohydrates
+        carbohydrates100g
+        carbohydratesValue
+        carbohydratesServing
+        carbohydratesUnit
+        alcohol
+        alcohol100g
+        alcoholValue
+        alcoholServing
+        alcoholUnit
+        sodium
+        sodium100g
+        sodiumValue
+        sodiumServing
+        sodiumUnit
+        potassium100g
+        polyunsaturatedFat100g
+        monounsaturatedFat100g
+        novaGroup
+        novaGroup100g
+        novaGroupServing
+        energy
+        energy100g
+        energyValue
+        energyServing
+        energyUnit
+        energyKcal
+        energyKcal100g
+        energyKcalValue
+        energyKcalServing
+        energyKcalUnit
+        nutritionScoreFr
+        nutritionScoreFr100g
+        nutritionScoreFrServing
+        nutritionScoreUk
+        nutritionScoreUk100g
+        nutritionScoreUkServing
+      }
+      vegan
+      vegetarian
+      glutenFree
+      lactoseFree
+      halal
+      kosher
+      createdAt
+      updatedAt
+    }
+  }
+`);
+
+// src/documents/queries/product.ts
+import { gql as gql10 } from "@apollo/client";
+var BARCODE_SCAN_QUERY = gql10(`
+  query BarcodeScan($barcode: String!, $searchMode: Boolean, $location: LocationInput) {
+    barcodeScan(barcode: $barcode, searchMode: $searchMode, location: $location) {
+      id
+      name
+      image
+      description
+      brand
+      code
+      model
+      categoryId
+      category {
+        id
+        name
+        expandedPathname
+        path
+      }
+      approximateWeight
+      netWeight
+      weightValue
+      weightType
+      quantityValue
+      quantityType
+      createdAt
+      updatedAt
+      stock {
+        id
+        productId
+        storeId
+        branchId
+        latestPriceId
+      }
+    }
+  }
+`);
+var PRODUCT_BY_ID_QUERY = gql10(`
+  query Product($productId: ID!, $viewerTrail: ViewerTrailInput) {
+    product(id: $productId, viewerTrail: $viewerTrail) {
+      id
+      name
+      image
+      description
+      brand
+      code
+      model
+      categoryId
+      category {
+        id
+        name
+        categoryAlias
+        expandedPathname
+        path
+      }
+      approximateWeight
+      netWeight
+      weightValue
+      weightType
+      quantityValue
+      quantityType
+      createdAt
+      updatedAt
+      views
+      productList {
+        id
+        listId
+        userId
+        productId
+        type
+        stockId
+        createdAt
+      }
+    }
+  }
+`);
+var ALL_PRODUCTS_QUERY = gql10(`
+  query AllProducts($paginator: PaginatorInput!, $search: ProductSearch) {
+    allProducts(paginator: $paginator, search: $search) {
+      products {
+        id
+        name
+        image
+        description
+        brand
+        code
+        model
+        categoryId
+        category {
+          id
+          name
+          expandedPathname
+          path
+        }
+        stock {
+          id
+          productId
+          storeId
+          store {
+            id
+            slug
+            name
+            logo
+          }
+          branchId
+          branch {
+            id
+            slug
+            name
+            addressId
+            address {
+              id
+              latitude
+              longitude
+              mapsLink
+              fullAddress
+              street
+              city
+              administrativeDivision
+              countryCode
+              country
+              zipCode
+              distance
+            }
+          }
+          latestPriceId
+          latestPrice {
+            id
+            productId
+            branchId
+            storeId
+            amount
+            currencyCode
+            createdAt
+            sale
+            originalPrice
+            condition
+            expiresAt
+            unitType
+            createdBy {
+              id
+              name
+              avatar
+            }
+          }
+          createdBy {
+            id
+            name
+            avatar
+          }
+          updatedBy {
+            id
+            name
+            avatar
+          }
+        }
+        approximateWeight
+        netWeight
+        weightValue
+        weightType
+        quantityValue
+        quantityType
+        createdAt
+        updatedAt
+        views
+      }
+      paginator {
+        next
+        page
+        prev
+        limit
+        total
+        numPages
+      }
+    }
+  }
+`);
+var BRANCHES_WITH_PRODUCTS_QUERY = gql10(`
+  query BranchesWithProducts($paginator: PaginatorInput!, $productLimit: Int!, $filters: ProductSearch) {
+    branchesWithProducts(
+      paginator: $paginator
+      productLimit: $productLimit
+      filters: $filters
+    ) {
+      branches {
+        id
+        slug
+        name
+        storeId
+        storeSlug
+        store {
+          id
+          slug
+          name
+          logo
+        }
+        addressId
+        address {
+          id
+          distance
+          latitude
+          longitude
+          mapsLink
+          fullAddress
+          street
+          city
+          administrativeDivision
+          countryCode
+          country
+          zipCode
+        }
+        products {
+          id
+          name
+          image
+          description
+          brand
+          code
+          model
+          categoryId
+          category {
+            id
+            name
+            expandedPathname
+            path
+          }
+          stock {
+            id
+            productId
+            storeId
+            branchId
+            latestPriceId
+            latestPrice {
+              id
+              productId
+              branchId
+              storeId
+              amount
+              currencyCode
+              createdAt
+              sale
+              originalPrice
+              condition
+              expiresAt
+              unitType
+            }
+            createdBy {
+              id
+              name
+              avatar
+            }
+            updatedBy {
+              id
+              name
+              avatar
+            }
+          }
+          approximateWeight
+          netWeight
+          weightValue
+          weightType
+          quantityValue
+          quantityType
+          createdAt
+          updatedAt
+          views
+        }
+      }
+      paginator {
+        next
+        page
+        prev
+        limit
+        total
+        numPages
+      }
+    }
+  }
+`);
+var PRODUCT_SUMMARY_QUERY = gql10(`
+  query ProductSummary($productId: ID!) {
+    productSummary(id: $productId) {
+      id
+      name
+      image
+      description
+      brand
+      code
+    }
+  }
+`);
+var PRODUCT_SEARCH_QUERY = gql10(`
+  query ProductSearch($paginator: PaginatorInput!, $search: String!) {
+    productSearch(search: $search, paginator: $paginator) {
+      products {
+        id
+        code
+        brand
+        name
+        category {
+          id
+          name
+          expandedPathname
+        }
+        quantityValue
+        quantityType
+        approximateWeight
+        netWeight
+        weightValue
+        weightType
+      }
+      paginator {
+        next
+        page
+        prev
+        limit
+        total
+        numPages
+      }
+    }
+  }
+`);
+var EXTRACT_PRODUCT_FIELDS_QUERY = gql10(`
+  query ExtractProductFields($base64Image: String!) {
+    extractProductFields(base64Image: $base64Image) {
+      brand
+      name
+      description
+      netWeight
+      weight
+      quantity
+      categoryId
+      category {
+        id
+        name
+        expandedPathname
+        path
+      }
+    }
+  }
+`);
+var MY_PRODUCT_VIEW_HISTORY_QUERY = gql10(`
+  query MyProductViewHistory($paginator: PaginatorInput!) {
+    myProductViewHistory(paginator: $paginator) {
+      products {
+        id
+        name
+        image
+        description
+        brand
+        code
+        model
+        categoryId
+        category {
+          id
+          name
+          expandedPathname
+          path
+        }
+        stock {
+          id
+          productId
+          storeId
+          store {
+            id
+            slug
+            name
+            logo
+          }
+          branchId
+          branch {
+            id
+            slug
+            name
+            addressId
+            address {
+              id
+              latitude
+              longitude
+              mapsLink
+              fullAddress
+              street
+              city
+              administrativeDivision
+              countryCode
+              country
+              zipCode
+              distance
+            }
+          }
+          latestPriceId
+          latestPrice {
+            id
+            productId
+            branchId
+            storeId
+            amount
+            currencyCode
+            createdAt
+            sale
+            originalPrice
+            condition
+            expiresAt
+            unitType
+          }
+          createdBy {
+            id
+            name
+            avatar
+          }
+          updatedBy {
+            id
+            name
+            avatar
+          }
+        }
+        approximateWeight
+        netWeight
+        weightValue
+        weightType
+        quantityValue
+        quantityType
+        createdAt
+        updatedAt
+        views
+      }
+      paginator {
+        next
+        page
+        prev
+        limit
+        total
+        numPages
+      }
+    }
+  }
+`);
+var WEIGHT_COMPONENTS_FROM_CATEGORY_ID_QUERY = gql10(`
+  query WeightComponentsFromCategoryId($categoryId: ID!) {
+    weightComponentsFromCategoryId(categoryId: $categoryId) {
+      weightValue
+      weightType
+    }
+  }
+`);
+
+// src/documents/queries/search.ts
+import { gql as gql11 } from "@apollo/client";
+var MY_SEARCH_HISTORY_QUERY = gql11(`
+  query MySearchHistory($paginator: PaginatorInput!) {
+    mySearchHistory(paginator:$paginator) {
+      searches {
+        id
+        searchTerm
+      }
+      paginator {
+        next
+        page
+        prev
+        limit
+        total
+        numPages
+      }
+    }
+  }
+`);
+
+// src/documents/queries/stock.ts
+import { gql as gql12 } from "@apollo/client";
+var GET_STOCK_BY_ID = gql12(`
+  query Stock($stockId: ID!) {
+    stock(stockId: $stockId) {
+      id
+      productId
+      storeId
+      store {
+        slug
+        id
+        name
+        logo
+      }
+      branchId
+      branch {
+        id
+        slug
+        name
+        addressId
+        address {
+          id
+          latitude
+          longitude
+          mapsLink
+          fullAddress
+          street
+          city
+          administrativeDivision
+          countryCode
+          country
+          zipCode
+          distance
+        }
+      }
+      latestPriceId
+      latestPrice {
+        id
+        productId
+        branchId
+        storeId
+        amount
+        currencyCode
+        sale
+        originalPrice
+        condition
+        expiresAt
+        createdAt
+        unitType
+      }
+      createdAt
+      updatedAt
+      createdBy {
+        id
+        name
+        avatar
+      }
+      updatedBy {
+        id
+        name
+        avatar
+      }
+    }
+  }
+`);
+var GET_STOCK_FROM_PRODUCT_AND_BRANCH_ID_QUERY = gql12(`
+  query GetStockFromProductAndBranchId($productId: ID!, $branchId: ID!) {
+    getStockFromProductAndBranchId(productId: $productId, branchId: $branchId) {
+      id
+      productId
+      storeId
+      branchId
+      latestPriceId
+      latestPrice {
+        id
+        productId
+        branchId
+        storeId
+        amount
+        currencyCode
+        sale
+        originalPrice
+        condition
+        expiresAt
+        createdAt
+        unitType
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`);
+var GET_PRODUCT_STOCKS_QUERY = gql12(`
+  query GetProductStocks($paginator: PaginatorInput!, $productId: ID!, $location: LocationInput) {
+    getProductStocks(paginator: $paginator, productId: $productId, location: $location) {
+      stocks {
+        id
+        productId
+        storeId
+        store {
+          id
+          slug
+          name
+          logo
+        }
+        branchId
+        branch {
+          id
+          slug
+          name
+          address {
+            id
+            latitude
+            longitude
+            mapsLink
+            fullAddress
+            street
+            city
+            administrativeDivision
+            countryCode
+            country
+            zipCode
+            distance
+          }
+        }
+        latestPriceId
+        latestPrice {
+          id
+          productId
+          branchId
+          storeId
+          amount
+          currencyCode
+          sale
+          originalPrice
+          condition
+          expiresAt
+          unitType
+        }
+        createdAt
+        updatedAt
+        createdBy {
+          id
+          name
+          avatar
+        }
+        updatedBy {
+          id
+          name
+          avatar
+        }
+      }
+      paginator {
+        next
+        page
+        prev
+        limit
+        total
+        numPages
+      }
+    }
+  }
+`);
+
+// src/documents/queries/store.ts
+import { gql as gql13 } from "@apollo/client";
+var ALL_STORES_QUERY = gql13(`
+  query AllStores($paginator: PaginatorInput!, $search: String) {
+    allStores(paginator: $paginator, search: $search) {
+      stores {
+        id
+        slug
+        name
+        logo
+        website
+      }
+      paginator {
+        next
+        page
+        prev
+        limit
+        total
+        numPages
+      }
+    }
+  }
+`);
+var FIND_STORE_QUERY = gql13(`
+  query FindStore($storeId: ID, $storeSlug: String) {
+    findStore(id: $storeId, slug: $storeSlug) {
+      id
+      slug
+      name
+      logo
+      website
+    }
+  }
+`);
+
+// src/documents/queries/user.ts
+import { gql as gql14 } from "@apollo/client";
+var UserFragment = gql14(`
+  fragment UserFields on User {
+    id
+    name
+    email
+    avatar
+    createdAt
+    updatedAt
+    active
+    authDevice
+    authPlatform
+    authStateId
+    role
+  }
+`);
+var LOGIN_INTERNAL_QUERY = gql14(`
+  query LoginInternal(
+    $email: String!
+    $password: String!
+    $ipAddress: String
+    $device: AuthDeviceType
+  ) {
+    login(email: $email, password: $password, ipAddress: $ipAddress, device: $device) {
+      token
+      user {
+        id
+        name
+        email
+        avatar
+        createdAt
+        updatedAt
+        active
+        authDevice
+        authPlatform
+        authStateId
+        expoPushToken
+        role
+        addressId
+        address {
+          id
+          latitude
+          longitude
+          mapsLink
+          fullAddress
+          street
+          city
+          administrativeDivision
+          countryCode
+          country
+          zipCode
+        }
+      }
+    }
+  }
+`);
+var GOOGLE_OAUTH_QUERY = gql14(`
+  query GoogleOAuth($accessToken: String!, $ipAddress: String, $device: AuthDeviceType) {
+    googleOAuth(accessToken: $accessToken, ipAddress: $ipAddress, device: $device) {
+      token
+      user {
+        id
+        name
+        email
+        avatar
+        createdAt
+        updatedAt
+        active
+        authDevice
+        authPlatform
+        authStateId
+        expoPushToken
+        role
+        addressId
+        address {
+          id
+          latitude
+          longitude
+          mapsLink
+          fullAddress
+          street
+          city
+          administrativeDivision
+          countryCode
+          country
+          zipCode
+        }
+      }
+      isNewUser
+    }
+  }
+`);
+var VERIFY_PASSWORD_RESET_CODE_QUERY = gql14(`
+  query VerifyPasswordResetCode($email: String!, $code: String!) {
+    verifyPasswordResetCode(email: $email, code: $code)
+  }
+`);
+var ME_QUERY = gql14(`
+  query Me {
+    me {
+      id
+      name
+      email
+      avatar
+      createdAt
+      updatedAt
+      active
+      authDevice
+      authPlatform
+      authStateId
+      expoPushToken
+      role
+      addressId
+      address {
+        id
+        latitude
+        longitude
+        mapsLink
+        fullAddress
+        street
+        city
+        administrativeDivision
+        countryCode
+        country
+        zipCode
+      }
+      birthDate
+      phoneNumber
+      bio
+    }
+  }
+`);
+var MY_PRODUCT_BILLING_DATA_QUERY = gql14(`
+  query MyProductBillingData($paginator: PaginatorInput!) {
+    myProductBillingData(paginator: $paginator) {
+      data {
+        id
+        rate
+        userId
+        user {
+          id
+          name
+          avatar
+          active
+        }
+        productId
+        product {
+          id
+          name
+          image
+          brand
+          code
+          category {
+            id
+            name
+            expandedPathname
+            path
+          }
+          createdAt
+          updatedAt
+        }
+        createdAt
+        paidAt
+        billingRateType
+      }
+      paginator {
+        next
+        page
+        prev
+        limit
+        total
+        numPages
+      }
+    }
+  }
+`);
+var POST_AUTH_USER_DATA_QUERIES = gql14(`
+  query PostAuthUserData($listType: ListType) {
+    getAllLists(listType: $listType) {
+      id
+      name
+      type
+      userId
+      createdAt
+      productList {
+        id
+        listId
+        productId
+        stockId
+        createdAt
+      }
+      branchList {
+        id
+        listId
+        branchId
+        createdAt
+      }
+    }
+
+    groceryLists {
+      id
+      name
+      default
+      createdAt
+    }
+  }
+`);
+
+// src/documents/mutations/admin.ts
+import { gql as gql15 } from "@apollo/client";
+var UPDATE_USER_BY_ID_MUTATION = gql15(`
+  mutation UpdateUserById($userId: ID!, $input: UpdateUserFull!) {
+    updateUserById(userId: $userId, input: $input) {
+      id
+      email
+      phoneNumber
+      name
+      avatar
+      birthDate
+      bio
+      active
+      role
+      createdAt
+      updatedAt
+    }
+  }
+`);
+
+// src/documents/mutations/branch.ts
+import { gql as gql16 } from "@apollo/client";
+var CREATE_BRANCH_WITH_FULL_ADDRESS_MUTATION = gql16(`
+  mutation CreateBranchFromFullAddress($storeId: ID!, $fullAddress: String!) {
+    createBranchWithFullAddress(storeId: $storeId, fullAddress: $fullAddress) {
+      id
+      name
+      addressId
+      storeId
+      address {
+        id
+        latitude
+        longitude
+        mapsLink
+        fullAddress
+        street
+        city
+        administrativeDivision
+        countryCode
+        country
+        zipCode
+      }
+    }
+  }
+`);
+var CREATE_BRANCH_MUTATION = gql16(`
+  mutation CreateBranch($input: CreateBranch!) {
+    createBranch(input: $input) {
+      id
+      name
+      addressId
+      storeId
+      address {
+        id
+        latitude
+        longitude
+        mapsLink
+        fullAddress
+        street
+        city
+        administrativeDivision
+        countryCode
+        country
+        zipCode
+      }
+    }
+  }
+`);
+
+// src/documents/mutations/category.ts
+import { gql as gql17 } from "@apollo/client";
+var CREATE_CATEGORY_MUTATION = gql17(`
+  mutation CreateCategory($input: CreateCategory!) {
+    createCategory(input:$input) {
+      id
+      name
+      path
+      expandedPathname
+      categoryAlias
+      depth
+    }
+  }
+`);
+
+// src/documents/mutations/grocery-list.ts
+import { gql as gql18 } from "@apollo/client";
+var ADD_GROCERY_LIST_ITEMS_MUTATION = gql18(`
+  mutation AddGroceryListItem($groceryListId: ID!, $input: CreateGroceryListItemInput!) {
+    addGroceryListItem(groceryListId: $groceryListId, input: $input) {
+      id
+    }
+  }
+`);
+var UPDATE_GROCERY_LIST_ITEMS_MUTATION = gql18(`
+  mutation UpdateGroceryListItem($groceryListItemId: ID!, $input: CreateGroceryListItemInput!) {
+    updateGroceryListItem(groceryListItemId: $groceryListItemId, input: $input) {
+      id
+    }
+  }
+`);
+var DELETE_GROCERY_LIST_ITEMS_MUTATION = gql18(`
+  mutation DeleteGroceryListItem($groceryListItemId: ID!) {
+    deleteGroceryListItem(groceryListItemId: $groceryListItemId) {
+      id
+    }
+  }
+`);
+var MARK_GROCERY_ITEM_MUTATION = gql18(`
+  mutation MarkGroceryListItem($groceryListItemId: ID!, $completed: Boolean!) {
+    markGroceryListItem(groceryListItemId: $groceryListItemId, completed:$completed) {
+      id
+      completed
+    }
+  }
+`);
+
+// src/documents/mutations/list.ts
+import { gql as gql19 } from "@apollo/client";
+var ADD_TO_LIST_MUTATION = gql19(`
+  mutation AddToList($listId: ID!, $productId: ID!, $stockId: ID) {
+    addToList(listId: $listId, productId: $productId, stockId: $stockId) {
+      id
+      userId
+      listId
+      productId
+      stockId
+      createdAt
+    }
+  }
+`);
+var REMOVE_FROM_LIST_MUTATION = gql19(`
+  mutation RemoveFromList($listId: ID!, $productListId: ID!) {
+    removeFromList(listId: $listId, productListId: $productListId) {
+      id
+      userId
+      listId
+      productId
+      stockId
+      createdAt
+    }
+  }
+`);
+var REMOVE_FROM_LIST_BY_PRODUCT_ID_MUTATION = gql19(`
+  mutation RemoveFromListWithProductId($listId: ID!, $productId: ID!, $stockId: ID) {
+    removeFromListWithProductId(listId: $listId, productId: $productId, stockId: $stockId) {
+      id
+      userId
+      listId
+      productId
+      stockId
+      createdAt
+    }
+  }
+`);
+var ADD_BRANCH_TO_LIST_MUTATION = gql19(`
+  mutation AddBranchToList($listId: ID!, $branchId: ID!) {
+    addBranchToList(listId: $listId, branchId: $branchId) {
+      id
+      userId
+      listId
+      branchId
+      createdAt
+    }
+  }
+`);
+var BULK_ADD_BRANCHES_TO_LIST_MUTATION = gql19(`
+  mutation BulkAddBranchesToList($listId: ID!, $branchIds: [ID!]!) {
+    bulkAddBranchesToList(listId: $listId, branchIds: $branchIds) {
+      id
+      userId
+      listId
+      branchId
+      createdAt
+    }
+  }
+`);
+var REMOVE_BRANCH_FROM_LIST_MUTATION = gql19(`
+  mutation RemoveBranchFromList($listId: ID!, $branchListId: ID!) {
+    removeBranchFromList(listId: $listId, branchListId: $branchListId) {
+      id
+      userId
+      listId
+      branchId
+      createdAt
+    }
+  }
+`);
+
+// src/documents/mutations/price.ts
+import { gql as gql20 } from "@apollo/client";
+var CREATE_PRICE_MUTATION = gql20(`
+  mutation CreatePrice($input: CreatePrice!) {
+    createPrice(input: $input) {
+      id
+      amount
+      currencyCode
+      productId
+      storeId
+      stockId
+      branchId
+    }
+  }
+`);
+
+// src/documents/mutations/product-nutrition.ts
+import { gql as gql21 } from "@apollo/client";
+var UPDATE_PRODUCT_NUTRITION_MUTATION = gql21(`
+  mutation UpdateProductNutritionData($productId: ID!) {
+    updateProductNutritionData(productId: $productId) {
+      productId
+      openfoodfactsUpdatedAt
+      createdAt
+      updatedAt
+    }
+  }
+`);
+
+// src/documents/mutations/product.ts
+import { gql as gql22 } from "@apollo/client";
+var CREATE_PRODUCT_MUTATION = gql22(`
+  mutation CreateProduct($input: CreateProduct!) {
+    createProduct(input: $input) {
+      id
+      name
+      image
+      description
+      brand
+      code
+      model
+      categoryId
+      category {
+        id
+        name
+        expandedPathname
+        path
+      }
+      weightValue
+      weightType
+      createdAt
+      updatedAt
+    }
+  }
+`);
+var UPDATE_PRODUCT_MUTATION = gql22(`
+  mutation UpdateProduct($id: ID!, $input: UpdateProduct!) {
+    updateProduct(id: $id, input: $input) {
+      id
+      name
+      image
+      description
+      brand
+      code
+      model
+      categoryId
+      category {
+        id
+        name
+        expandedPathname
+        path
+      }
+      weightValue
+      weightType
+      createdAt
+      updatedAt
+    }
+  }
+`);
+var EXTRACT_AND_CREATE_PRODUCT_FIELDS_QUERY = gql22(`
+  mutation ExtractAndCreateProduct($barcode: String!, $base64Image: String!) {
+    extractAndCreateProduct(barcode: $barcode, base64Image: $base64Image) {
+      id
+      code
+      brand
+      name
+      categoryId
+      weightValue
+      weightType
+      quantityValue
+      quantityType
+      description
+    }
+  }
+`);
+var SANITIZE_PRODUCT_MUTATION = gql22(`
+  mutation SanitizeProduct($id: ID!) {
+    sanitizeProduct(id: $id) {
+      id
+      name
+      image
+      description
+      brand
+      code
+      model
+      categoryId
+      category {
+        id
+        name
+        categoryAlias
+        expandedPathname
+        path
+      }
+      approximateWeight
+      netWeight
+      weightValue
+      weightType
+      quantityValue
+      quantityType
+      createdAt
+      updatedAt
+      views
+    }
+  }
+`);
+
+// src/documents/mutations/store.ts
+import { gql as gql23 } from "@apollo/client";
+var CREATE_STORE_MUTATION = gql23(`
+  mutation CreateStore($input: CreateStore!) {
+    createStore(input: $input) {
+      id
+      name
+      logo
+      website
+    }
+  }
+`);
+
+// src/documents/mutations/user.ts
+import { gql as gql24 } from "@apollo/client";
+var CREATE_USER_MUTATION = gql24`
+  mutation CreateAccount($email: String!, $name: String!, $password: String!) {
+    createAccount(input: { email: $email, name: $name, password: $password }) {
+      id
+      name
+      email
+      phoneNumber
+      createdAt
+      updatedAt
+      authPlatform
+      role
+    }
+  }
+`;
+var VERIFY_EMAIL_MUTATION = gql24(`
+  mutation VerifyEmail($verificationCode: String!) {
+    verifyEmail(verificationCode: $verificationCode) {
+      id
+      name
+      email
+      avatar
+      createdAt
+      updatedAt
+      active
+      authPlatform
+      authStateId
+      role
+    }
+  }
+`);
+var RESEND_VERIFICATION_MUTATION = gql24(`
+  mutation ResendVerification($email: String!) {
+    resendEmailVerificationCode(email: $email)
+  }
+`);
+var LOGOUT_MUTATION = gql24(`
+  mutation Logout {
+    logout
+  }
+`);
+var UPDATE_PROFILE_MUTATION = gql24(`
+  mutation UpdateProfile($input: UpdateUser!) {
+    updateProfile(input: $input) {
+      id
+      name
+      email
+      avatar
+      createdAt
+      updatedAt
+      active
+      authPlatform
+      authStateId
+      role
+      addressId
+      address {
+        id
+        latitude
+        longitude
+        mapsLink
+        fullAddress
+        street
+        city
+        administrativeDivision
+        countryCode
+        country
+        zipCode
+      }
+      birthDate
+      phoneNumber
+      bio
+    }
+  }
+`);
+var REQUEST_RESET_PASSWORD_MUTATION = gql24(`
+  mutation RequestResetPassword($email: String!) {
+    requestPasswordReset(email: $email)
+  }
+`);
+var UPDATE_PASSWORD_WITH_RESET_CODE_MUTATION = gql24(`
+  mutation UpdatePasswordWithResetCode($email: String!, $code: String!, $newPassword: String!) {
+    updatePasswordWithResetCode(
+      email: $email
+      code: $code
+      newPassword: $newPassword
+    )
+  }
+`);
+var REGISTER_EXPO_PUSH_TOKEN = gql24(`
+  mutation RegisterExpoPushToken($expoPushToken: String!) {
+    registerExpoPushToken(expoPushToken: $expoPushToken) {
+      id
+      name
+      email
+      avatar
+      createdAt
+      updatedAt
+      active
+      authPlatform
+      authStateId
+      expoPushToken
+      role
+      addressId
+      address {
+        id
+        latitude
+        longitude
+        mapsLink
+        fullAddress
+        street
+        city
+        administrativeDivision
+        countryCode
+        country
+        zipCode
+      }
+    }
+  }
+`);
 export {
-  AddBranchToListDocument,
-  AddGroceryListItemDocument,
-  AddToListDocument,
-  AllBranchesDocument,
-  AllBrandsDocument,
-  AllProductsDocument,
-  AllStoresDocument,
-  AuthDeviceType,
-  AuthPlatformType,
-  BarcodeScanDocument,
-  BranchDocument,
-  BranchesWithProductsDocument,
-  BulkAddBranchesToListDocument,
-  CategorySearchDocument,
-  CheckAppVersionDocument,
-  CountGroceryListItemsDocument,
-  CreateAccountDocument,
-  CreateBranchDocument,
-  CreateBranchFromFullAddressDocument,
-  CreateCategoryDocument,
-  CreatePriceDocument,
-  CreateProductDocument,
-  CreateStoreDocument,
-  DefaultGroceryListItemsDocument,
-  DeleteGroceryListItemDocument,
-  ExtractAndCreateProductDocument,
-  ExtractProductFieldsDocument,
-  FavoriteBranchesWithPricesDocument,
-  FindBranchDocument,
-  FindBranchesByDistanceDocument,
-  FindStoreDocument,
-  GetAllBranchListsByListIdDocument,
-  GetAllCountriesDocument,
-  GetAllListsDocument,
-  GetAllProductListsByListIdDocument,
-  GetAllUsersDocument,
-  GetCategoriesDocument,
-  GetCategoryDocument,
-  GetProductNutritionDataDocument,
-  GetProductStocksDocument,
-  GetStockFromProductAndBranchIdDocument,
-  GoogleOAuthDocument,
-  GroceryListItemsDocument,
-  GroceryListsDocument,
-  IpToAddressDocument,
-  ListType,
-  LoginInternalDocument,
-  LogoutDocument,
-  MarkGroceryListItemDocument,
-  MeDocument,
-  MyProductBillingDataDocument,
-  MyProductViewHistoryDocument,
-  MySearchHistoryDocument,
-  OrderByType,
-  PostAuthUserDataDocument,
-  PriceChangeHistoryDocument,
-  ProductBillingDataByUserIdDocument,
-  ProductDocument,
-  ProductSearchDocument,
-  ProductSummaryDocument,
-  RegisterExpoPushTokenDocument,
-  RemoveBranchFromListDocument,
-  RemoveFromListDocument,
-  RemoveFromListWithProductIdDocument,
-  RequestResetPasswordDocument,
-  ResendVerificationDocument,
-  SanitizeProductDocument,
-  StockDocument,
-  UpdateGroceryListItemDocument,
-  UpdatePasswordWithResetCodeDocument,
-  UpdateProductDocument,
-  UpdateProductNutritionDataDocument,
-  UpdateProfileDocument,
-  UpdateUserByIdDocument,
-  UserFieldsFragmentDoc,
-  UserRole,
-  VerifyEmailDocument,
-  VerifyPasswordResetCodeDocument,
-  WeightComponentsFromCategoryIdDocument
+  ADD_BRANCH_TO_LIST_MUTATION,
+  ADD_GROCERY_LIST_ITEMS_MUTATION,
+  ADD_TO_LIST_MUTATION,
+  ALL_BRANCHES_QUERY,
+  ALL_BRANDS_QUERY,
+  ALL_PRODUCTS_QUERY,
+  ALL_STORES_QUERY,
+  BARCODE_SCAN_QUERY,
+  BRANCHES_WITH_PRODUCTS_QUERY,
+  BRANCH_QUERY,
+  BULK_ADD_BRANCHES_TO_LIST_MUTATION,
+  CATEGORY_SEARCH_QUERY,
+  CHECK_APP_VERSION_QUERY,
+  COUNT_GROCERY_LIST_ITEMS_QUERY,
+  CREATE_BRANCH_MUTATION,
+  CREATE_BRANCH_WITH_FULL_ADDRESS_MUTATION,
+  CREATE_CATEGORY_MUTATION,
+  CREATE_PRICE_MUTATION,
+  CREATE_PRODUCT_MUTATION,
+  CREATE_STORE_MUTATION,
+  CREATE_USER_MUTATION,
+  DEFAULT_GROCERY_LIST_ITEMS_QUERY,
+  DELETE_GROCERY_LIST_ITEMS_MUTATION,
+  EXTRACT_AND_CREATE_PRODUCT_FIELDS_QUERY,
+  EXTRACT_PRODUCT_FIELDS_QUERY,
+  FIND_BRANCHES_BY_DISTANCE_QUERY,
+  FIND_BRANCH_QUERY,
+  FIND_STORE_QUERY,
+  GET_ALL_BRANCH_LISTS_BY_LIST_ID,
+  GET_ALL_COUNTRIES_QUERY,
+  GET_ALL_LISTS,
+  GET_ALL_PRODUCT_LISTS_BY_LIST_ID,
+  GET_ALL_USERS_QUERY,
+  GET_CATEGORIES_QUERY,
+  GET_CATEGORY_QUERY,
+  GET_FAVORITE_BRANCHES_WITH_PRICE_DATA_QUERY,
+  GET_GROCERY_LIST_ITEMS_QUERY,
+  GET_PRODUCT_NUTRITION_DATA_QUERY,
+  GET_PRODUCT_STOCKS_QUERY,
+  GET_STOCK_BY_ID,
+  GET_STOCK_FROM_PRODUCT_AND_BRANCH_ID_QUERY,
+  GOOGLE_OAUTH_QUERY,
+  GROCERY_LISTS_QUERY,
+  IP_TO_ADDRESS_QUERY,
+  LOGIN_INTERNAL_QUERY,
+  LOGOUT_MUTATION,
+  MARK_GROCERY_ITEM_MUTATION,
+  ME_QUERY,
+  MY_PRODUCT_BILLING_DATA_QUERY,
+  MY_PRODUCT_VIEW_HISTORY_QUERY,
+  MY_SEARCH_HISTORY_QUERY,
+  POST_AUTH_USER_DATA_QUERIES,
+  PRICE_CHANGE_HISTORY_QUERY,
+  PRODUCT_BILLING_DATA_BY_USER_ID_QUERY,
+  PRODUCT_BY_ID_QUERY,
+  PRODUCT_SEARCH_QUERY,
+  PRODUCT_SUMMARY_QUERY,
+  REGISTER_EXPO_PUSH_TOKEN,
+  REMOVE_BRANCH_FROM_LIST_MUTATION,
+  REMOVE_FROM_LIST_BY_PRODUCT_ID_MUTATION,
+  REMOVE_FROM_LIST_MUTATION,
+  REQUEST_RESET_PASSWORD_MUTATION,
+  RESEND_VERIFICATION_MUTATION,
+  SANITIZE_PRODUCT_MUTATION,
+  UPDATE_GROCERY_LIST_ITEMS_MUTATION,
+  UPDATE_PASSWORD_WITH_RESET_CODE_MUTATION,
+  UPDATE_PRODUCT_MUTATION,
+  UPDATE_PRODUCT_NUTRITION_MUTATION,
+  UPDATE_PROFILE_MUTATION,
+  UPDATE_USER_BY_ID_MUTATION,
+  UserFragment,
+  VERIFY_EMAIL_MUTATION,
+  VERIFY_PASSWORD_RESET_CODE_QUERY,
+  WEIGHT_COMPONENTS_FROM_CATEGORY_ID_QUERY,
+  graphql,
+  isFragmentReady,
+  makeFragmentData,
+  useFragment
 };
