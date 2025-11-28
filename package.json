@@ -23,7 +23,11 @@
     "start": "npm run gql-codegen && npm run build",
     "bump-version": "node bumpVersion.js",
     "bump-version:minor": "node bumpVersion.js minor",
-    "bump-version:major": "node bumpVersion.js major"
+    "bump-version:major": "node bumpVersion.js major",
+    "prepublish": "npm run build",
+    "release:patch": "npm run gql-codegen && npm run build && npm run bump-version:patch && npm publish",
+    "release:minor": "npm run gql-codegen && npm run build && npm run bump-version:minor && npm publish",
+    "release:major": "npm run gql-codegen && npm run build && npm run bump-version:major && npm publish"
   },
   "peerDependencies": {
     "@apollo/client": "*"
