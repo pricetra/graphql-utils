@@ -1,22 +1,26 @@
 {
   "name": "graphql-utils",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "main": "dist/index.js",
+  "module": "dist/index.mjs",
   "types": "dist/index.d.ts",
   "exports": {
     ".": {
-      "import": "./dist/index.js",
-      "types": "./dist/index.d.ts"
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js"
     },
-    "./documents/queries": {
-      "import": "./dist/documents/queries/index.js",
-      "types": "./dist/documents/queries/index.d.ts"
+    "./types/*": {
+      "import": "./dist/types/*",
+      "require": "./dist/types/*"
     },
-    "./documents/mutations": {
-      "import": "./dist/documents/mutations/index.js",
-      "types": "./dist/documents/mutations/index.d.ts"
+    "./documents/*": {
+      "import": "./dist/documents/*",
+      "require": "./dist/documents/*"
     }
   },
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "build": "tsup",
     "gql-codegen": "graphql-codegen --config codegen.ts",
