@@ -1,15 +1,12 @@
 {
   "name": "graphql-utils",
-  "version": "1.0.11",
+  "version": "1.0.12",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
   "types": "dist/index.d.ts",
   "exports": {
     ".": {
-      "default": "./dist/index.mjs",
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.mjs",
-      "require": "./dist/index.js"
+      "default": "./dist/index.mjs"
     },
     "./types/*": {
       "types": "./dist/types/*.d.ts",
@@ -20,6 +17,19 @@
       "types": "./dist/documents/*.d.ts",
       "import": "./dist/documents/*.mjs",
       "require": "./dist/documents/*.js"
+    }
+  },
+  "typesVersions": {
+    "*": {
+      "*": [
+        "dist/*.d.ts"
+      ],
+      "types/*": [
+        "dist/types/*.d.ts"
+      ],
+      "documents/*": [
+        "dist/documents/*.d.ts"
+      ]
     }
   },
   "files": [
