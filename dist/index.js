@@ -1,3 +1,185 @@
+"use strict";
+var __defProp = Object.defineProperty;
+var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
+var __getOwnPropNames = Object.getOwnPropertyNames;
+var __hasOwnProp = Object.prototype.hasOwnProperty;
+var __export = (target, all) => {
+  for (var name in all)
+    __defProp(target, name, { get: all[name], enumerable: true });
+};
+var __copyProps = (to, from, except, desc) => {
+  if (from && typeof from === "object" || typeof from === "function") {
+    for (let key of __getOwnPropNames(from))
+      if (!__hasOwnProp.call(to, key) && key !== except)
+        __defProp(to, key, { get: () => from[key], enumerable: !(desc = __getOwnPropDesc(from, key)) || desc.enumerable });
+  }
+  return to;
+};
+var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
+
+// src/index.ts
+var src_exports = {};
+__export(src_exports, {
+  ADD_BRANCH_TO_LIST_MUTATION: () => ADD_BRANCH_TO_LIST_MUTATION,
+  ADD_GROCERY_LIST_ITEMS_MUTATION: () => ADD_GROCERY_LIST_ITEMS_MUTATION,
+  ADD_TO_LIST_MUTATION: () => ADD_TO_LIST_MUTATION,
+  ALL_BRANCHES_QUERY: () => ALL_BRANCHES_QUERY,
+  ALL_BRANDS_QUERY: () => ALL_BRANDS_QUERY,
+  ALL_PRODUCTS_QUERY: () => ALL_PRODUCTS_QUERY,
+  ALL_STORES_QUERY: () => ALL_STORES_QUERY,
+  AddBranchToListDocument: () => AddBranchToListDocument,
+  AddGroceryListItemDocument: () => AddGroceryListItemDocument,
+  AddToListDocument: () => AddToListDocument,
+  AllBranchesDocument: () => AllBranchesDocument,
+  AllBrandsDocument: () => AllBrandsDocument,
+  AllProductsDocument: () => AllProductsDocument,
+  AllStoresDocument: () => AllStoresDocument,
+  AuthDeviceType: () => AuthDeviceType,
+  AuthPlatformType: () => AuthPlatformType,
+  BARCODE_SCAN_QUERY: () => BARCODE_SCAN_QUERY,
+  BRANCHES_WITH_PRODUCTS_QUERY: () => BRANCHES_WITH_PRODUCTS_QUERY,
+  BRANCH_QUERY: () => BRANCH_QUERY,
+  BULK_ADD_BRANCHES_TO_LIST_MUTATION: () => BULK_ADD_BRANCHES_TO_LIST_MUTATION,
+  BarcodeScanDocument: () => BarcodeScanDocument,
+  BranchDocument: () => BranchDocument,
+  BranchesWithProductsDocument: () => BranchesWithProductsDocument,
+  BulkAddBranchesToListDocument: () => BulkAddBranchesToListDocument,
+  CATEGORY_SEARCH_QUERY: () => CATEGORY_SEARCH_QUERY,
+  CHECK_APP_VERSION_QUERY: () => CHECK_APP_VERSION_QUERY,
+  COUNT_GROCERY_LIST_ITEMS_QUERY: () => COUNT_GROCERY_LIST_ITEMS_QUERY,
+  CREATE_BRANCH_MUTATION: () => CREATE_BRANCH_MUTATION,
+  CREATE_BRANCH_WITH_FULL_ADDRESS_MUTATION: () => CREATE_BRANCH_WITH_FULL_ADDRESS_MUTATION,
+  CREATE_CATEGORY_MUTATION: () => CREATE_CATEGORY_MUTATION,
+  CREATE_PRICE_MUTATION: () => CREATE_PRICE_MUTATION,
+  CREATE_PRODUCT_MUTATION: () => CREATE_PRODUCT_MUTATION,
+  CREATE_STORE_MUTATION: () => CREATE_STORE_MUTATION,
+  CREATE_USER_MUTATION: () => CREATE_USER_MUTATION,
+  CategorySearchDocument: () => CategorySearchDocument,
+  CheckAppVersionDocument: () => CheckAppVersionDocument,
+  CountGroceryListItemsDocument: () => CountGroceryListItemsDocument,
+  CreateAccountDocument: () => CreateAccountDocument,
+  CreateBranchDocument: () => CreateBranchDocument,
+  CreateBranchFromFullAddressDocument: () => CreateBranchFromFullAddressDocument,
+  CreateCategoryDocument: () => CreateCategoryDocument,
+  CreatePriceDocument: () => CreatePriceDocument,
+  CreateProductDocument: () => CreateProductDocument,
+  CreateStoreDocument: () => CreateStoreDocument,
+  DEFAULT_GROCERY_LIST_ITEMS_QUERY: () => DEFAULT_GROCERY_LIST_ITEMS_QUERY,
+  DELETE_GROCERY_LIST_ITEMS_MUTATION: () => DELETE_GROCERY_LIST_ITEMS_MUTATION,
+  DefaultGroceryListItemsDocument: () => DefaultGroceryListItemsDocument,
+  DeleteGroceryListItemDocument: () => DeleteGroceryListItemDocument,
+  EXTRACT_AND_CREATE_PRODUCT_FIELDS_QUERY: () => EXTRACT_AND_CREATE_PRODUCT_FIELDS_QUERY,
+  EXTRACT_PRODUCT_FIELDS_QUERY: () => EXTRACT_PRODUCT_FIELDS_QUERY,
+  ExtractAndCreateProductDocument: () => ExtractAndCreateProductDocument,
+  ExtractProductFieldsDocument: () => ExtractProductFieldsDocument,
+  FIND_BRANCHES_BY_DISTANCE_QUERY: () => FIND_BRANCHES_BY_DISTANCE_QUERY,
+  FIND_BRANCH_QUERY: () => FIND_BRANCH_QUERY,
+  FIND_STORE_QUERY: () => FIND_STORE_QUERY,
+  FavoriteBranchesWithPricesDocument: () => FavoriteBranchesWithPricesDocument,
+  FindBranchDocument: () => FindBranchDocument,
+  FindBranchesByDistanceDocument: () => FindBranchesByDistanceDocument,
+  FindStoreDocument: () => FindStoreDocument,
+  GET_ALL_BRANCH_LISTS_BY_LIST_ID: () => GET_ALL_BRANCH_LISTS_BY_LIST_ID,
+  GET_ALL_COUNTRIES_QUERY: () => GET_ALL_COUNTRIES_QUERY,
+  GET_ALL_LISTS: () => GET_ALL_LISTS,
+  GET_ALL_PRODUCT_LISTS_BY_LIST_ID: () => GET_ALL_PRODUCT_LISTS_BY_LIST_ID,
+  GET_ALL_USERS_QUERY: () => GET_ALL_USERS_QUERY,
+  GET_CATEGORIES_QUERY: () => GET_CATEGORIES_QUERY,
+  GET_CATEGORY_QUERY: () => GET_CATEGORY_QUERY,
+  GET_FAVORITE_BRANCHES_WITH_PRICE_DATA_QUERY: () => GET_FAVORITE_BRANCHES_WITH_PRICE_DATA_QUERY,
+  GET_GROCERY_LIST_ITEMS_QUERY: () => GET_GROCERY_LIST_ITEMS_QUERY,
+  GET_PRODUCT_NUTRITION_DATA_QUERY: () => GET_PRODUCT_NUTRITION_DATA_QUERY,
+  GET_PRODUCT_STOCKS_QUERY: () => GET_PRODUCT_STOCKS_QUERY,
+  GET_STOCK_BY_ID: () => GET_STOCK_BY_ID,
+  GET_STOCK_FROM_PRODUCT_AND_BRANCH_ID_QUERY: () => GET_STOCK_FROM_PRODUCT_AND_BRANCH_ID_QUERY,
+  GOOGLE_OAUTH_QUERY: () => GOOGLE_OAUTH_QUERY,
+  GROCERY_LISTS_QUERY: () => GROCERY_LISTS_QUERY,
+  GetAllBranchListsByListIdDocument: () => GetAllBranchListsByListIdDocument,
+  GetAllCountriesDocument: () => GetAllCountriesDocument,
+  GetAllListsDocument: () => GetAllListsDocument,
+  GetAllProductListsByListIdDocument: () => GetAllProductListsByListIdDocument,
+  GetAllUsersDocument: () => GetAllUsersDocument,
+  GetCategoriesDocument: () => GetCategoriesDocument,
+  GetCategoryDocument: () => GetCategoryDocument,
+  GetProductNutritionDataDocument: () => GetProductNutritionDataDocument,
+  GetProductStocksDocument: () => GetProductStocksDocument,
+  GetStockFromProductAndBranchIdDocument: () => GetStockFromProductAndBranchIdDocument,
+  GoogleOAuthDocument: () => GoogleOAuthDocument,
+  GroceryListItemsDocument: () => GroceryListItemsDocument,
+  GroceryListsDocument: () => GroceryListsDocument,
+  IP_TO_ADDRESS_QUERY: () => IP_TO_ADDRESS_QUERY,
+  IpToAddressDocument: () => IpToAddressDocument,
+  LOGIN_INTERNAL_QUERY: () => LOGIN_INTERNAL_QUERY,
+  LOGOUT_MUTATION: () => LOGOUT_MUTATION,
+  ListType: () => ListType,
+  LoginInternalDocument: () => LoginInternalDocument,
+  LogoutDocument: () => LogoutDocument,
+  MARK_GROCERY_ITEM_MUTATION: () => MARK_GROCERY_ITEM_MUTATION,
+  ME_QUERY: () => ME_QUERY,
+  MY_PRODUCT_BILLING_DATA_QUERY: () => MY_PRODUCT_BILLING_DATA_QUERY,
+  MY_PRODUCT_VIEW_HISTORY_QUERY: () => MY_PRODUCT_VIEW_HISTORY_QUERY,
+  MY_SEARCH_HISTORY_QUERY: () => MY_SEARCH_HISTORY_QUERY,
+  MarkGroceryListItemDocument: () => MarkGroceryListItemDocument,
+  MeDocument: () => MeDocument,
+  MyProductBillingDataDocument: () => MyProductBillingDataDocument,
+  MyProductViewHistoryDocument: () => MyProductViewHistoryDocument,
+  MySearchHistoryDocument: () => MySearchHistoryDocument,
+  OrderByType: () => OrderByType,
+  POST_AUTH_USER_DATA_QUERIES: () => POST_AUTH_USER_DATA_QUERIES,
+  PRICE_CHANGE_HISTORY_QUERY: () => PRICE_CHANGE_HISTORY_QUERY,
+  PRODUCT_BILLING_DATA_BY_USER_ID_QUERY: () => PRODUCT_BILLING_DATA_BY_USER_ID_QUERY,
+  PRODUCT_BY_ID_QUERY: () => PRODUCT_BY_ID_QUERY,
+  PRODUCT_SEARCH_QUERY: () => PRODUCT_SEARCH_QUERY,
+  PRODUCT_SUMMARY_QUERY: () => PRODUCT_SUMMARY_QUERY,
+  PostAuthUserDataDocument: () => PostAuthUserDataDocument,
+  PriceChangeHistoryDocument: () => PriceChangeHistoryDocument,
+  ProductBillingDataByUserIdDocument: () => ProductBillingDataByUserIdDocument,
+  ProductDocument: () => ProductDocument,
+  ProductSearchDocument: () => ProductSearchDocument,
+  ProductSummaryDocument: () => ProductSummaryDocument,
+  REGISTER_EXPO_PUSH_TOKEN: () => REGISTER_EXPO_PUSH_TOKEN,
+  REMOVE_BRANCH_FROM_LIST_MUTATION: () => REMOVE_BRANCH_FROM_LIST_MUTATION,
+  REMOVE_FROM_LIST_BY_PRODUCT_ID_MUTATION: () => REMOVE_FROM_LIST_BY_PRODUCT_ID_MUTATION,
+  REMOVE_FROM_LIST_MUTATION: () => REMOVE_FROM_LIST_MUTATION,
+  REQUEST_RESET_PASSWORD_MUTATION: () => REQUEST_RESET_PASSWORD_MUTATION,
+  RESEND_VERIFICATION_MUTATION: () => RESEND_VERIFICATION_MUTATION,
+  RegisterExpoPushTokenDocument: () => RegisterExpoPushTokenDocument,
+  RemoveBranchFromListDocument: () => RemoveBranchFromListDocument,
+  RemoveFromListDocument: () => RemoveFromListDocument,
+  RemoveFromListWithProductIdDocument: () => RemoveFromListWithProductIdDocument,
+  RequestResetPasswordDocument: () => RequestResetPasswordDocument,
+  ResendVerificationDocument: () => ResendVerificationDocument,
+  SANITIZE_PRODUCT_MUTATION: () => SANITIZE_PRODUCT_MUTATION,
+  SanitizeProductDocument: () => SanitizeProductDocument,
+  StockDocument: () => StockDocument,
+  UPDATE_GROCERY_LIST_ITEMS_MUTATION: () => UPDATE_GROCERY_LIST_ITEMS_MUTATION,
+  UPDATE_PASSWORD_WITH_RESET_CODE_MUTATION: () => UPDATE_PASSWORD_WITH_RESET_CODE_MUTATION,
+  UPDATE_PRODUCT_MUTATION: () => UPDATE_PRODUCT_MUTATION,
+  UPDATE_PRODUCT_NUTRITION_MUTATION: () => UPDATE_PRODUCT_NUTRITION_MUTATION,
+  UPDATE_PROFILE_MUTATION: () => UPDATE_PROFILE_MUTATION,
+  UPDATE_USER_BY_ID_MUTATION: () => UPDATE_USER_BY_ID_MUTATION,
+  UpdateGroceryListItemDocument: () => UpdateGroceryListItemDocument,
+  UpdatePasswordWithResetCodeDocument: () => UpdatePasswordWithResetCodeDocument,
+  UpdateProductDocument: () => UpdateProductDocument,
+  UpdateProductNutritionDataDocument: () => UpdateProductNutritionDataDocument,
+  UpdateProfileDocument: () => UpdateProfileDocument,
+  UpdateUserByIdDocument: () => UpdateUserByIdDocument,
+  UserFieldsFragmentDoc: () => UserFieldsFragmentDoc,
+  UserFragment: () => UserFragment,
+  UserRole: () => UserRole,
+  VERIFY_EMAIL_MUTATION: () => VERIFY_EMAIL_MUTATION,
+  VERIFY_PASSWORD_RESET_CODE_QUERY: () => VERIFY_PASSWORD_RESET_CODE_QUERY,
+  VerifyEmailDocument: () => VerifyEmailDocument,
+  VerifyPasswordResetCodeDocument: () => VerifyPasswordResetCodeDocument,
+  WEIGHT_COMPONENTS_FROM_CATEGORY_ID_QUERY: () => WEIGHT_COMPONENTS_FROM_CATEGORY_ID_QUERY,
+  WeightComponentsFromCategoryIdDocument: () => WeightComponentsFromCategoryIdDocument,
+  graphql: () => graphql,
+  isFragmentReady: () => isFragmentReady,
+  makeFragmentData: () => makeFragmentData,
+  useFragment: () => useFragment
+});
+module.exports = __toCommonJS(src_exports);
+
 // src/types/fragment-masking.ts
 function useFragment(_documentNode, fragmentType) {
   return fragmentType;
@@ -204,8 +386,8 @@ function graphql(source) {
 }
 
 // src/documents/queries/admin.ts
-import { gql } from "@apollo/client";
-var GET_ALL_USERS_QUERY = gql(`
+var import_client = require("@apollo/client");
+var GET_ALL_USERS_QUERY = (0, import_client.gql)(`
   query GetAllUsers($paginator: PaginatorInput!, $filters: UserFilter) {
     getAllUsers(paginator:$paginator, filters:$filters) {
       users {
@@ -232,7 +414,7 @@ var GET_ALL_USERS_QUERY = gql(`
     }
   }
 `);
-var PRODUCT_BILLING_DATA_BY_USER_ID_QUERY = gql(`
+var PRODUCT_BILLING_DATA_BY_USER_ID_QUERY = (0, import_client.gql)(`
   query ProductBillingDataByUserId($userId: ID!, $paginator: PaginatorInput!) {
     productBillingDataByUserId(userId: $userId, paginator: $paginator) {
       data {
@@ -278,8 +460,8 @@ var PRODUCT_BILLING_DATA_BY_USER_ID_QUERY = gql(`
 `);
 
 // src/documents/queries/branch.ts
-import { gql as gql2 } from "@apollo/client";
-var ALL_BRANCHES_QUERY = gql2(`
+var import_client2 = require("@apollo/client");
+var ALL_BRANCHES_QUERY = (0, import_client2.gql)(`
   query AllBranches($storeId: ID, $storeSlug: String, $paginator: PaginatorInput!, $search: String, $location: LocationInput) {
     allBranches(storeId: $storeId, storeSlug: $storeSlug, paginator: $paginator, search: $search, location: $location) {
       branches {
@@ -315,7 +497,7 @@ var ALL_BRANCHES_QUERY = gql2(`
     }
   }
 `);
-var BRANCH_QUERY = gql2(`
+var BRANCH_QUERY = (0, import_client2.gql)(`
   query Branch($branchId: ID, $branchSlug: String, $storeId: ID, $storeSlug: String) {
     findBranch(id: $branchId, slug: $branchSlug, storeId: $storeId, storeSlug: $storeSlug) {
       id
@@ -348,7 +530,7 @@ var BRANCH_QUERY = gql2(`
     }
   }
 `);
-var FIND_BRANCH_QUERY = gql2(`
+var FIND_BRANCH_QUERY = (0, import_client2.gql)(`
   query FindBranch($branchId: ID, $branchSlug: String, $storeId: ID, $storeSlug: String) {
     findBranch(id: $branchId, slug: $branchSlug, storeId: $storeId, storeSlug: $storeSlug) {
       id
@@ -373,7 +555,7 @@ var FIND_BRANCH_QUERY = gql2(`
     }
   }
 `);
-var FIND_BRANCHES_BY_DISTANCE_QUERY = gql2(`
+var FIND_BRANCHES_BY_DISTANCE_QUERY = (0, import_client2.gql)(`
   query FindBranchesByDistance($lat: Float!, $lon: Float!, $radiusMeters: Int!) {
     findBranchesByDistance(lat: $lat, lon: $lon, radiusMeters: $radiusMeters) {
       id
@@ -406,7 +588,7 @@ var FIND_BRANCHES_BY_DISTANCE_QUERY = gql2(`
     }
   }
 `);
-var GET_FAVORITE_BRANCHES_WITH_PRICE_DATA_QUERY = gql2(`
+var GET_FAVORITE_BRANCHES_WITH_PRICE_DATA_QUERY = (0, import_client2.gql)(`
   query FavoriteBranchesWithPrices($productId: ID!) {
     getFavoriteBranchesWithPrices(productId: $productId) {
       id
@@ -471,8 +653,8 @@ var GET_FAVORITE_BRANCHES_WITH_PRICE_DATA_QUERY = gql2(`
 `);
 
 // src/documents/queries/brand.ts
-import { gql as gql3 } from "@apollo/client";
-var ALL_BRANDS_QUERY = gql3(`
+var import_client3 = require("@apollo/client");
+var ALL_BRANDS_QUERY = (0, import_client3.gql)(`
   query AllBrands($joinStock: Boolean) {
     allBrands(joinStock: $joinStock) {
       brand
@@ -482,8 +664,8 @@ var ALL_BRANDS_QUERY = gql3(`
 `);
 
 // src/documents/queries/category.ts
-import { gql as gql4 } from "@apollo/client";
-var GET_CATEGORIES_QUERY = gql4(`
+var import_client4 = require("@apollo/client");
+var GET_CATEGORIES_QUERY = (0, import_client4.gql)(`
   query GetCategories($depth: Int, $parentId: ID) {
     getCategories(depth: $depth, parentId: $parentId) {
       id
@@ -495,7 +677,7 @@ var GET_CATEGORIES_QUERY = gql4(`
     }
   }
 `);
-var CATEGORY_SEARCH_QUERY = gql4(`
+var CATEGORY_SEARCH_QUERY = (0, import_client4.gql)(`
   query CategorySearch($search: String!, $quickSearchMode: Boolean) {
     categorySearch(search: $search, quickSearchMode: $quickSearchMode) {
       id
@@ -503,7 +685,7 @@ var CATEGORY_SEARCH_QUERY = gql4(`
     }
   }
 `);
-var GET_CATEGORY_QUERY = gql4(`
+var GET_CATEGORY_QUERY = (0, import_client4.gql)(`
   query GetCategory($id: ID!) {
     getCategory(id: $id) {
       id
@@ -516,8 +698,8 @@ var GET_CATEGORY_QUERY = gql4(`
 `);
 
 // src/documents/queries/grocery-list.ts
-import { gql as gql5 } from "@apollo/client";
-var GROCERY_LISTS_QUERY = gql5(`
+var import_client5 = require("@apollo/client");
+var GROCERY_LISTS_QUERY = (0, import_client5.gql)(`
   query GroceryLists {
     groceryLists {
       id
@@ -527,7 +709,7 @@ var GROCERY_LISTS_QUERY = gql5(`
     }
   }
 `);
-var GET_GROCERY_LIST_ITEMS_QUERY = gql5(`
+var GET_GROCERY_LIST_ITEMS_QUERY = (0, import_client5.gql)(`
   query GroceryListItems($groceryListId: ID!, $filters: GroceryListItemsFilters) {
     groceryListItems(groceryListId: $groceryListId, filters: $filters) {
       id
@@ -556,7 +738,7 @@ var GET_GROCERY_LIST_ITEMS_QUERY = gql5(`
     }
   }
 `);
-var DEFAULT_GROCERY_LIST_ITEMS_QUERY = gql5(`
+var DEFAULT_GROCERY_LIST_ITEMS_QUERY = (0, import_client5.gql)(`
   query DefaultGroceryListItems($filters: GroceryListItemsFilters) {
     defaultGroceryListItems(filters: $filters) {
       id
@@ -585,15 +767,15 @@ var DEFAULT_GROCERY_LIST_ITEMS_QUERY = gql5(`
     }
   }
 `);
-var COUNT_GROCERY_LIST_ITEMS_QUERY = gql5(`
+var COUNT_GROCERY_LIST_ITEMS_QUERY = (0, import_client5.gql)(`
   query CountGroceryListItems($groceryListId: ID, $includeCompleted: Boolean) {
     countGroceryListItems(groceryListId: $groceryListId, includeCompleted: $includeCompleted)
   }
 `);
 
 // src/documents/queries/list.ts
-import { gql as gql6 } from "@apollo/client";
-var GET_ALL_LISTS = gql6`
+var import_client6 = require("@apollo/client");
+var GET_ALL_LISTS = import_client6.gql`
   query GetAllLists($listType: ListType) {
     getAllLists(listType: $listType) {
       id
@@ -617,7 +799,7 @@ var GET_ALL_LISTS = gql6`
     }
   }
 `;
-var GET_ALL_PRODUCT_LISTS_BY_LIST_ID = gql6(`
+var GET_ALL_PRODUCT_LISTS_BY_LIST_ID = (0, import_client6.gql)(`
   query GetAllProductListsByListId($listId: ID!) {
     getAllProductListsByListId(listId: $listId) {
       id
@@ -700,7 +882,7 @@ var GET_ALL_PRODUCT_LISTS_BY_LIST_ID = gql6(`
     }
   }
 `);
-var GET_ALL_BRANCH_LISTS_BY_LIST_ID = gql6(`
+var GET_ALL_BRANCH_LISTS_BY_LIST_ID = (0, import_client6.gql)(`
   query GetAllBranchListsByListId($listId: ID!) {
     getAllBranchListsByListId(listId: $listId) {
       id
@@ -739,8 +921,8 @@ var GET_ALL_BRANCH_LISTS_BY_LIST_ID = gql6(`
 `);
 
 // src/documents/queries/metadata.ts
-import { gql as gql7 } from "@apollo/client";
-var GET_ALL_COUNTRIES_QUERY = gql7`
+var import_client7 = require("@apollo/client");
+var GET_ALL_COUNTRIES_QUERY = import_client7.gql`
   query GetAllCountries {
     getAllCountries {
       code
@@ -762,12 +944,12 @@ var GET_ALL_COUNTRIES_QUERY = gql7`
     }
   }
 `;
-var CHECK_APP_VERSION_QUERY = gql7(`
+var CHECK_APP_VERSION_QUERY = (0, import_client7.gql)(`
   query CheckAppVersion($platform: AuthDeviceType!, $version: String!) {
     checkAppVersion(platform: $platform, version: $version)
   }
 `);
-var IP_TO_ADDRESS_QUERY = gql7(`
+var IP_TO_ADDRESS_QUERY = (0, import_client7.gql)(`
   query IpToAddress($ipAddress: String!) {
     ipToAddress(ipAddress: $ipAddress) {
       id
@@ -786,8 +968,8 @@ var IP_TO_ADDRESS_QUERY = gql7(`
 `);
 
 // src/documents/queries/price.ts
-import { gql as gql8 } from "@apollo/client";
-var PRICE_CHANGE_HISTORY_QUERY = gql8(`
+var import_client8 = require("@apollo/client");
+var PRICE_CHANGE_HISTORY_QUERY = (0, import_client8.gql)(`
   query PriceChangeHistory($productId: ID!, $stockId: ID!, $paginator: PaginatorInput!, $filters: PriceHistoryFilter) {
     priceChangeHistory(
       productId: $productId
@@ -828,8 +1010,8 @@ var PRICE_CHANGE_HISTORY_QUERY = gql8(`
 `);
 
 // src/documents/queries/product-nutrition.ts
-import { gql as gql9 } from "@apollo/client";
-var GET_PRODUCT_NUTRITION_DATA_QUERY = gql9(`
+var import_client9 = require("@apollo/client");
+var GET_PRODUCT_NUTRITION_DATA_QUERY = (0, import_client9.gql)(`
   query GetProductNutritionData($productId: ID!) {
     getProductNutritionData(productId: $productId) {
       productId
@@ -951,8 +1133,8 @@ var GET_PRODUCT_NUTRITION_DATA_QUERY = gql9(`
 `);
 
 // src/documents/queries/product.ts
-import { gql as gql10 } from "@apollo/client";
-var BARCODE_SCAN_QUERY = gql10(`
+var import_client10 = require("@apollo/client");
+var BARCODE_SCAN_QUERY = (0, import_client10.gql)(`
   query BarcodeScan($barcode: String!, $searchMode: Boolean, $location: LocationInput) {
     barcodeScan(barcode: $barcode, searchMode: $searchMode, location: $location) {
       id
@@ -987,7 +1169,7 @@ var BARCODE_SCAN_QUERY = gql10(`
     }
   }
 `);
-var PRODUCT_BY_ID_QUERY = gql10(`
+var PRODUCT_BY_ID_QUERY = (0, import_client10.gql)(`
   query Product($productId: ID!, $viewerTrail: ViewerTrailInput) {
     product(id: $productId, viewerTrail: $viewerTrail) {
       id
@@ -1026,7 +1208,7 @@ var PRODUCT_BY_ID_QUERY = gql10(`
     }
   }
 `);
-var ALL_PRODUCTS_QUERY = gql10(`
+var ALL_PRODUCTS_QUERY = (0, import_client10.gql)(`
   query AllProducts($paginator: PaginatorInput!, $search: ProductSearch) {
     allProducts(paginator: $paginator, search: $search) {
       products {
@@ -1127,7 +1309,7 @@ var ALL_PRODUCTS_QUERY = gql10(`
     }
   }
 `);
-var BRANCHES_WITH_PRODUCTS_QUERY = gql10(`
+var BRANCHES_WITH_PRODUCTS_QUERY = (0, import_client10.gql)(`
   query BranchesWithProducts($paginator: PaginatorInput!, $productLimit: Int!, $filters: ProductSearch) {
     branchesWithProducts(
       paginator: $paginator
@@ -1229,7 +1411,7 @@ var BRANCHES_WITH_PRODUCTS_QUERY = gql10(`
     }
   }
 `);
-var PRODUCT_SUMMARY_QUERY = gql10(`
+var PRODUCT_SUMMARY_QUERY = (0, import_client10.gql)(`
   query ProductSummary($productId: ID!) {
     productSummary(id: $productId) {
       id
@@ -1241,7 +1423,7 @@ var PRODUCT_SUMMARY_QUERY = gql10(`
     }
   }
 `);
-var PRODUCT_SEARCH_QUERY = gql10(`
+var PRODUCT_SEARCH_QUERY = (0, import_client10.gql)(`
   query ProductSearch($paginator: PaginatorInput!, $search: String!) {
     productSearch(search: $search, paginator: $paginator) {
       products {
@@ -1272,7 +1454,7 @@ var PRODUCT_SEARCH_QUERY = gql10(`
     }
   }
 `);
-var EXTRACT_PRODUCT_FIELDS_QUERY = gql10(`
+var EXTRACT_PRODUCT_FIELDS_QUERY = (0, import_client10.gql)(`
   query ExtractProductFields($base64Image: String!) {
     extractProductFields(base64Image: $base64Image) {
       brand
@@ -1291,7 +1473,7 @@ var EXTRACT_PRODUCT_FIELDS_QUERY = gql10(`
     }
   }
 `);
-var MY_PRODUCT_VIEW_HISTORY_QUERY = gql10(`
+var MY_PRODUCT_VIEW_HISTORY_QUERY = (0, import_client10.gql)(`
   query MyProductViewHistory($paginator: PaginatorInput!) {
     myProductViewHistory(paginator: $paginator) {
       products {
@@ -1387,7 +1569,7 @@ var MY_PRODUCT_VIEW_HISTORY_QUERY = gql10(`
     }
   }
 `);
-var WEIGHT_COMPONENTS_FROM_CATEGORY_ID_QUERY = gql10(`
+var WEIGHT_COMPONENTS_FROM_CATEGORY_ID_QUERY = (0, import_client10.gql)(`
   query WeightComponentsFromCategoryId($categoryId: ID!) {
     weightComponentsFromCategoryId(categoryId: $categoryId) {
       weightValue
@@ -1397,8 +1579,8 @@ var WEIGHT_COMPONENTS_FROM_CATEGORY_ID_QUERY = gql10(`
 `);
 
 // src/documents/queries/search.ts
-import { gql as gql11 } from "@apollo/client";
-var MY_SEARCH_HISTORY_QUERY = gql11(`
+var import_client11 = require("@apollo/client");
+var MY_SEARCH_HISTORY_QUERY = (0, import_client11.gql)(`
   query MySearchHistory($paginator: PaginatorInput!) {
     mySearchHistory(paginator:$paginator) {
       searches {
@@ -1418,8 +1600,8 @@ var MY_SEARCH_HISTORY_QUERY = gql11(`
 `);
 
 // src/documents/queries/stock.ts
-import { gql as gql12 } from "@apollo/client";
-var GET_STOCK_BY_ID = gql12(`
+var import_client12 = require("@apollo/client");
+var GET_STOCK_BY_ID = (0, import_client12.gql)(`
   query Stock($stockId: ID!) {
     stock(stockId: $stockId) {
       id
@@ -1482,7 +1664,7 @@ var GET_STOCK_BY_ID = gql12(`
     }
   }
 `);
-var GET_STOCK_FROM_PRODUCT_AND_BRANCH_ID_QUERY = gql12(`
+var GET_STOCK_FROM_PRODUCT_AND_BRANCH_ID_QUERY = (0, import_client12.gql)(`
   query GetStockFromProductAndBranchId($productId: ID!, $branchId: ID!) {
     getStockFromProductAndBranchId(productId: $productId, branchId: $branchId) {
       id
@@ -1509,7 +1691,7 @@ var GET_STOCK_FROM_PRODUCT_AND_BRANCH_ID_QUERY = gql12(`
     }
   }
 `);
-var GET_PRODUCT_STOCKS_QUERY = gql12(`
+var GET_PRODUCT_STOCKS_QUERY = (0, import_client12.gql)(`
   query GetProductStocks($paginator: PaginatorInput!, $productId: ID!, $location: LocationInput) {
     getProductStocks(paginator: $paginator, productId: $productId, location: $location) {
       stocks {
@@ -1582,8 +1764,8 @@ var GET_PRODUCT_STOCKS_QUERY = gql12(`
 `);
 
 // src/documents/queries/store.ts
-import { gql as gql13 } from "@apollo/client";
-var ALL_STORES_QUERY = gql13(`
+var import_client13 = require("@apollo/client");
+var ALL_STORES_QUERY = (0, import_client13.gql)(`
   query AllStores($paginator: PaginatorInput!, $search: String) {
     allStores(paginator: $paginator, search: $search) {
       stores {
@@ -1604,7 +1786,7 @@ var ALL_STORES_QUERY = gql13(`
     }
   }
 `);
-var FIND_STORE_QUERY = gql13(`
+var FIND_STORE_QUERY = (0, import_client13.gql)(`
   query FindStore($storeId: ID, $storeSlug: String) {
     findStore(id: $storeId, slug: $storeSlug) {
       id
@@ -1617,8 +1799,8 @@ var FIND_STORE_QUERY = gql13(`
 `);
 
 // src/documents/queries/user.ts
-import { gql as gql14 } from "@apollo/client";
-var UserFragment = gql14(`
+var import_client14 = require("@apollo/client");
+var UserFragment = (0, import_client14.gql)(`
   fragment UserFields on User {
     id
     name
@@ -1633,7 +1815,7 @@ var UserFragment = gql14(`
     role
   }
 `);
-var LOGIN_INTERNAL_QUERY = gql14(`
+var LOGIN_INTERNAL_QUERY = (0, import_client14.gql)(`
   query LoginInternal(
     $email: String!
     $password: String!
@@ -1673,7 +1855,7 @@ var LOGIN_INTERNAL_QUERY = gql14(`
     }
   }
 `);
-var GOOGLE_OAUTH_QUERY = gql14(`
+var GOOGLE_OAUTH_QUERY = (0, import_client14.gql)(`
   query GoogleOAuth($accessToken: String!, $ipAddress: String, $device: AuthDeviceType) {
     googleOAuth(accessToken: $accessToken, ipAddress: $ipAddress, device: $device) {
       token
@@ -1709,12 +1891,12 @@ var GOOGLE_OAUTH_QUERY = gql14(`
     }
   }
 `);
-var VERIFY_PASSWORD_RESET_CODE_QUERY = gql14(`
+var VERIFY_PASSWORD_RESET_CODE_QUERY = (0, import_client14.gql)(`
   query VerifyPasswordResetCode($email: String!, $code: String!) {
     verifyPasswordResetCode(email: $email, code: $code)
   }
 `);
-var ME_QUERY = gql14(`
+var ME_QUERY = (0, import_client14.gql)(`
   query Me {
     me {
       id
@@ -1749,7 +1931,7 @@ var ME_QUERY = gql14(`
     }
   }
 `);
-var MY_PRODUCT_BILLING_DATA_QUERY = gql14(`
+var MY_PRODUCT_BILLING_DATA_QUERY = (0, import_client14.gql)(`
   query MyProductBillingData($paginator: PaginatorInput!) {
     myProductBillingData(paginator: $paginator) {
       data {
@@ -1793,7 +1975,7 @@ var MY_PRODUCT_BILLING_DATA_QUERY = gql14(`
     }
   }
 `);
-var POST_AUTH_USER_DATA_QUERIES = gql14(`
+var POST_AUTH_USER_DATA_QUERIES = (0, import_client14.gql)(`
   query PostAuthUserData($listType: ListType) {
     getAllLists(listType: $listType) {
       id
@@ -1826,8 +2008,8 @@ var POST_AUTH_USER_DATA_QUERIES = gql14(`
 `);
 
 // src/documents/mutations/admin.ts
-import { gql as gql15 } from "@apollo/client";
-var UPDATE_USER_BY_ID_MUTATION = gql15(`
+var import_client15 = require("@apollo/client");
+var UPDATE_USER_BY_ID_MUTATION = (0, import_client15.gql)(`
   mutation UpdateUserById($userId: ID!, $input: UpdateUserFull!) {
     updateUserById(userId: $userId, input: $input) {
       id
@@ -1846,8 +2028,8 @@ var UPDATE_USER_BY_ID_MUTATION = gql15(`
 `);
 
 // src/documents/mutations/branch.ts
-import { gql as gql16 } from "@apollo/client";
-var CREATE_BRANCH_WITH_FULL_ADDRESS_MUTATION = gql16(`
+var import_client16 = require("@apollo/client");
+var CREATE_BRANCH_WITH_FULL_ADDRESS_MUTATION = (0, import_client16.gql)(`
   mutation CreateBranchFromFullAddress($storeId: ID!, $fullAddress: String!) {
     createBranchWithFullAddress(storeId: $storeId, fullAddress: $fullAddress) {
       id
@@ -1870,7 +2052,7 @@ var CREATE_BRANCH_WITH_FULL_ADDRESS_MUTATION = gql16(`
     }
   }
 `);
-var CREATE_BRANCH_MUTATION = gql16(`
+var CREATE_BRANCH_MUTATION = (0, import_client16.gql)(`
   mutation CreateBranch($input: CreateBranch!) {
     createBranch(input: $input) {
       id
@@ -1895,8 +2077,8 @@ var CREATE_BRANCH_MUTATION = gql16(`
 `);
 
 // src/documents/mutations/category.ts
-import { gql as gql17 } from "@apollo/client";
-var CREATE_CATEGORY_MUTATION = gql17(`
+var import_client17 = require("@apollo/client");
+var CREATE_CATEGORY_MUTATION = (0, import_client17.gql)(`
   mutation CreateCategory($input: CreateCategory!) {
     createCategory(input:$input) {
       id
@@ -1910,29 +2092,29 @@ var CREATE_CATEGORY_MUTATION = gql17(`
 `);
 
 // src/documents/mutations/grocery-list.ts
-import { gql as gql18 } from "@apollo/client";
-var ADD_GROCERY_LIST_ITEMS_MUTATION = gql18(`
+var import_client18 = require("@apollo/client");
+var ADD_GROCERY_LIST_ITEMS_MUTATION = (0, import_client18.gql)(`
   mutation AddGroceryListItem($groceryListId: ID!, $input: CreateGroceryListItemInput!) {
     addGroceryListItem(groceryListId: $groceryListId, input: $input) {
       id
     }
   }
 `);
-var UPDATE_GROCERY_LIST_ITEMS_MUTATION = gql18(`
+var UPDATE_GROCERY_LIST_ITEMS_MUTATION = (0, import_client18.gql)(`
   mutation UpdateGroceryListItem($groceryListItemId: ID!, $input: CreateGroceryListItemInput!) {
     updateGroceryListItem(groceryListItemId: $groceryListItemId, input: $input) {
       id
     }
   }
 `);
-var DELETE_GROCERY_LIST_ITEMS_MUTATION = gql18(`
+var DELETE_GROCERY_LIST_ITEMS_MUTATION = (0, import_client18.gql)(`
   mutation DeleteGroceryListItem($groceryListItemId: ID!) {
     deleteGroceryListItem(groceryListItemId: $groceryListItemId) {
       id
     }
   }
 `);
-var MARK_GROCERY_ITEM_MUTATION = gql18(`
+var MARK_GROCERY_ITEM_MUTATION = (0, import_client18.gql)(`
   mutation MarkGroceryListItem($groceryListItemId: ID!, $completed: Boolean!) {
     markGroceryListItem(groceryListItemId: $groceryListItemId, completed:$completed) {
       id
@@ -1942,8 +2124,8 @@ var MARK_GROCERY_ITEM_MUTATION = gql18(`
 `);
 
 // src/documents/mutations/list.ts
-import { gql as gql19 } from "@apollo/client";
-var ADD_TO_LIST_MUTATION = gql19(`
+var import_client19 = require("@apollo/client");
+var ADD_TO_LIST_MUTATION = (0, import_client19.gql)(`
   mutation AddToList($listId: ID!, $productId: ID!, $stockId: ID) {
     addToList(listId: $listId, productId: $productId, stockId: $stockId) {
       id
@@ -1955,7 +2137,7 @@ var ADD_TO_LIST_MUTATION = gql19(`
     }
   }
 `);
-var REMOVE_FROM_LIST_MUTATION = gql19(`
+var REMOVE_FROM_LIST_MUTATION = (0, import_client19.gql)(`
   mutation RemoveFromList($listId: ID!, $productListId: ID!) {
     removeFromList(listId: $listId, productListId: $productListId) {
       id
@@ -1967,7 +2149,7 @@ var REMOVE_FROM_LIST_MUTATION = gql19(`
     }
   }
 `);
-var REMOVE_FROM_LIST_BY_PRODUCT_ID_MUTATION = gql19(`
+var REMOVE_FROM_LIST_BY_PRODUCT_ID_MUTATION = (0, import_client19.gql)(`
   mutation RemoveFromListWithProductId($listId: ID!, $productId: ID!, $stockId: ID) {
     removeFromListWithProductId(listId: $listId, productId: $productId, stockId: $stockId) {
       id
@@ -1979,7 +2161,7 @@ var REMOVE_FROM_LIST_BY_PRODUCT_ID_MUTATION = gql19(`
     }
   }
 `);
-var ADD_BRANCH_TO_LIST_MUTATION = gql19(`
+var ADD_BRANCH_TO_LIST_MUTATION = (0, import_client19.gql)(`
   mutation AddBranchToList($listId: ID!, $branchId: ID!) {
     addBranchToList(listId: $listId, branchId: $branchId) {
       id
@@ -1990,7 +2172,7 @@ var ADD_BRANCH_TO_LIST_MUTATION = gql19(`
     }
   }
 `);
-var BULK_ADD_BRANCHES_TO_LIST_MUTATION = gql19(`
+var BULK_ADD_BRANCHES_TO_LIST_MUTATION = (0, import_client19.gql)(`
   mutation BulkAddBranchesToList($listId: ID!, $branchIds: [ID!]!) {
     bulkAddBranchesToList(listId: $listId, branchIds: $branchIds) {
       id
@@ -2001,7 +2183,7 @@ var BULK_ADD_BRANCHES_TO_LIST_MUTATION = gql19(`
     }
   }
 `);
-var REMOVE_BRANCH_FROM_LIST_MUTATION = gql19(`
+var REMOVE_BRANCH_FROM_LIST_MUTATION = (0, import_client19.gql)(`
   mutation RemoveBranchFromList($listId: ID!, $branchListId: ID!) {
     removeBranchFromList(listId: $listId, branchListId: $branchListId) {
       id
@@ -2014,8 +2196,8 @@ var REMOVE_BRANCH_FROM_LIST_MUTATION = gql19(`
 `);
 
 // src/documents/mutations/price.ts
-import { gql as gql20 } from "@apollo/client";
-var CREATE_PRICE_MUTATION = gql20(`
+var import_client20 = require("@apollo/client");
+var CREATE_PRICE_MUTATION = (0, import_client20.gql)(`
   mutation CreatePrice($input: CreatePrice!) {
     createPrice(input: $input) {
       id
@@ -2030,8 +2212,8 @@ var CREATE_PRICE_MUTATION = gql20(`
 `);
 
 // src/documents/mutations/product-nutrition.ts
-import { gql as gql21 } from "@apollo/client";
-var UPDATE_PRODUCT_NUTRITION_MUTATION = gql21(`
+var import_client21 = require("@apollo/client");
+var UPDATE_PRODUCT_NUTRITION_MUTATION = (0, import_client21.gql)(`
   mutation UpdateProductNutritionData($productId: ID!) {
     updateProductNutritionData(productId: $productId) {
       productId
@@ -2043,8 +2225,8 @@ var UPDATE_PRODUCT_NUTRITION_MUTATION = gql21(`
 `);
 
 // src/documents/mutations/product.ts
-import { gql as gql22 } from "@apollo/client";
-var CREATE_PRODUCT_MUTATION = gql22(`
+var import_client22 = require("@apollo/client");
+var CREATE_PRODUCT_MUTATION = (0, import_client22.gql)(`
   mutation CreateProduct($input: CreateProduct!) {
     createProduct(input: $input) {
       id
@@ -2068,7 +2250,7 @@ var CREATE_PRODUCT_MUTATION = gql22(`
     }
   }
 `);
-var UPDATE_PRODUCT_MUTATION = gql22(`
+var UPDATE_PRODUCT_MUTATION = (0, import_client22.gql)(`
   mutation UpdateProduct($id: ID!, $input: UpdateProduct!) {
     updateProduct(id: $id, input: $input) {
       id
@@ -2092,7 +2274,7 @@ var UPDATE_PRODUCT_MUTATION = gql22(`
     }
   }
 `);
-var EXTRACT_AND_CREATE_PRODUCT_FIELDS_QUERY = gql22(`
+var EXTRACT_AND_CREATE_PRODUCT_FIELDS_QUERY = (0, import_client22.gql)(`
   mutation ExtractAndCreateProduct($barcode: String!, $base64Image: String!) {
     extractAndCreateProduct(barcode: $barcode, base64Image: $base64Image) {
       id
@@ -2108,7 +2290,7 @@ var EXTRACT_AND_CREATE_PRODUCT_FIELDS_QUERY = gql22(`
     }
   }
 `);
-var SANITIZE_PRODUCT_MUTATION = gql22(`
+var SANITIZE_PRODUCT_MUTATION = (0, import_client22.gql)(`
   mutation SanitizeProduct($id: ID!) {
     sanitizeProduct(id: $id) {
       id
@@ -2140,8 +2322,8 @@ var SANITIZE_PRODUCT_MUTATION = gql22(`
 `);
 
 // src/documents/mutations/store.ts
-import { gql as gql23 } from "@apollo/client";
-var CREATE_STORE_MUTATION = gql23(`
+var import_client23 = require("@apollo/client");
+var CREATE_STORE_MUTATION = (0, import_client23.gql)(`
   mutation CreateStore($input: CreateStore!) {
     createStore(input: $input) {
       id
@@ -2153,8 +2335,8 @@ var CREATE_STORE_MUTATION = gql23(`
 `);
 
 // src/documents/mutations/user.ts
-import { gql as gql24 } from "@apollo/client";
-var CREATE_USER_MUTATION = gql24`
+var import_client24 = require("@apollo/client");
+var CREATE_USER_MUTATION = import_client24.gql`
   mutation CreateAccount($email: String!, $name: String!, $password: String!) {
     createAccount(input: { email: $email, name: $name, password: $password }) {
       id
@@ -2168,7 +2350,7 @@ var CREATE_USER_MUTATION = gql24`
     }
   }
 `;
-var VERIFY_EMAIL_MUTATION = gql24(`
+var VERIFY_EMAIL_MUTATION = (0, import_client24.gql)(`
   mutation VerifyEmail($verificationCode: String!) {
     verifyEmail(verificationCode: $verificationCode) {
       id
@@ -2184,17 +2366,17 @@ var VERIFY_EMAIL_MUTATION = gql24(`
     }
   }
 `);
-var RESEND_VERIFICATION_MUTATION = gql24(`
+var RESEND_VERIFICATION_MUTATION = (0, import_client24.gql)(`
   mutation ResendVerification($email: String!) {
     resendEmailVerificationCode(email: $email)
   }
 `);
-var LOGOUT_MUTATION = gql24(`
+var LOGOUT_MUTATION = (0, import_client24.gql)(`
   mutation Logout {
     logout
   }
 `);
-var UPDATE_PROFILE_MUTATION = gql24(`
+var UPDATE_PROFILE_MUTATION = (0, import_client24.gql)(`
   mutation UpdateProfile($input: UpdateUser!) {
     updateProfile(input: $input) {
       id
@@ -2227,12 +2409,12 @@ var UPDATE_PROFILE_MUTATION = gql24(`
     }
   }
 `);
-var REQUEST_RESET_PASSWORD_MUTATION = gql24(`
+var REQUEST_RESET_PASSWORD_MUTATION = (0, import_client24.gql)(`
   mutation RequestResetPassword($email: String!) {
     requestPasswordReset(email: $email)
   }
 `);
-var UPDATE_PASSWORD_WITH_RESET_CODE_MUTATION = gql24(`
+var UPDATE_PASSWORD_WITH_RESET_CODE_MUTATION = (0, import_client24.gql)(`
   mutation UpdatePasswordWithResetCode($email: String!, $code: String!, $newPassword: String!) {
     updatePasswordWithResetCode(
       email: $email
@@ -2241,7 +2423,7 @@ var UPDATE_PASSWORD_WITH_RESET_CODE_MUTATION = gql24(`
     )
   }
 `);
-var REGISTER_EXPO_PUSH_TOKEN = gql24(`
+var REGISTER_EXPO_PUSH_TOKEN = (0, import_client24.gql)(`
   mutation RegisterExpoPushToken($expoPushToken: String!) {
     registerExpoPushToken(expoPushToken: $expoPushToken) {
       id
@@ -2272,7 +2454,8 @@ var REGISTER_EXPO_PUSH_TOKEN = gql24(`
     }
   }
 `);
-export {
+// Annotate the CommonJS export names for ESM import in node:
+0 && (module.exports = {
   ADD_BRANCH_TO_LIST_MUTATION,
   ADD_GROCERY_LIST_ITEMS_MUTATION,
   ADD_TO_LIST_MUTATION,
@@ -2430,5 +2613,5 @@ export {
   isFragmentReady,
   makeFragmentData,
   useFragment
-};
-//# sourceMappingURL=index.mjs.map
+});
+//# sourceMappingURL=index.js.map
