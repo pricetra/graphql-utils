@@ -282,14 +282,21 @@ export const BRANCHES_WITH_PRODUCTS_QUERY = gql(`
 `);
 
 export const PRODUCT_SUMMARY_QUERY = gql(`
-  query ProductSummary($productId: ID!) {
-    productSummary(id: $productId) {
+  query ProductSummary($productId: ID!, $stockId: ID) {
+    productSummary(id: $productId, stockId: $stockId) {
       id
       name
       image
       description
       brand
       code
+      store
+      branch
+      address
+      price
+      originalPrice
+      sale
+      priceCreatedAt
     }
   }
 `);
