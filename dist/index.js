@@ -1424,8 +1424,8 @@ var PRODUCT_SUMMARY_QUERY = (0, import_client10.gql)(`
   }
 `);
 var PRODUCT_SEARCH_QUERY = (0, import_client10.gql)(`
-  query ProductSearch($paginator: PaginatorInput!, $search: String!) {
-    productSearch(search: $search, paginator: $paginator) {
+  query ProductSearch($paginator: PaginatorInput!, $search: String, $brand: String) {
+    productSearch(paginator: $paginator, search: $search, brand: $brand) {
       products {
         id
         code
