@@ -4,7 +4,7 @@ const config: CodegenConfig = {
   schema: process.env.EXPO_PUBLIC_API_URL ?? 'http://localhost:8080/graphql',
   documents: ['src/documents/**/*.ts'],
   generates: {
-    'types/': {
+    'src/types/': {
       preset: 'client',
       // plugins: ['typescript', 'typescript-operations'],
       config: {
