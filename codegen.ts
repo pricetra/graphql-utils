@@ -18,8 +18,7 @@ const config: CodegenConfig = {
       plugins: [
         {
           add: {
-            content: `
-export * from "./fragment-masking";
+            content: `export * from "./fragment-masking";
 export * from "./gql";
 export * from './graphql';
 `

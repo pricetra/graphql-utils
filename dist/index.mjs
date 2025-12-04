@@ -15,6 +15,38 @@ function isFragmentReady(queryNode, fragmentNode, data) {
 }
 
 // src/types/graphql.ts
+var AuthDeviceType = /* @__PURE__ */ ((AuthDeviceType2) => {
+  AuthDeviceType2["Android"] = "android";
+  AuthDeviceType2["Ios"] = "ios";
+  AuthDeviceType2["Other"] = "other";
+  AuthDeviceType2["Unknown"] = "unknown";
+  AuthDeviceType2["Web"] = "web";
+  return AuthDeviceType2;
+})(AuthDeviceType || {});
+var AuthPlatformType = /* @__PURE__ */ ((AuthPlatformType2) => {
+  AuthPlatformType2["Apple"] = "APPLE";
+  AuthPlatformType2["Google"] = "GOOGLE";
+  AuthPlatformType2["Internal"] = "INTERNAL";
+  return AuthPlatformType2;
+})(AuthPlatformType || {});
+var ListType = /* @__PURE__ */ ((ListType2) => {
+  ListType2["Favorites"] = "FAVORITES";
+  ListType2["Personal"] = "PERSONAL";
+  ListType2["WatchList"] = "WATCH_LIST";
+  return ListType2;
+})(ListType || {});
+var OrderByType = /* @__PURE__ */ ((OrderByType2) => {
+  OrderByType2["Asc"] = "ASC";
+  OrderByType2["Desc"] = "DESC";
+  return OrderByType2;
+})(OrderByType || {});
+var UserRole = /* @__PURE__ */ ((UserRole2) => {
+  UserRole2["Admin"] = "ADMIN";
+  UserRole2["Consumer"] = "CONSUMER";
+  UserRole2["Contributor"] = "CONTRIBUTOR";
+  UserRole2["SuperAdmin"] = "SUPER_ADMIN";
+  return UserRole2;
+})(UserRole || {});
 var UserFieldsFragmentDoc = { "kind": "Document", "definitions": [{ "kind": "FragmentDefinition", "name": { "kind": "Name", "value": "UserFields" }, "typeCondition": { "kind": "NamedType", "name": { "kind": "Name", "value": "User" } }, "selectionSet": { "kind": "SelectionSet", "selections": [{ "kind": "Field", "name": { "kind": "Name", "value": "id" } }, { "kind": "Field", "name": { "kind": "Name", "value": "name" } }, { "kind": "Field", "name": { "kind": "Name", "value": "email" } }, { "kind": "Field", "name": { "kind": "Name", "value": "avatar" } }, { "kind": "Field", "name": { "kind": "Name", "value": "createdAt" } }, { "kind": "Field", "name": { "kind": "Name", "value": "updatedAt" } }, { "kind": "Field", "name": { "kind": "Name", "value": "active" } }, { "kind": "Field", "name": { "kind": "Name", "value": "authDevice" } }, { "kind": "Field", "name": { "kind": "Name", "value": "authPlatform" } }, { "kind": "Field", "name": { "kind": "Name", "value": "authStateId" } }, { "kind": "Field", "name": { "kind": "Name", "value": "role" } }] } }] };
 var UpdateUserByIdDocument = { "kind": "Document", "definitions": [{ "kind": "OperationDefinition", "operation": "mutation", "name": { "kind": "Name", "value": "UpdateUserById" }, "variableDefinitions": [{ "kind": "VariableDefinition", "variable": { "kind": "Variable", "name": { "kind": "Name", "value": "userId" } }, "type": { "kind": "NonNullType", "type": { "kind": "NamedType", "name": { "kind": "Name", "value": "ID" } } } }, { "kind": "VariableDefinition", "variable": { "kind": "Variable", "name": { "kind": "Name", "value": "input" } }, "type": { "kind": "NonNullType", "type": { "kind": "NamedType", "name": { "kind": "Name", "value": "UpdateUserFull" } } } }], "selectionSet": { "kind": "SelectionSet", "selections": [{ "kind": "Field", "name": { "kind": "Name", "value": "updateUserById" }, "arguments": [{ "kind": "Argument", "name": { "kind": "Name", "value": "userId" }, "value": { "kind": "Variable", "name": { "kind": "Name", "value": "userId" } } }, { "kind": "Argument", "name": { "kind": "Name", "value": "input" }, "value": { "kind": "Variable", "name": { "kind": "Name", "value": "input" } } }], "selectionSet": { "kind": "SelectionSet", "selections": [{ "kind": "Field", "name": { "kind": "Name", "value": "id" } }, { "kind": "Field", "name": { "kind": "Name", "value": "email" } }, { "kind": "Field", "name": { "kind": "Name", "value": "phoneNumber" } }, { "kind": "Field", "name": { "kind": "Name", "value": "name" } }, { "kind": "Field", "name": { "kind": "Name", "value": "avatar" } }, { "kind": "Field", "name": { "kind": "Name", "value": "birthDate" } }, { "kind": "Field", "name": { "kind": "Name", "value": "bio" } }, { "kind": "Field", "name": { "kind": "Name", "value": "active" } }, { "kind": "Field", "name": { "kind": "Name", "value": "role" } }, { "kind": "Field", "name": { "kind": "Name", "value": "createdAt" } }, { "kind": "Field", "name": { "kind": "Name", "value": "updatedAt" } }] } }] } }] };
 var CreateBranchFromFullAddressDocument = { "kind": "Document", "definitions": [{ "kind": "OperationDefinition", "operation": "mutation", "name": { "kind": "Name", "value": "CreateBranchFromFullAddress" }, "variableDefinitions": [{ "kind": "VariableDefinition", "variable": { "kind": "Variable", "name": { "kind": "Name", "value": "storeId" } }, "type": { "kind": "NonNullType", "type": { "kind": "NamedType", "name": { "kind": "Name", "value": "ID" } } } }, { "kind": "VariableDefinition", "variable": { "kind": "Variable", "name": { "kind": "Name", "value": "fullAddress" } }, "type": { "kind": "NonNullType", "type": { "kind": "NamedType", "name": { "kind": "Name", "value": "String" } } } }], "selectionSet": { "kind": "SelectionSet", "selections": [{ "kind": "Field", "name": { "kind": "Name", "value": "createBranchWithFullAddress" }, "arguments": [{ "kind": "Argument", "name": { "kind": "Name", "value": "storeId" }, "value": { "kind": "Variable", "name": { "kind": "Name", "value": "storeId" } } }, { "kind": "Argument", "name": { "kind": "Name", "value": "fullAddress" }, "value": { "kind": "Variable", "name": { "kind": "Name", "value": "fullAddress" } } }], "selectionSet": { "kind": "SelectionSet", "selections": [{ "kind": "Field", "name": { "kind": "Name", "value": "id" } }, { "kind": "Field", "name": { "kind": "Name", "value": "name" } }, { "kind": "Field", "name": { "kind": "Name", "value": "addressId" } }, { "kind": "Field", "name": { "kind": "Name", "value": "storeId" } }, { "kind": "Field", "name": { "kind": "Name", "value": "address" }, "selectionSet": { "kind": "SelectionSet", "selections": [{ "kind": "Field", "name": { "kind": "Name", "value": "id" } }, { "kind": "Field", "name": { "kind": "Name", "value": "latitude" } }, { "kind": "Field", "name": { "kind": "Name", "value": "longitude" } }, { "kind": "Field", "name": { "kind": "Name", "value": "mapsLink" } }, { "kind": "Field", "name": { "kind": "Name", "value": "fullAddress" } }, { "kind": "Field", "name": { "kind": "Name", "value": "street" } }, { "kind": "Field", "name": { "kind": "Name", "value": "city" } }, { "kind": "Field", "name": { "kind": "Name", "value": "administrativeDivision" } }, { "kind": "Field", "name": { "kind": "Name", "value": "countryCode" } }, { "kind": "Field", "name": { "kind": "Name", "value": "country" } }, { "kind": "Field", "name": { "kind": "Name", "value": "zipCode" } }] } }] } }] } }] };
@@ -2255,10 +2287,23 @@ export {
   ALL_BRANDS_QUERY,
   ALL_PRODUCTS_QUERY,
   ALL_STORES_QUERY,
+  AddBranchToListDocument,
+  AddGroceryListItemDocument,
+  AddToListDocument,
+  AllBranchesDocument,
+  AllBrandsDocument,
+  AllProductsDocument,
+  AllStoresDocument,
+  AuthDeviceType,
+  AuthPlatformType,
   BARCODE_SCAN_QUERY,
   BRANCHES_WITH_PRODUCTS_QUERY,
   BRANCH_QUERY,
   BULK_ADD_BRANCHES_TO_LIST_MUTATION,
+  BarcodeScanDocument,
+  BranchDocument,
+  BranchesWithProductsDocument,
+  BulkAddBranchesToListDocument,
   CATEGORY_SEARCH_QUERY,
   CHECK_APP_VERSION_QUERY,
   COUNT_GROCERY_LIST_ITEMS_QUERY,
@@ -2269,13 +2314,31 @@ export {
   CREATE_PRODUCT_MUTATION,
   CREATE_STORE_MUTATION,
   CREATE_USER_MUTATION,
+  CategorySearchDocument,
+  CheckAppVersionDocument,
+  CountGroceryListItemsDocument,
+  CreateAccountDocument,
+  CreateBranchDocument,
+  CreateBranchFromFullAddressDocument,
+  CreateCategoryDocument,
+  CreatePriceDocument,
+  CreateProductDocument,
+  CreateStoreDocument,
   DEFAULT_GROCERY_LIST_ITEMS_QUERY,
   DELETE_GROCERY_LIST_ITEMS_MUTATION,
+  DefaultGroceryListItemsDocument,
+  DeleteGroceryListItemDocument,
   EXTRACT_AND_CREATE_PRODUCT_FIELDS_QUERY,
   EXTRACT_PRODUCT_FIELDS_QUERY,
+  ExtractAndCreateProductDocument,
+  ExtractProductFieldsDocument,
   FIND_BRANCHES_BY_DISTANCE_QUERY,
   FIND_BRANCH_QUERY,
   FIND_STORE_QUERY,
+  FavoriteBranchesWithPricesDocument,
+  FindBranchDocument,
+  FindBranchesByDistanceDocument,
+  FindStoreDocument,
   GET_ALL_BRANCH_LISTS_BY_LIST_ID,
   GET_ALL_COUNTRIES_QUERY,
   GET_ALL_LISTS,
@@ -2291,37 +2354,85 @@ export {
   GET_STOCK_FROM_PRODUCT_AND_BRANCH_ID_QUERY,
   GOOGLE_OAUTH_QUERY,
   GROCERY_LISTS_QUERY,
+  GetAllBranchListsByListIdDocument,
+  GetAllCountriesDocument,
+  GetAllListsDocument,
+  GetAllProductListsByListIdDocument,
+  GetAllUsersDocument,
+  GetCategoriesDocument,
+  GetCategoryDocument,
+  GetProductNutritionDataDocument,
+  GetProductStocksDocument,
+  GetStockFromProductAndBranchIdDocument,
+  GoogleOAuthDocument,
+  GroceryListItemsDocument,
+  GroceryListsDocument,
   IP_TO_ADDRESS_QUERY,
+  IpToAddressDocument,
   LOGIN_INTERNAL_QUERY,
   LOGOUT_MUTATION,
+  ListType,
+  LoginInternalDocument,
+  LogoutDocument,
   MARK_GROCERY_ITEM_MUTATION,
   ME_QUERY,
   MY_PRODUCT_BILLING_DATA_QUERY,
   MY_PRODUCT_VIEW_HISTORY_QUERY,
   MY_SEARCH_HISTORY_QUERY,
+  MarkGroceryListItemDocument,
+  MeDocument,
+  MyProductBillingDataDocument,
+  MyProductViewHistoryDocument,
+  MySearchHistoryDocument,
+  OrderByType,
   POST_AUTH_USER_DATA_QUERIES,
   PRICE_CHANGE_HISTORY_QUERY,
   PRODUCT_BILLING_DATA_BY_USER_ID_QUERY,
   PRODUCT_BY_ID_QUERY,
   PRODUCT_SEARCH_QUERY,
   PRODUCT_SUMMARY_QUERY,
+  PostAuthUserDataDocument,
+  PriceChangeHistoryDocument,
+  ProductBillingDataByUserIdDocument,
+  ProductDocument,
+  ProductSearchDocument,
+  ProductSummaryDocument,
   REGISTER_EXPO_PUSH_TOKEN,
   REMOVE_BRANCH_FROM_LIST_MUTATION,
   REMOVE_FROM_LIST_BY_PRODUCT_ID_MUTATION,
   REMOVE_FROM_LIST_MUTATION,
   REQUEST_RESET_PASSWORD_MUTATION,
   RESEND_VERIFICATION_MUTATION,
+  RegisterExpoPushTokenDocument,
+  RemoveBranchFromListDocument,
+  RemoveFromListDocument,
+  RemoveFromListWithProductIdDocument,
+  RequestResetPasswordDocument,
+  ResendVerificationDocument,
   SANITIZE_PRODUCT_MUTATION,
+  SanitizeProductDocument,
+  StockDocument,
   UPDATE_GROCERY_LIST_ITEMS_MUTATION,
   UPDATE_PASSWORD_WITH_RESET_CODE_MUTATION,
   UPDATE_PRODUCT_MUTATION,
   UPDATE_PRODUCT_NUTRITION_MUTATION,
   UPDATE_PROFILE_MUTATION,
   UPDATE_USER_BY_ID_MUTATION,
+  UpdateGroceryListItemDocument,
+  UpdatePasswordWithResetCodeDocument,
+  UpdateProductDocument,
+  UpdateProductNutritionDataDocument,
+  UpdateProfileDocument,
+  UpdateUserByIdDocument,
+  UserFieldsFragmentDoc,
   UserFragment,
+  UserRole,
   VERIFY_EMAIL_MUTATION,
   VERIFY_PASSWORD_RESET_CODE_QUERY,
+  VerifyEmailDocument,
+  VerifyPasswordResetCodeDocument,
   WEIGHT_COMPONENTS_FROM_CATEGORY_ID_QUERY,
+  WeightComponentsFromCategoryIdDocument,
   graphql,
   isFragmentReady,
   makeFragmentData,
