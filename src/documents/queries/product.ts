@@ -294,8 +294,10 @@ export const PRODUCT_SUMMARY_QUERY = gql(`
       branch
       address
       price
+      priceCurrencyCode
       originalPrice
       sale
+      saleExpiresAt
       priceCreatedAt
     }
   }
