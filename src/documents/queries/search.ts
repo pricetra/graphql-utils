@@ -18,3 +18,19 @@ export const MY_SEARCH_HISTORY_QUERY = gql(`
     }
   }
 `);
+
+export const POPULAR_SEARCH_KEYWORDS_QUERY = gql(`
+  query PopularSearchKeywords($paginator: PaginatorInput!, $dateRange: TimestampRangeBetween) {
+    popularSearchKeywords(paginator:$paginator, dateRange: $dateRange) {
+      searches
+      paginator {
+        next
+        page
+        prev
+        limit
+        total
+        numPages
+      }
+    }
+  }  
+`);

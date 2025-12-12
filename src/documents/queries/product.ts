@@ -452,6 +452,103 @@ export const MY_PRODUCT_VIEW_HISTORY_QUERY = gql(`
   }
 `);
 
+export const POPULAR_PRODUCTS_QUERY = gql(`
+  query PopularProducts($paginator: PaginatorInput!, $dateRange: TimestampRangeBetween) {
+    popularProducts(paginator: $paginator, dateRange: $dateRange) {
+      products {
+        id
+        name
+        image
+        description
+        brand
+        code
+        model
+        categoryId
+        category {
+          id
+          name
+          expandedPathname
+          path
+        }
+        stock {
+          id
+          productId
+          storeId
+          store {
+            id
+            slug
+            name
+            logo
+          }
+          branchId
+          branch {
+            id
+            slug
+            name
+            addressId
+            address {
+              id
+              latitude
+              longitude
+              mapsLink
+              fullAddress
+              street
+              city
+              administrativeDivision
+              countryCode
+              country
+              zipCode
+              distance
+            }
+          }
+          latestPriceId
+          latestPrice {
+            id
+            productId
+            branchId
+            storeId
+            amount
+            currencyCode
+            createdAt
+            sale
+            originalPrice
+            condition
+            expiresAt
+            unitType
+          }
+          createdBy {
+            id
+            name
+            avatar
+          }
+          updatedBy {
+            id
+            name
+            avatar
+          }
+        }
+        approximateWeight
+        netWeight
+        weightValue
+        weightType
+        quantityValue
+        quantityType
+        createdAt
+        updatedAt
+        views
+      }
+      paginator {
+        next
+        page
+        prev
+        limit
+        total
+        numPages
+      }
+    }
+  }
+`);
+
 export const WEIGHT_COMPONENTS_FROM_CATEGORY_ID_QUERY = gql(`
   query WeightComponentsFromCategoryId($categoryId: ID!) {
     weightComponentsFromCategoryId(categoryId: $categoryId) {
