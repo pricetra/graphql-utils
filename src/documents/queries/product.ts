@@ -304,8 +304,8 @@ export const PRODUCT_SUMMARY_QUERY = gql(`
 `);
 
 export const PRODUCT_SEARCH_QUERY = gql(`
-  query ProductSearch($paginator: PaginatorInput!, $search: String, $brand: String) {
-    productSearch(paginator: $paginator, search: $search, brand: $brand) {
+  query ProductSearch($paginator: PaginatorInput!, $search: String, $filters: ProductSearchFilters) {
+    productSearch(paginator: $paginator, search: $search, filters: $filters) {
       products {
         id
         code
