@@ -291,7 +291,10 @@ export const PRODUCT_SUMMARY_QUERY = gql(`
       brand
       code
       store
+      storeLogo
+      storeSlug
       branch
+      branchSlug
       address
       price
       priceCurrencyCode
