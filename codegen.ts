@@ -6,25 +6,12 @@ const config: CodegenConfig = {
   generates: {
     'src/types/': {
       preset: 'client',
-      // plugins: ['typescript', 'typescript-operations'],
       config: {
         // avoidOptionals: true,
         scalars: {
           ID: 'number',
         },
       },
-    },
-    "src/types/index.ts": {
-      plugins: [
-        {
-          add: {
-            content: `export * from "./fragment-masking";
-export * from "./gql";
-export * from './graphql';
-`
-          }
-        },
-      ],
     },
   },
 };
