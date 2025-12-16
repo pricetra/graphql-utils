@@ -34,3 +34,9 @@ export const POPULAR_SEARCH_KEYWORDS_QUERY = gql(`
     }
   }  
 `);
+
+export const SEARCH_KEYWORDS_QUERY = gql(`
+  query SearchKeywords($search: String!) {
+    searchKeywords(search: $search)
+  }
+`);
