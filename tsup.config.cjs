@@ -6,7 +6,6 @@ module.exports = defineConfig({
   },
   format: ["esm", "cjs"],
   dts: true,
-  external: ["@apollo/client", "graphql", "@graphql-typed-document-node/core"],
   clean: true,
   splitting: false,
   sourcemap: true,
