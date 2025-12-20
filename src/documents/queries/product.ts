@@ -282,18 +282,21 @@ export const BRANCHES_WITH_PRODUCTS_QUERY = gql(`
 `);
 
 export const PRODUCT_SUMMARY_QUERY = gql(`
-  query ProductSummary($productId: ID!, $stockId: ID) {
-    productSummary(id: $productId, stockId: $stockId) {
+  query ProductSummary($productId: ID!, $stockId: ID, $branch: ProductSummaryBranchInput) {
+    productSummary(id: $productId, stockId: $stockId, branch: $branch) {
       id
       name
       image
       description
       brand
       code
+      stockId
       store
+      storeId
       storeLogo
       storeSlug
       branch
+      branchId
       branchSlug
       address
       price
