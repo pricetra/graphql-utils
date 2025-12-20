@@ -803,6 +803,12 @@ export type ProductNutrition = {
   vegetarian?: Maybe<Scalars['Boolean']['output']>;
 };
 
+export type ProductReferrer = {
+  sharedByUser?: InputMaybe<Scalars['String']['input']>;
+  sharedFromPlatform?: InputMaybe<Scalars['String']['input']>;
+  sharedOn?: InputMaybe<Scalars['String']['input']>;
+};
+
 export type ProductSearch = {
   branchId?: InputMaybe<Scalars['ID']['input']>;
   branchIds?: InputMaybe<Array<Scalars['ID']['input']>>;
@@ -1345,6 +1351,7 @@ export type UserShallow = {
 
 export type ViewerTrailInput = {
   origin?: InputMaybe<Scalars['String']['input']>;
+  referrer?: InputMaybe<ProductReferrer>;
   stockId?: InputMaybe<Scalars['ID']['input']>;
 };
 
