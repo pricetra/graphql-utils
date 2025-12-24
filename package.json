@@ -1,6 +1,6 @@
 {
   "name": "graphql-utils",
-  "version": "1.0.28",
+  "version": "1.0.29",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
   "types": "dist/index.d.ts",
@@ -23,9 +23,9 @@
     "build": "tsup",
     "gql-codegen": "graphql-codegen --config codegen.ts && node append-graphql-gen-file.mjs",
     "start": "npm run gql-codegen && npm run build",
-    "bump-version": "node bumpVersion.js",
-    "bump-version:minor": "node bumpVersion.js minor",
-    "bump-version:major": "node bumpVersion.js major"
+    "bump-version": "node bumpVersion.js && npm i --package-lock-only",
+    "bump-version:minor": "node bumpVersion.js minor && npm i --package-lock-only",
+    "bump-version:major": "node bumpVersion.js major && npm i --package-lock-only"
   },
   "peerDependencies": {
     "@apollo/client": "*"

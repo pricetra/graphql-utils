@@ -328,6 +328,8 @@ export const PRODUCT_SEARCH_QUERY = gql(`
         netWeight
         weightValue
         weightType
+        createdAt
+        updatedAt
       }
       paginator {
         next

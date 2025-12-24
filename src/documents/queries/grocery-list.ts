@@ -22,14 +22,20 @@ export const GET_GROCERY_LIST_ITEMS_QUERY = gql(`
         code
         name
         image
+        categoryId
         category {
           id
           name
         }
+        approximateWeight
+        netWeight
         weightValue
         weightType
         quantityValue
         quantityType
+        createdAt
+        updatedAt
+        views
       }
       category
       weight
@@ -52,14 +58,20 @@ export const DEFAULT_GROCERY_LIST_ITEMS_QUERY = gql(`
         code
         name
         image
+        categoryId
         category {
           id
           name
         }
+        approximateWeight
+        netWeight
         weightValue
         weightType
         quantityValue
         quantityType
+        createdAt
+        updatedAt
+        views
       }
       category
       weight
