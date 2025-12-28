@@ -94,6 +94,53 @@ export const GOOGLE_OAUTH_QUERY = gql(`
   }
 `);
 
+export const APPLE_OAUTH_QUERY = gql(`
+  query AppleOAuth(
+    $code: String!
+    $appleRawUser: String
+    $ipAddress: String
+    $device: AuthDeviceType
+  ) {
+    appleOAuth(
+      code: $code
+      appleRawUser: $appleRawUser
+      ipAddress: $ipAddress
+      device: $device
+    ) {
+      token
+      user {
+        id
+        name
+        email
+        avatar
+        createdAt
+        updatedAt
+        active
+        authDevice
+        authPlatform
+        authStateId
+        expoPushToken
+        role
+        addressId
+        address {
+          id
+          latitude
+          longitude
+          mapsLink
+          fullAddress
+          street
+          city
+          administrativeDivision
+          countryCode
+          country
+          zipCode
+        }
+      }
+      isNewUser
+    }
+  }
+`);
+
 export const VERIFY_PASSWORD_RESET_CODE_QUERY = gql(`
   query VerifyPasswordResetCode($email: String!, $code: String!) {
     verifyPasswordResetCode(email: $email, code: $code)
