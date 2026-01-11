@@ -83,6 +83,12 @@ type AdministrativeDivision = {
     cities: Scalars['String']['output'];
     name: Scalars['String']['output'];
 };
+type ApprovedByUser = {
+    __typename?: 'ApprovedByUser';
+    avatar?: Maybe<Scalars['String']['output']>;
+    id: Scalars['ID']['output'];
+    name: Scalars['String']['output'];
+};
 type Auth = {
     __typename?: 'Auth';
     isNewUser?: Maybe<Scalars['Boolean']['output']>;
@@ -241,6 +247,16 @@ type CreateStore = {
     name: Scalars['String']['input'];
     website: Scalars['String']['input'];
 };
+type CreateStoreUserAdmin = {
+    branchId?: InputMaybe<Scalars['ID']['input']>;
+    email: Scalars['String']['input'];
+    employeeId?: InputMaybe<Scalars['String']['input']>;
+    firstName: Scalars['String']['input'];
+    lastName: Scalars['String']['input'];
+    role: StoreUserRole;
+    storeId: Scalars['ID']['input'];
+    userId?: InputMaybe<Scalars['ID']['input']>;
+};
 type CreatedByUser = {
     __typename?: 'CreatedByUser';
     active?: Maybe<Scalars['Boolean']['output']>;
@@ -308,6 +324,7 @@ type LocationInput = {
 };
 type Mutation = {
     __typename?: 'Mutation';
+    acceptPendingStoreUserInvite: StoreUser;
     addBranchToList: BranchList;
     addGroceryListItem: GroceryListItem;
     addToList: ProductList;
@@ -321,6 +338,8 @@ type Mutation = {
     createPrice: Price;
     createProduct: Product;
     createStore: Store;
+    createStoreUserAdmin: StoreUser;
+    declinePendingStoreUserInvite: Scalars['Boolean']['output'];
     deleteGroceryListItem: GroceryListItem;
     deleteList: List;
     deleteSearchById: Scalars['Boolean']['output'];
@@ -342,6 +361,9 @@ type Mutation = {
     updateProfile: User;
     updateUserById: User;
     verifyEmail: User;
+};
+type MutationAcceptPendingStoreUserInviteArgs = {
+    data: Scalars['String']['input'];
 };
 type MutationAddBranchToListArgs = {
     branchId: Scalars['ID']['input'];
@@ -384,6 +406,12 @@ type MutationCreateProductArgs = {
 };
 type MutationCreateStoreArgs = {
     input: CreateStore;
+};
+type MutationCreateStoreUserAdminArgs = {
+    input: CreateStoreUserAdmin;
+};
+type MutationDeclinePendingStoreUserInviteArgs = {
+    data: Scalars['String']['input'];
 };
 type MutationDeleteGroceryListItemArgs = {
     groceryListItemId: Scalars['ID']['input'];
@@ -845,6 +873,7 @@ type Query = {
     myProductBillingData: PaginatedProductBilling;
     myProductViewHistory: PaginatedProducts;
     mySearchHistory: PaginatedSearch;
+    myStoreUsers: Array<StoreUser>;
     popularProducts: PaginatedProducts;
     popularSearchKeywords: PaginatedSearchKeywords;
     priceChangeHistory: PaginatedPriceHistory;
@@ -1096,6 +1125,47 @@ type Store = {
     slug: Scalars['String']['output'];
     website: Scalars['String']['output'];
 };
+type StoreUser = {
+    __typename?: 'StoreUser';
+    approved: Scalars['Boolean']['output'];
+    approvedAt?: Maybe<Scalars['Time']['output']>;
+    approvedById?: Maybe<Scalars['ID']['output']>;
+    approvedByUser?: Maybe<ApprovedByUser>;
+    branch?: Maybe<BranchFlat>;
+    branchId?: Maybe<Scalars['ID']['output']>;
+    createdAt: Scalars['Time']['output'];
+    createdBy?: Maybe<CreatedByUser>;
+    createdById: Scalars['ID']['output'];
+    email: Scalars['String']['output'];
+    employeeId?: Maybe<Scalars['String']['output']>;
+    encodedId?: Maybe<Scalars['String']['output']>;
+    id: Scalars['ID']['output'];
+    legalName: Scalars['String']['output'];
+    role: StoreUserRole;
+    store?: Maybe<Store>;
+    storeId: Scalars['ID']['output'];
+    user?: Maybe<UserShallow>;
+    userId?: Maybe<Scalars['ID']['output']>;
+};
+type StoreUserData = {
+    __typename?: 'StoreUserData';
+    email: Scalars['String']['output'];
+    storeUserId: Scalars['ID']['output'];
+};
+declare enum StoreUserRole {
+    Accounting = "ACCOUNTING",
+    Admin = "ADMIN",
+    Associate = "ASSOCIATE",
+    Auditor = "AUDITOR",
+    Inventory = "INVENTORY",
+    It = "IT",
+    Manager = "MANAGER",
+    Marketing = "MARKETING",
+    Other = "OTHER",
+    Owner = "OWNER",
+    Sales = "SALES",
+    Supervisor = "SUPERVISOR"
+}
 type TimestampRangeBetween = {
     from: Scalars['Time']['input'];
     to: Scalars['Time']['input'];
@@ -1205,6 +1275,39 @@ type UpdateUserByIdMutation = {
         role: UserRole;
         createdAt: any;
         updatedAt: any;
+    };
+};
+type CreateStoreUserAdminMutationVariables = Exact<{
+    input: CreateStoreUserAdmin;
+}>;
+type CreateStoreUserAdminMutation = {
+    __typename?: 'Mutation';
+    createStoreUserAdmin: {
+        __typename?: 'StoreUser';
+        id: number;
+        storeId: number;
+        branchId?: number | null;
+        userId?: number | null;
+        legalName: string;
+        email: string;
+        employeeId?: string | null;
+        role: StoreUserRole;
+        approved: boolean;
+        createdAt: any;
+        encodedId?: string | null;
+        user?: {
+            __typename?: 'UserShallow';
+            id: number;
+            name: string;
+            avatar?: string | null;
+        } | null;
+        createdBy?: {
+            __typename?: 'CreatedByUser';
+            id: number;
+            name: string;
+            avatar?: string | null;
+            active?: boolean | null;
+        } | null;
     };
 };
 type CreateBranchFromFullAddressMutationVariables = Exact<{
@@ -1555,6 +1658,72 @@ type SanitizeProductMutation = {
             path: string;
         } | null;
     };
+};
+type AcceptPendingStoreUserInviteMutationVariables = Exact<{
+    data: Scalars['String']['input'];
+}>;
+type AcceptPendingStoreUserInviteMutation = {
+    __typename?: 'Mutation';
+    acceptPendingStoreUserInvite: {
+        __typename?: 'StoreUser';
+        id: number;
+        storeId: number;
+        branchId?: number | null;
+        userId?: number | null;
+        legalName: string;
+        email: string;
+        employeeId?: string | null;
+        role: StoreUserRole;
+        approvedAt?: any | null;
+        approvedById?: number | null;
+        approved: boolean;
+        createdById: number;
+        createdAt: any;
+        store?: {
+            __typename?: 'Store';
+            id: number;
+            slug: string;
+            name: string;
+            logo: string;
+        } | null;
+        branch?: {
+            __typename?: 'BranchFlat';
+            id: number;
+            slug: string;
+            name: string;
+            address: {
+                __typename?: 'Address';
+                id: number;
+                fullAddress: string;
+            };
+        } | null;
+        user?: {
+            __typename?: 'UserShallow';
+            id: number;
+            name: string;
+            avatar?: string | null;
+        } | null;
+        approvedByUser?: {
+            __typename?: 'ApprovedByUser';
+            id: number;
+            name: string;
+            avatar?: string | null;
+        } | null;
+        createdBy?: {
+            __typename?: 'CreatedByUser';
+            id: number;
+            name: string;
+            avatar?: string | null;
+            active?: boolean | null;
+        } | null;
+    };
+};
+type DeclinePendingStoreUserInviteMutationVariables = Exact<{
+    data: Scalars['String']['input'];
+}>;
+type DeclinePendingStoreUserInviteMutation = {
+    __typename?: 'Mutation';
+    declinePendingStoreUserInvite: boolean;
 };
 type CreateStoreMutationVariables = Exact<{
     input: CreateStore;
@@ -3447,6 +3616,65 @@ type GetProductStocksQuery = {
         };
     };
 };
+type MyStoreUserQueryVariables = Exact<{
+    [key: string]: never;
+}>;
+type MyStoreUserQuery = {
+    __typename?: 'Query';
+    myStoreUsers: Array<{
+        __typename?: 'StoreUser';
+        id: number;
+        storeId: number;
+        branchId?: number | null;
+        userId?: number | null;
+        legalName: string;
+        email: string;
+        employeeId?: string | null;
+        role: StoreUserRole;
+        approvedAt?: any | null;
+        approvedById?: number | null;
+        approved: boolean;
+        createdById: number;
+        createdAt: any;
+        store?: {
+            __typename?: 'Store';
+            id: number;
+            slug: string;
+            name: string;
+            logo: string;
+        } | null;
+        branch?: {
+            __typename?: 'BranchFlat';
+            id: number;
+            slug: string;
+            name: string;
+            address: {
+                __typename?: 'Address';
+                id: number;
+                fullAddress: string;
+            };
+        } | null;
+        user?: {
+            __typename?: 'UserShallow';
+            id: number;
+            name: string;
+            avatar?: string | null;
+        } | null;
+        approvedByUser?: {
+            __typename?: 'ApprovedByUser';
+            id: number;
+            name: string;
+            avatar?: string | null;
+        } | null;
+        createdBy?: {
+            __typename?: 'CreatedByUser';
+            id: number;
+            name: string;
+            avatar?: string | null;
+            active?: boolean | null;
+        } | null;
+    }>;
+};
 type AllStoresQueryVariables = Exact<{
     paginator: PaginatorInput;
     search?: InputMaybe<Scalars['String']['input']>;
@@ -3772,6 +4000,7 @@ type PostAuthUserDataQuery = {
 };
 declare const UserFieldsFragmentDoc: TypedDocumentNode<UserFieldsFragment, unknown>;
 declare const UpdateUserByIdDocument: TypedDocumentNode<UpdateUserByIdMutation, UpdateUserByIdMutationVariables>;
+declare const CreateStoreUserAdminDocument: TypedDocumentNode<CreateStoreUserAdminMutation, CreateStoreUserAdminMutationVariables>;
 declare const CreateBranchFromFullAddressDocument: TypedDocumentNode<CreateBranchFromFullAddressMutation, CreateBranchFromFullAddressMutationVariables>;
 declare const CreateBranchDocument: TypedDocumentNode<CreateBranchMutation, CreateBranchMutationVariables>;
 declare const CreateCategoryDocument: TypedDocumentNode<CreateCategoryMutation, CreateCategoryMutationVariables>;
@@ -3791,6 +4020,8 @@ declare const CreateProductDocument: TypedDocumentNode<CreateProductMutation, Cr
 declare const UpdateProductDocument: TypedDocumentNode<UpdateProductMutation, UpdateProductMutationVariables>;
 declare const ExtractAndCreateProductDocument: TypedDocumentNode<ExtractAndCreateProductMutation, ExtractAndCreateProductMutationVariables>;
 declare const SanitizeProductDocument: TypedDocumentNode<SanitizeProductMutation, SanitizeProductMutationVariables>;
+declare const AcceptPendingStoreUserInviteDocument: TypedDocumentNode<AcceptPendingStoreUserInviteMutation, AcceptPendingStoreUserInviteMutationVariables>;
+declare const DeclinePendingStoreUserInviteDocument: TypedDocumentNode<DeclinePendingStoreUserInviteMutation, DeclinePendingStoreUserInviteMutationVariables>;
 declare const CreateStoreDocument: TypedDocumentNode<CreateStoreMutation, CreateStoreMutationVariables>;
 declare const CreateAccountDocument: TypedDocumentNode<CreateAccountMutation, CreateAccountMutationVariables>;
 declare const VerifyEmailDocument: TypedDocumentNode<VerifyEmailMutation, VerifyEmailMutationVariables>;
@@ -3839,6 +4070,7 @@ declare const SearchKeywordsDocument: TypedDocumentNode<SearchKeywordsQuery, Sea
 declare const StockDocument: TypedDocumentNode<StockQuery, StockQueryVariables>;
 declare const GetStockFromProductAndBranchIdDocument: TypedDocumentNode<GetStockFromProductAndBranchIdQuery, GetStockFromProductAndBranchIdQueryVariables>;
 declare const GetProductStocksDocument: TypedDocumentNode<GetProductStocksQuery, GetProductStocksQueryVariables>;
+declare const MyStoreUserDocument: TypedDocumentNode<MyStoreUserQuery, MyStoreUserQueryVariables>;
 declare const AllStoresDocument: TypedDocumentNode<AllStoresQuery, AllStoresQueryVariables>;
 declare const FindStoreDocument: TypedDocumentNode<FindStoreQuery, FindStoreQueryVariables>;
 declare const LoginInternalDocument: TypedDocumentNode<LoginInternalQuery, LoginInternalQueryVariables>;
@@ -3880,6 +4112,7 @@ declare function isFragmentReady<TQuery, TFrag>(queryNode: DocumentTypeDecoratio
  */
 type Documents = {
     "\n  mutation UpdateUserById($userId: ID!, $input: UpdateUserFull!) {\n    updateUserById(userId: $userId, input: $input) {\n      id\n      email\n      phoneNumber\n      name\n      avatar\n      birthDate\n      bio\n      active\n      role\n      createdAt\n      updatedAt\n    }\n  }\n": typeof UpdateUserByIdDocument;
+    "\n  mutation CreateStoreUserAdmin($input: CreateStoreUserAdmin!) {\n    createStoreUserAdmin(input:$input) {\n      id\n      storeId\n      branchId\n      userId\n      user {\n        id\n        name\n        avatar\n      }\n      legalName\n      email\n      employeeId\n      role\n      approved\n      createdBy {\n        id\n        name\n        avatar\n        active\n      }\n      createdAt\n      encodedId\n    }\n  }\n": typeof CreateStoreUserAdminDocument;
     "\n  mutation CreateBranchFromFullAddress($storeId: ID!, $fullAddress: String!) {\n    createBranchWithFullAddress(storeId: $storeId, fullAddress: $fullAddress) {\n      id\n      name\n      addressId\n      storeId\n      address {\n        id\n        latitude\n        longitude\n        mapsLink\n        fullAddress\n        street\n        city\n        administrativeDivision\n        countryCode\n        country\n        zipCode\n      }\n    }\n  }\n": typeof CreateBranchFromFullAddressDocument;
     "\n  mutation CreateBranch($input: CreateBranch!) {\n    createBranch(input: $input) {\n      id\n      name\n      addressId\n      storeId\n      address {\n        id\n        latitude\n        longitude\n        mapsLink\n        fullAddress\n        street\n        city\n        administrativeDivision\n        countryCode\n        country\n        zipCode\n      }\n    }\n  }\n": typeof CreateBranchDocument;
     "\n  mutation CreateCategory($input: CreateCategory!) {\n    createCategory(input:$input) {\n      id\n      name\n      path\n      expandedPathname\n      categoryAlias\n      depth\n    }\n  }\n": typeof CreateCategoryDocument;
@@ -3899,6 +4132,8 @@ type Documents = {
     "\n  mutation UpdateProduct($id: ID!, $input: UpdateProduct!) {\n    updateProduct(id: $id, input: $input) {\n      id\n      name\n      image\n      description\n      brand\n      code\n      model\n      categoryId\n      category {\n        id\n        name\n        expandedPathname\n        path\n      }\n      weightValue\n      weightType\n      createdAt\n      updatedAt\n    }\n  }\n": typeof UpdateProductDocument;
     "\n  mutation ExtractAndCreateProduct($barcode: String!, $base64Image: String!) {\n    extractAndCreateProduct(barcode: $barcode, base64Image: $base64Image) {\n      id\n      code\n      brand\n      name\n      categoryId\n      weightValue\n      weightType\n      quantityValue\n      quantityType\n      description\n    }\n  }\n": typeof ExtractAndCreateProductDocument;
     "\n  mutation SanitizeProduct($id: ID!) {\n    sanitizeProduct(id: $id) {\n      id\n      name\n      image\n      description\n      brand\n      code\n      model\n      categoryId\n      category {\n        id\n        name\n        categoryAlias\n        expandedPathname\n        path\n      }\n      approximateWeight\n      netWeight\n      weightValue\n      weightType\n      quantityValue\n      quantityType\n      createdAt\n      updatedAt\n      views\n    }\n  }\n": typeof SanitizeProductDocument;
+    "\n  mutation AcceptPendingStoreUserInvite($data: String!) {\n    acceptPendingStoreUserInvite(data: $data) {\n      id\n      storeId\n      store {\n        id\n        slug\n        name\n        logo\n      }\n      branchId\n      branch {\n        id\n        slug\n        name\n        address {\n          id\n          fullAddress\n        }\n      }\n      userId\n      user {\n        id\n        name\n        avatar\n      }\n      legalName\n      email\n      employeeId\n      role\n      approvedAt\n      approvedById\n      approvedByUser {\n        id\n        name\n        avatar\n      }\n      approved\n      createdById\n      createdBy {\n        id\n        name\n        avatar\n        active\n      }\n      createdAt\n    }\n  }\n": typeof AcceptPendingStoreUserInviteDocument;
+    "\n  mutation DeclinePendingStoreUserInvite($data: String!) {\n    declinePendingStoreUserInvite(data: $data)\n  }\n": typeof DeclinePendingStoreUserInviteDocument;
     "\n  mutation CreateStore($input: CreateStore!) {\n    createStore(input: $input) {\n      id\n      name\n      logo\n      website\n    }\n  }\n": typeof CreateStoreDocument;
     "\n  mutation CreateAccount($email: String!, $name: String!, $password: String!) {\n    createAccount(input: { email: $email, name: $name, password: $password }) {\n      id\n      name\n      email\n      phoneNumber\n      createdAt\n      updatedAt\n      authPlatform\n      role\n    }\n  }\n": typeof CreateAccountDocument;
     "\n  mutation VerifyEmail($verificationCode: String!) {\n    verifyEmail(verificationCode: $verificationCode) {\n      id\n      name\n      email\n      avatar\n      createdAt\n      updatedAt\n      active\n      authPlatform\n      authStateId\n      role\n    }\n  }\n": typeof VerifyEmailDocument;
@@ -3947,6 +4182,7 @@ type Documents = {
     "\n  query Stock($stockId: ID!) {\n    stock(stockId: $stockId) {\n      id\n      productId\n      storeId\n      store {\n        slug\n        id\n        name\n        logo\n      }\n      branchId\n      branch {\n        id\n        slug\n        name\n        addressId\n        address {\n          id\n          latitude\n          longitude\n          mapsLink\n          fullAddress\n          street\n          city\n          administrativeDivision\n          countryCode\n          country\n          zipCode\n          distance\n        }\n      }\n      latestPriceId\n      latestPrice {\n        id\n        productId\n        branchId\n        storeId\n        amount\n        currencyCode\n        sale\n        originalPrice\n        condition\n        expiresAt\n        createdAt\n        unitType\n      }\n      createdAt\n      updatedAt\n      createdBy {\n        id\n        name\n        avatar\n      }\n      updatedBy {\n        id\n        name\n        avatar\n      }\n    }\n  }\n": typeof StockDocument;
     "\n  query GetStockFromProductAndBranchId($productId: ID!, $branchId: ID!) {\n    getStockFromProductAndBranchId(productId: $productId, branchId: $branchId) {\n      id\n      productId\n      storeId\n      branchId\n      latestPriceId\n      latestPrice {\n        id\n        productId\n        branchId\n        storeId\n        amount\n        currencyCode\n        sale\n        originalPrice\n        condition\n        expiresAt\n        createdAt\n        unitType\n      }\n      createdAt\n      updatedAt\n    }\n  }\n": typeof GetStockFromProductAndBranchIdDocument;
     "\n  query GetProductStocks($paginator: PaginatorInput!, $productId: ID!, $location: LocationInput) {\n    getProductStocks(paginator: $paginator, productId: $productId, location: $location) {\n      stocks {\n        id\n        productId\n        storeId\n        store {\n          id\n          slug\n          name\n          logo\n        }\n        branchId\n        branch {\n          id\n          slug\n          name\n          address {\n            id\n            latitude\n            longitude\n            mapsLink\n            fullAddress\n            street\n            city\n            administrativeDivision\n            countryCode\n            country\n            zipCode\n            distance\n          }\n        }\n        latestPriceId\n        latestPrice {\n          id\n          productId\n          branchId\n          storeId\n          amount\n          currencyCode\n          sale\n          originalPrice\n          condition\n          expiresAt\n          unitType\n        }\n        createdAt\n        updatedAt\n        createdBy {\n          id\n          name\n          avatar\n        }\n        updatedBy {\n          id\n          name\n          avatar\n        }\n      }\n      paginator {\n        next\n        page\n        prev\n        limit\n        total\n        numPages\n      }\n    }\n  }\n": typeof GetProductStocksDocument;
+    "\n  query MyStoreUser {\n    myStoreUsers {\n      id\n      storeId\n      store {\n        id\n        slug\n        name\n        logo\n      }\n      branchId\n      branch {\n        id\n        slug\n        name\n        address {\n          id\n          fullAddress\n        }\n      }\n      userId\n      user {\n        id\n        name\n        avatar\n      }\n      legalName\n      email\n      employeeId\n      role\n      approvedAt\n      approvedById\n      approvedByUser {\n        id\n        name\n        avatar\n      }\n      approved\n      createdById\n      createdBy {\n        id\n        name\n        avatar\n        active\n      }\n      createdAt\n    }\n  }\n": typeof MyStoreUserDocument;
     "\n  query AllStores($paginator: PaginatorInput!, $search: String) {\n    allStores(paginator: $paginator, search: $search) {\n      stores {\n        id\n        slug\n        name\n        logo\n        website\n      }\n      paginator {\n        next\n        page\n        prev\n        limit\n        total\n        numPages\n      }\n    }\n  }\n": typeof AllStoresDocument;
     "\n  query FindStore($storeId: ID, $storeSlug: String) {\n    findStore(id: $storeId, slug: $storeSlug) {\n      id\n      slug\n      name\n      logo\n      website\n    }\n  }\n": typeof FindStoreDocument;
     "\n  fragment UserFields on User {\n    id\n    name\n    email\n    avatar\n    createdAt\n    updatedAt\n    active\n    authDevice\n    authPlatform\n    authStateId\n    role\n  }\n": typeof UserFieldsFragmentDoc;
@@ -3976,6 +4212,10 @@ declare function graphql(source: string): unknown;
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 declare function graphql(source: "\n  mutation UpdateUserById($userId: ID!, $input: UpdateUserFull!) {\n    updateUserById(userId: $userId, input: $input) {\n      id\n      email\n      phoneNumber\n      name\n      avatar\n      birthDate\n      bio\n      active\n      role\n      createdAt\n      updatedAt\n    }\n  }\n"): (typeof documents)["\n  mutation UpdateUserById($userId: ID!, $input: UpdateUserFull!) {\n    updateUserById(userId: $userId, input: $input) {\n      id\n      email\n      phoneNumber\n      name\n      avatar\n      birthDate\n      bio\n      active\n      role\n      createdAt\n      updatedAt\n    }\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+declare function graphql(source: "\n  mutation CreateStoreUserAdmin($input: CreateStoreUserAdmin!) {\n    createStoreUserAdmin(input:$input) {\n      id\n      storeId\n      branchId\n      userId\n      user {\n        id\n        name\n        avatar\n      }\n      legalName\n      email\n      employeeId\n      role\n      approved\n      createdBy {\n        id\n        name\n        avatar\n        active\n      }\n      createdAt\n      encodedId\n    }\n  }\n"): (typeof documents)["\n  mutation CreateStoreUserAdmin($input: CreateStoreUserAdmin!) {\n    createStoreUserAdmin(input:$input) {\n      id\n      storeId\n      branchId\n      userId\n      user {\n        id\n        name\n        avatar\n      }\n      legalName\n      email\n      employeeId\n      role\n      approved\n      createdBy {\n        id\n        name\n        avatar\n        active\n      }\n      createdAt\n      encodedId\n    }\n  }\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
@@ -4052,6 +4292,14 @@ declare function graphql(source: "\n  mutation ExtractAndCreateProduct($barcode:
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 declare function graphql(source: "\n  mutation SanitizeProduct($id: ID!) {\n    sanitizeProduct(id: $id) {\n      id\n      name\n      image\n      description\n      brand\n      code\n      model\n      categoryId\n      category {\n        id\n        name\n        categoryAlias\n        expandedPathname\n        path\n      }\n      approximateWeight\n      netWeight\n      weightValue\n      weightType\n      quantityValue\n      quantityType\n      createdAt\n      updatedAt\n      views\n    }\n  }\n"): (typeof documents)["\n  mutation SanitizeProduct($id: ID!) {\n    sanitizeProduct(id: $id) {\n      id\n      name\n      image\n      description\n      brand\n      code\n      model\n      categoryId\n      category {\n        id\n        name\n        categoryAlias\n        expandedPathname\n        path\n      }\n      approximateWeight\n      netWeight\n      weightValue\n      weightType\n      quantityValue\n      quantityType\n      createdAt\n      updatedAt\n      views\n    }\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+declare function graphql(source: "\n  mutation AcceptPendingStoreUserInvite($data: String!) {\n    acceptPendingStoreUserInvite(data: $data) {\n      id\n      storeId\n      store {\n        id\n        slug\n        name\n        logo\n      }\n      branchId\n      branch {\n        id\n        slug\n        name\n        address {\n          id\n          fullAddress\n        }\n      }\n      userId\n      user {\n        id\n        name\n        avatar\n      }\n      legalName\n      email\n      employeeId\n      role\n      approvedAt\n      approvedById\n      approvedByUser {\n        id\n        name\n        avatar\n      }\n      approved\n      createdById\n      createdBy {\n        id\n        name\n        avatar\n        active\n      }\n      createdAt\n    }\n  }\n"): (typeof documents)["\n  mutation AcceptPendingStoreUserInvite($data: String!) {\n    acceptPendingStoreUserInvite(data: $data) {\n      id\n      storeId\n      store {\n        id\n        slug\n        name\n        logo\n      }\n      branchId\n      branch {\n        id\n        slug\n        name\n        address {\n          id\n          fullAddress\n        }\n      }\n      userId\n      user {\n        id\n        name\n        avatar\n      }\n      legalName\n      email\n      employeeId\n      role\n      approvedAt\n      approvedById\n      approvedByUser {\n        id\n        name\n        avatar\n      }\n      approved\n      createdById\n      createdBy {\n        id\n        name\n        avatar\n        active\n      }\n      createdAt\n    }\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+declare function graphql(source: "\n  mutation DeclinePendingStoreUserInvite($data: String!) {\n    declinePendingStoreUserInvite(data: $data)\n  }\n"): (typeof documents)["\n  mutation DeclinePendingStoreUserInvite($data: String!) {\n    declinePendingStoreUserInvite(data: $data)\n  }\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
@@ -4247,6 +4495,10 @@ declare function graphql(source: "\n  query GetProductStocks($paginator: Paginat
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
+declare function graphql(source: "\n  query MyStoreUser {\n    myStoreUsers {\n      id\n      storeId\n      store {\n        id\n        slug\n        name\n        logo\n      }\n      branchId\n      branch {\n        id\n        slug\n        name\n        address {\n          id\n          fullAddress\n        }\n      }\n      userId\n      user {\n        id\n        name\n        avatar\n      }\n      legalName\n      email\n      employeeId\n      role\n      approvedAt\n      approvedById\n      approvedByUser {\n        id\n        name\n        avatar\n      }\n      approved\n      createdById\n      createdBy {\n        id\n        name\n        avatar\n        active\n      }\n      createdAt\n    }\n  }\n"): (typeof documents)["\n  query MyStoreUser {\n    myStoreUsers {\n      id\n      storeId\n      store {\n        id\n        slug\n        name\n        logo\n      }\n      branchId\n      branch {\n        id\n        slug\n        name\n        address {\n          id\n          fullAddress\n        }\n      }\n      userId\n      user {\n        id\n        name\n        avatar\n      }\n      legalName\n      email\n      employeeId\n      role\n      approvedAt\n      approvedById\n      approvedByUser {\n        id\n        name\n        avatar\n      }\n      approved\n      createdById\n      createdBy {\n        id\n        name\n        avatar\n        active\n      }\n      createdAt\n    }\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
 declare function graphql(source: "\n  query AllStores($paginator: PaginatorInput!, $search: String) {\n    allStores(paginator: $paginator, search: $search) {\n      stores {\n        id\n        slug\n        name\n        logo\n        website\n      }\n      paginator {\n        next\n        page\n        prev\n        limit\n        total\n        numPages\n      }\n    }\n  }\n"): (typeof documents)["\n  query AllStores($paginator: PaginatorInput!, $search: String) {\n    allStores(paginator: $paginator, search: $search) {\n      stores {\n        id\n        slug\n        name\n        logo\n        website\n      }\n      paginator {\n        next\n        page\n        prev\n        limit\n        total\n        numPages\n      }\n    }\n  }\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
@@ -4350,6 +4602,7 @@ declare const MY_PRODUCT_BILLING_DATA_QUERY: graphql$1.DocumentNode;
 declare const POST_AUTH_USER_DATA_QUERIES: graphql$1.DocumentNode;
 
 declare const UPDATE_USER_BY_ID_MUTATION: graphql$1.DocumentNode;
+declare const CREATE_STORE_USER_ADMIN: graphql$1.DocumentNode;
 
 declare const CREATE_BRANCH_WITH_FULL_ADDRESS_MUTATION: graphql$1.DocumentNode;
 declare const CREATE_BRANCH_MUTATION: graphql$1.DocumentNode;
@@ -4388,4 +4641,4 @@ declare const REQUEST_RESET_PASSWORD_MUTATION: graphql$1.DocumentNode;
 declare const UPDATE_PASSWORD_WITH_RESET_CODE_MUTATION: graphql$1.DocumentNode;
 declare const REGISTER_EXPO_PUSH_TOKEN: graphql$1.DocumentNode;
 
-export { ADD_BRANCH_TO_LIST_MUTATION, ADD_GROCERY_LIST_ITEMS_MUTATION, ADD_TO_LIST_MUTATION, ALL_BRANCHES_QUERY, ALL_BRANDS_QUERY, ALL_PRODUCTS_QUERY, ALL_STORES_QUERY, APPLE_OAUTH_QUERY, AddBranchToListDocument, type AddBranchToListMutation, type AddBranchToListMutationVariables, AddGroceryListItemDocument, type AddGroceryListItemMutation, type AddGroceryListItemMutationVariables, AddToListDocument, type AddToListMutation, type AddToListMutationVariables, type Address, type AdministrativeDivision, AllBranchesDocument, type AllBranchesQuery, type AllBranchesQueryVariables, AllBrandsDocument, type AllBrandsQuery, type AllBrandsQueryVariables, AllProductsDocument, type AllProductsQuery, type AllProductsQueryVariables, AllStoresDocument, type AllStoresQuery, type AllStoresQueryVariables, AppleOAuthDocument, type AppleOAuthQuery, type AppleOAuthQueryVariables, type Auth, AuthDeviceType, AuthPlatformType, BARCODE_SCAN_QUERY, BRANCHES_WITH_PRODUCTS_QUERY, BRANCH_QUERY, BULK_ADD_BRANCHES_TO_LIST_MUTATION, BarcodeScanDocument, type BarcodeScanQuery, type BarcodeScanQueryVariables, type Branch, BranchDocument, type BranchFlat, type BranchList, type BranchListWithPrices, type BranchQuery, type BranchQueryVariables, BranchesWithProductsDocument, type BranchesWithProductsQuery, type BranchesWithProductsQueryVariables, type Brand, BulkAddBranchesToListDocument, type BulkAddBranchesToListMutation, type BulkAddBranchesToListMutationVariables, CATEGORY_SEARCH_QUERY, CHECK_APP_VERSION_QUERY, COUNT_GROCERY_LIST_ITEMS_QUERY, CREATE_BRANCH_MUTATION, CREATE_BRANCH_WITH_FULL_ADDRESS_MUTATION, CREATE_CATEGORY_MUTATION, CREATE_PRICE_MUTATION, CREATE_PRODUCT_MUTATION, CREATE_STORE_MUTATION, CREATE_USER_MUTATION, type Category, CategorySearchDocument, type CategorySearchQuery, type CategorySearchQueryVariables, CheckAppVersionDocument, type CheckAppVersionQuery, type CheckAppVersionQueryVariables, CountGroceryListItemsDocument, type CountGroceryListItemsQuery, type CountGroceryListItemsQueryVariables, type Country, CreateAccountDocument, type CreateAccountInput, type CreateAccountMutation, type CreateAccountMutationVariables, type CreateAddress, type CreateBranch, CreateBranchDocument, CreateBranchFromFullAddressDocument, type CreateBranchFromFullAddressMutation, type CreateBranchFromFullAddressMutationVariables, type CreateBranchMutation, type CreateBranchMutationVariables, type CreateCategory, CreateCategoryDocument, type CreateCategoryMutation, type CreateCategoryMutationVariables, type CreateGroceryListInput, type CreateGroceryListItemInput, type CreatePrice, CreatePriceDocument, type CreatePriceMutation, type CreatePriceMutationVariables, type CreateProduct, CreateProductDocument, type CreateProductMutation, type CreateProductMutationVariables, type CreateStock, type CreateStore, CreateStoreDocument, type CreateStoreMutation, type CreateStoreMutationVariables, type CreatedByUser, type Currency, DEFAULT_GROCERY_LIST_ITEMS_QUERY, DELETE_GROCERY_LIST_ITEMS_MUTATION, DefaultGroceryListItemsDocument, type DefaultGroceryListItemsQuery, type DefaultGroceryListItemsQueryVariables, DeleteGroceryListItemDocument, type DeleteGroceryListItemMutation, type DeleteGroceryListItemMutationVariables, type DocumentType, EXTRACT_AND_CREATE_PRODUCT_FIELDS_QUERY, EXTRACT_PRODUCT_FIELDS_QUERY, type Exact, ExtractAndCreateProductDocument, type ExtractAndCreateProductMutation, type ExtractAndCreateProductMutationVariables, ExtractProductFieldsDocument, type ExtractProductFieldsQuery, type ExtractProductFieldsQueryVariables, FIND_BRANCHES_BY_DISTANCE_QUERY, FIND_BRANCH_QUERY, FIND_STORE_QUERY, FavoriteBranchesWithPricesDocument, type FavoriteBranchesWithPricesQuery, type FavoriteBranchesWithPricesQueryVariables, FindBranchDocument, type FindBranchQuery, type FindBranchQueryVariables, FindBranchesByDistanceDocument, type FindBranchesByDistanceQuery, type FindBranchesByDistanceQueryVariables, FindStoreDocument, type FindStoreQuery, type FindStoreQueryVariables, type FragmentType, GET_ALL_BRANCH_LISTS_BY_LIST_ID, GET_ALL_COUNTRIES_QUERY, GET_ALL_LISTS, GET_ALL_PRODUCT_LISTS_BY_LIST_ID, GET_ALL_USERS_QUERY, GET_CATEGORIES_QUERY, GET_CATEGORY_QUERY, GET_FAVORITE_BRANCHES_WITH_PRICE_DATA_QUERY, GET_GROCERY_LIST_ITEMS_QUERY, GET_PRODUCT_NUTRITION_DATA_QUERY, GET_PRODUCT_STOCKS_QUERY, GET_STOCK_BY_ID, GET_STOCK_FROM_PRODUCT_AND_BRANCH_ID_QUERY, GOOGLE_OAUTH_QUERY, GROCERY_LISTS_QUERY, GetAllBranchListsByListIdDocument, type GetAllBranchListsByListIdQuery, type GetAllBranchListsByListIdQueryVariables, GetAllCountriesDocument, type GetAllCountriesQuery, type GetAllCountriesQueryVariables, GetAllListsDocument, type GetAllListsQuery, type GetAllListsQueryVariables, GetAllProductListsByListIdDocument, type GetAllProductListsByListIdQuery, type GetAllProductListsByListIdQueryVariables, GetAllUsersDocument, type GetAllUsersQuery, type GetAllUsersQueryVariables, GetCategoriesDocument, type GetCategoriesQuery, type GetCategoriesQueryVariables, GetCategoryDocument, type GetCategoryQuery, type GetCategoryQueryVariables, GetProductNutritionDataDocument, type GetProductNutritionDataQuery, type GetProductNutritionDataQueryVariables, GetProductStocksDocument, type GetProductStocksQuery, type GetProductStocksQueryVariables, GetStockFromProductAndBranchIdDocument, type GetStockFromProductAndBranchIdQuery, type GetStockFromProductAndBranchIdQueryVariables, GoogleOAuthDocument, type GoogleOAuthQuery, type GoogleOAuthQueryVariables, type GroceryList, type GroceryListItem, GroceryListItemsDocument, type GroceryListItemsFilters, type GroceryListItemsQuery, type GroceryListItemsQueryVariables, GroceryListsDocument, type GroceryListsQuery, type GroceryListsQueryVariables, IP_TO_ADDRESS_QUERY, type Incremental, type InputMaybe, IpToAddressDocument, type IpToAddressQuery, type IpToAddressQueryVariables, LOGIN_INTERNAL_QUERY, LOGOUT_MUTATION, type List, ListType, type LocationInput, LoginInternalDocument, type LoginInternalQuery, type LoginInternalQueryVariables, LogoutDocument, type LogoutMutation, type LogoutMutationVariables, MARK_GROCERY_ITEM_MUTATION, ME_QUERY, MY_PRODUCT_BILLING_DATA_QUERY, MY_PRODUCT_VIEW_HISTORY_QUERY, MY_SEARCH_HISTORY_QUERY, type MakeEmpty, type MakeMaybe, type MakeOptional, MarkGroceryListItemDocument, type MarkGroceryListItemMutation, type MarkGroceryListItemMutationVariables, type Maybe, MeDocument, type MeQuery, type MeQueryVariables, type Mutation, type MutationAddBranchToListArgs, type MutationAddGroceryListItemArgs, type MutationAddToListArgs, type MutationBulkAddBranchesToListArgs, type MutationCreateAccountArgs, type MutationCreateBranchArgs, type MutationCreateBranchWithFullAddressArgs, type MutationCreateCategoryArgs, type MutationCreateListArgs, type MutationCreatePriceArgs, type MutationCreateProductArgs, type MutationCreateStoreArgs, type MutationDeleteGroceryListItemArgs, type MutationDeleteListArgs, type MutationDeleteSearchByIdArgs, type MutationExtractAndCreateProductArgs, type MutationMarkGroceryListItemArgs, type MutationRegisterExpoPushTokenArgs, type MutationRemoveBranchFromListArgs, type MutationRemoveFromListArgs, type MutationRemoveFromListWithProductIdArgs, type MutationRequestPasswordResetArgs, type MutationResendEmailVerificationCodeArgs, type MutationSanitizeProductArgs, type MutationSaveProductsFromUpcItemDbArgs, type MutationUpdateGroceryListItemArgs, type MutationUpdatePasswordWithResetCodeArgs, type MutationUpdateProductArgs, type MutationUpdateProductNutritionDataArgs, type MutationUpdateProfileArgs, type MutationUpdateUserByIdArgs, type MutationVerifyEmailArgs, MyProductBillingDataDocument, type MyProductBillingDataQuery, type MyProductBillingDataQueryVariables, MyProductViewHistoryDocument, type MyProductViewHistoryQuery, type MyProductViewHistoryQueryVariables, MySearchHistoryDocument, type MySearchHistoryQuery, type MySearchHistoryQueryVariables, OrderByType, POPULAR_PRODUCTS_QUERY, POPULAR_SEARCH_KEYWORDS_QUERY, POST_AUTH_USER_DATA_QUERIES, PRICE_CHANGE_HISTORY_QUERY, PRODUCT_BILLING_DATA_BY_USER_ID_QUERY, PRODUCT_BY_ID_QUERY, PRODUCT_SEARCH_QUERY, PRODUCT_SUMMARY_QUERY, type PaginatedBranches, type PaginatedPriceHistory, type PaginatedProductBilling, type PaginatedProducts, type PaginatedSearch, type PaginatedSearchKeywords, type PaginatedStocks, type PaginatedStores, type PaginatedUsers, type Paginator, type PaginatorInput, PopularProductsDocument, type PopularProductsQuery, type PopularProductsQueryVariables, PopularSearchKeywordsDocument, type PopularSearchKeywordsQuery, type PopularSearchKeywordsQueryVariables, PostAuthUserDataDocument, type PostAuthUserDataQuery, type PostAuthUserDataQueryVariables, type Price, PriceChangeHistoryDocument, type PriceChangeHistoryQuery, type PriceChangeHistoryQueryVariables, type PriceHistoryFilter, type Product, type ProductBilling, ProductBillingDataByUserIdDocument, type ProductBillingDataByUserIdQuery, type ProductBillingDataByUserIdQueryVariables, ProductDocument, type ProductExtractionFields, type ProductExtractionResponse, type ProductList, type ProductNutriment, type ProductNutrition, type ProductQuery, type ProductQueryVariables, type ProductReferrer, type ProductSearch, ProductSearchDocument, type ProductSearchFilters, type ProductSearchQuery, type ProductSearchQueryVariables, type ProductSimple, type ProductSummary, type ProductSummaryBranchInput, ProductSummaryDocument, type ProductSummaryQuery, type ProductSummaryQueryVariables, type ProductWeightComponents, type Query, type QueryAllBranchesArgs, type QueryAllBrandsArgs, type QueryAllProductsArgs, type QueryAllStoresArgs, type QueryAppleOAuthArgs, type QueryBarcodeScanArgs, type QueryBranchesWithProductsArgs, type QueryCategorySearchArgs, type QueryCheckAppVersionArgs, type QueryCountGroceryListItemsArgs, type QueryDefaultGroceryListItemsArgs, type QueryExtractProductFieldsArgs, type QueryFindBranchArgs, type QueryFindBranchesByDistanceArgs, type QueryFindStoreArgs, type QueryGetAllBranchListsByListIdArgs, type QueryGetAllListsArgs, type QueryGetAllProductListsByListIdArgs, type QueryGetAllUsersArgs, type QueryGetCategoriesArgs, type QueryGetCategoryArgs, type QueryGetFavoriteBranchesWithPricesArgs, type QueryGetProductNutritionDataArgs, type QueryGetProductStocksArgs, type QueryGetStockFromProductAndBranchIdArgs, type QueryGoogleOAuthArgs, type QueryGroceryListArgs, type QueryGroceryListItemsArgs, type QueryIpToAddressArgs, type QueryLoginArgs, type QueryMyProductBillingDataArgs, type QueryMyProductViewHistoryArgs, type QueryMySearchHistoryArgs, type QueryPopularProductsArgs, type QueryPopularSearchKeywordsArgs, type QueryPriceChangeHistoryArgs, type QueryProductArgs, type QueryProductBillingDataByUserIdArgs, type QueryProductSearchArgs, type QueryProductSummaryArgs, type QuerySearchKeywordsArgs, type QueryStockArgs, type QueryVerifyPasswordResetCodeArgs, type QueryWeightComponentsFromCategoryIdArgs, REGISTER_EXPO_PUSH_TOKEN, REMOVE_BRANCH_FROM_LIST_MUTATION, REMOVE_FROM_LIST_BY_PRODUCT_ID_MUTATION, REMOVE_FROM_LIST_MUTATION, REQUEST_RESET_PASSWORD_MUTATION, RESEND_VERIFICATION_MUTATION, RegisterExpoPushTokenDocument, type RegisterExpoPushTokenMutation, type RegisterExpoPushTokenMutationVariables, RemoveBranchFromListDocument, type RemoveBranchFromListMutation, type RemoveBranchFromListMutationVariables, RemoveFromListDocument, type RemoveFromListMutation, type RemoveFromListMutationVariables, RemoveFromListWithProductIdDocument, type RemoveFromListWithProductIdMutation, type RemoveFromListWithProductIdMutationVariables, RequestResetPasswordDocument, type RequestResetPasswordMutation, type RequestResetPasswordMutationVariables, ResendVerificationDocument, type ResendVerificationMutation, type ResendVerificationMutationVariables, SANITIZE_PRODUCT_MUTATION, SEARCH_KEYWORDS_QUERY, SanitizeProductDocument, type SanitizeProductMutation, type SanitizeProductMutationVariables, type SaveExternalProductInput, type Scalars, type SearchHistory, SearchKeywordsDocument, type SearchKeywordsQuery, type SearchKeywordsQueryVariables, type SearchResult, type Stock, StockDocument, type StockQuery, type StockQueryVariables, type StockSimple, type Store, type TimestampRangeBetween, UPDATE_GROCERY_LIST_ITEMS_MUTATION, UPDATE_PASSWORD_WITH_RESET_CODE_MUTATION, UPDATE_PRODUCT_MUTATION, UPDATE_PRODUCT_NUTRITION_MUTATION, UPDATE_PROFILE_MUTATION, UPDATE_USER_BY_ID_MUTATION, UpdateGroceryListItemDocument, type UpdateGroceryListItemMutation, type UpdateGroceryListItemMutationVariables, UpdatePasswordWithResetCodeDocument, type UpdatePasswordWithResetCodeMutation, type UpdatePasswordWithResetCodeMutationVariables, type UpdateProduct, UpdateProductDocument, type UpdateProductMutation, type UpdateProductMutationVariables, UpdateProductNutritionDataDocument, type UpdateProductNutritionDataMutation, type UpdateProductNutritionDataMutationVariables, UpdateProfileDocument, type UpdateProfileMutation, type UpdateProfileMutationVariables, type UpdateUser, UpdateUserByIdDocument, type UpdateUserByIdMutation, type UpdateUserByIdMutationVariables, type UpdateUserFull, type UpdatedByUser, type User, type UserFieldsFragment, UserFieldsFragmentDoc, type UserFilter, UserFragment, UserRole, type UserShallow, VERIFY_EMAIL_MUTATION, VERIFY_PASSWORD_RESET_CODE_QUERY, VerifyEmailDocument, type VerifyEmailMutation, type VerifyEmailMutationVariables, VerifyPasswordResetCodeDocument, type VerifyPasswordResetCodeQuery, type VerifyPasswordResetCodeQueryVariables, type ViewerTrailInput, WEIGHT_COMPONENTS_FROM_CATEGORY_ID_QUERY, WeightComponentsFromCategoryIdDocument, type WeightComponentsFromCategoryIdQuery, type WeightComponentsFromCategoryIdQueryVariables, graphql, isFragmentReady, makeFragmentData, useFragment };
+export { ADD_BRANCH_TO_LIST_MUTATION, ADD_GROCERY_LIST_ITEMS_MUTATION, ADD_TO_LIST_MUTATION, ALL_BRANCHES_QUERY, ALL_BRANDS_QUERY, ALL_PRODUCTS_QUERY, ALL_STORES_QUERY, APPLE_OAUTH_QUERY, AcceptPendingStoreUserInviteDocument, type AcceptPendingStoreUserInviteMutation, type AcceptPendingStoreUserInviteMutationVariables, AddBranchToListDocument, type AddBranchToListMutation, type AddBranchToListMutationVariables, AddGroceryListItemDocument, type AddGroceryListItemMutation, type AddGroceryListItemMutationVariables, AddToListDocument, type AddToListMutation, type AddToListMutationVariables, type Address, type AdministrativeDivision, AllBranchesDocument, type AllBranchesQuery, type AllBranchesQueryVariables, AllBrandsDocument, type AllBrandsQuery, type AllBrandsQueryVariables, AllProductsDocument, type AllProductsQuery, type AllProductsQueryVariables, AllStoresDocument, type AllStoresQuery, type AllStoresQueryVariables, AppleOAuthDocument, type AppleOAuthQuery, type AppleOAuthQueryVariables, type ApprovedByUser, type Auth, AuthDeviceType, AuthPlatformType, BARCODE_SCAN_QUERY, BRANCHES_WITH_PRODUCTS_QUERY, BRANCH_QUERY, BULK_ADD_BRANCHES_TO_LIST_MUTATION, BarcodeScanDocument, type BarcodeScanQuery, type BarcodeScanQueryVariables, type Branch, BranchDocument, type BranchFlat, type BranchList, type BranchListWithPrices, type BranchQuery, type BranchQueryVariables, BranchesWithProductsDocument, type BranchesWithProductsQuery, type BranchesWithProductsQueryVariables, type Brand, BulkAddBranchesToListDocument, type BulkAddBranchesToListMutation, type BulkAddBranchesToListMutationVariables, CATEGORY_SEARCH_QUERY, CHECK_APP_VERSION_QUERY, COUNT_GROCERY_LIST_ITEMS_QUERY, CREATE_BRANCH_MUTATION, CREATE_BRANCH_WITH_FULL_ADDRESS_MUTATION, CREATE_CATEGORY_MUTATION, CREATE_PRICE_MUTATION, CREATE_PRODUCT_MUTATION, CREATE_STORE_MUTATION, CREATE_STORE_USER_ADMIN, CREATE_USER_MUTATION, type Category, CategorySearchDocument, type CategorySearchQuery, type CategorySearchQueryVariables, CheckAppVersionDocument, type CheckAppVersionQuery, type CheckAppVersionQueryVariables, CountGroceryListItemsDocument, type CountGroceryListItemsQuery, type CountGroceryListItemsQueryVariables, type Country, CreateAccountDocument, type CreateAccountInput, type CreateAccountMutation, type CreateAccountMutationVariables, type CreateAddress, type CreateBranch, CreateBranchDocument, CreateBranchFromFullAddressDocument, type CreateBranchFromFullAddressMutation, type CreateBranchFromFullAddressMutationVariables, type CreateBranchMutation, type CreateBranchMutationVariables, type CreateCategory, CreateCategoryDocument, type CreateCategoryMutation, type CreateCategoryMutationVariables, type CreateGroceryListInput, type CreateGroceryListItemInput, type CreatePrice, CreatePriceDocument, type CreatePriceMutation, type CreatePriceMutationVariables, type CreateProduct, CreateProductDocument, type CreateProductMutation, type CreateProductMutationVariables, type CreateStock, type CreateStore, CreateStoreDocument, type CreateStoreMutation, type CreateStoreMutationVariables, type CreateStoreUserAdmin, CreateStoreUserAdminDocument, type CreateStoreUserAdminMutation, type CreateStoreUserAdminMutationVariables, type CreatedByUser, type Currency, DEFAULT_GROCERY_LIST_ITEMS_QUERY, DELETE_GROCERY_LIST_ITEMS_MUTATION, DeclinePendingStoreUserInviteDocument, type DeclinePendingStoreUserInviteMutation, type DeclinePendingStoreUserInviteMutationVariables, DefaultGroceryListItemsDocument, type DefaultGroceryListItemsQuery, type DefaultGroceryListItemsQueryVariables, DeleteGroceryListItemDocument, type DeleteGroceryListItemMutation, type DeleteGroceryListItemMutationVariables, type DocumentType, EXTRACT_AND_CREATE_PRODUCT_FIELDS_QUERY, EXTRACT_PRODUCT_FIELDS_QUERY, type Exact, ExtractAndCreateProductDocument, type ExtractAndCreateProductMutation, type ExtractAndCreateProductMutationVariables, ExtractProductFieldsDocument, type ExtractProductFieldsQuery, type ExtractProductFieldsQueryVariables, FIND_BRANCHES_BY_DISTANCE_QUERY, FIND_BRANCH_QUERY, FIND_STORE_QUERY, FavoriteBranchesWithPricesDocument, type FavoriteBranchesWithPricesQuery, type FavoriteBranchesWithPricesQueryVariables, FindBranchDocument, type FindBranchQuery, type FindBranchQueryVariables, FindBranchesByDistanceDocument, type FindBranchesByDistanceQuery, type FindBranchesByDistanceQueryVariables, FindStoreDocument, type FindStoreQuery, type FindStoreQueryVariables, type FragmentType, GET_ALL_BRANCH_LISTS_BY_LIST_ID, GET_ALL_COUNTRIES_QUERY, GET_ALL_LISTS, GET_ALL_PRODUCT_LISTS_BY_LIST_ID, GET_ALL_USERS_QUERY, GET_CATEGORIES_QUERY, GET_CATEGORY_QUERY, GET_FAVORITE_BRANCHES_WITH_PRICE_DATA_QUERY, GET_GROCERY_LIST_ITEMS_QUERY, GET_PRODUCT_NUTRITION_DATA_QUERY, GET_PRODUCT_STOCKS_QUERY, GET_STOCK_BY_ID, GET_STOCK_FROM_PRODUCT_AND_BRANCH_ID_QUERY, GOOGLE_OAUTH_QUERY, GROCERY_LISTS_QUERY, GetAllBranchListsByListIdDocument, type GetAllBranchListsByListIdQuery, type GetAllBranchListsByListIdQueryVariables, GetAllCountriesDocument, type GetAllCountriesQuery, type GetAllCountriesQueryVariables, GetAllListsDocument, type GetAllListsQuery, type GetAllListsQueryVariables, GetAllProductListsByListIdDocument, type GetAllProductListsByListIdQuery, type GetAllProductListsByListIdQueryVariables, GetAllUsersDocument, type GetAllUsersQuery, type GetAllUsersQueryVariables, GetCategoriesDocument, type GetCategoriesQuery, type GetCategoriesQueryVariables, GetCategoryDocument, type GetCategoryQuery, type GetCategoryQueryVariables, GetProductNutritionDataDocument, type GetProductNutritionDataQuery, type GetProductNutritionDataQueryVariables, GetProductStocksDocument, type GetProductStocksQuery, type GetProductStocksQueryVariables, GetStockFromProductAndBranchIdDocument, type GetStockFromProductAndBranchIdQuery, type GetStockFromProductAndBranchIdQueryVariables, GoogleOAuthDocument, type GoogleOAuthQuery, type GoogleOAuthQueryVariables, type GroceryList, type GroceryListItem, GroceryListItemsDocument, type GroceryListItemsFilters, type GroceryListItemsQuery, type GroceryListItemsQueryVariables, GroceryListsDocument, type GroceryListsQuery, type GroceryListsQueryVariables, IP_TO_ADDRESS_QUERY, type Incremental, type InputMaybe, IpToAddressDocument, type IpToAddressQuery, type IpToAddressQueryVariables, LOGIN_INTERNAL_QUERY, LOGOUT_MUTATION, type List, ListType, type LocationInput, LoginInternalDocument, type LoginInternalQuery, type LoginInternalQueryVariables, LogoutDocument, type LogoutMutation, type LogoutMutationVariables, MARK_GROCERY_ITEM_MUTATION, ME_QUERY, MY_PRODUCT_BILLING_DATA_QUERY, MY_PRODUCT_VIEW_HISTORY_QUERY, MY_SEARCH_HISTORY_QUERY, type MakeEmpty, type MakeMaybe, type MakeOptional, MarkGroceryListItemDocument, type MarkGroceryListItemMutation, type MarkGroceryListItemMutationVariables, type Maybe, MeDocument, type MeQuery, type MeQueryVariables, type Mutation, type MutationAcceptPendingStoreUserInviteArgs, type MutationAddBranchToListArgs, type MutationAddGroceryListItemArgs, type MutationAddToListArgs, type MutationBulkAddBranchesToListArgs, type MutationCreateAccountArgs, type MutationCreateBranchArgs, type MutationCreateBranchWithFullAddressArgs, type MutationCreateCategoryArgs, type MutationCreateListArgs, type MutationCreatePriceArgs, type MutationCreateProductArgs, type MutationCreateStoreArgs, type MutationCreateStoreUserAdminArgs, type MutationDeclinePendingStoreUserInviteArgs, type MutationDeleteGroceryListItemArgs, type MutationDeleteListArgs, type MutationDeleteSearchByIdArgs, type MutationExtractAndCreateProductArgs, type MutationMarkGroceryListItemArgs, type MutationRegisterExpoPushTokenArgs, type MutationRemoveBranchFromListArgs, type MutationRemoveFromListArgs, type MutationRemoveFromListWithProductIdArgs, type MutationRequestPasswordResetArgs, type MutationResendEmailVerificationCodeArgs, type MutationSanitizeProductArgs, type MutationSaveProductsFromUpcItemDbArgs, type MutationUpdateGroceryListItemArgs, type MutationUpdatePasswordWithResetCodeArgs, type MutationUpdateProductArgs, type MutationUpdateProductNutritionDataArgs, type MutationUpdateProfileArgs, type MutationUpdateUserByIdArgs, type MutationVerifyEmailArgs, MyProductBillingDataDocument, type MyProductBillingDataQuery, type MyProductBillingDataQueryVariables, MyProductViewHistoryDocument, type MyProductViewHistoryQuery, type MyProductViewHistoryQueryVariables, MySearchHistoryDocument, type MySearchHistoryQuery, type MySearchHistoryQueryVariables, MyStoreUserDocument, type MyStoreUserQuery, type MyStoreUserQueryVariables, OrderByType, POPULAR_PRODUCTS_QUERY, POPULAR_SEARCH_KEYWORDS_QUERY, POST_AUTH_USER_DATA_QUERIES, PRICE_CHANGE_HISTORY_QUERY, PRODUCT_BILLING_DATA_BY_USER_ID_QUERY, PRODUCT_BY_ID_QUERY, PRODUCT_SEARCH_QUERY, PRODUCT_SUMMARY_QUERY, type PaginatedBranches, type PaginatedPriceHistory, type PaginatedProductBilling, type PaginatedProducts, type PaginatedSearch, type PaginatedSearchKeywords, type PaginatedStocks, type PaginatedStores, type PaginatedUsers, type Paginator, type PaginatorInput, PopularProductsDocument, type PopularProductsQuery, type PopularProductsQueryVariables, PopularSearchKeywordsDocument, type PopularSearchKeywordsQuery, type PopularSearchKeywordsQueryVariables, PostAuthUserDataDocument, type PostAuthUserDataQuery, type PostAuthUserDataQueryVariables, type Price, PriceChangeHistoryDocument, type PriceChangeHistoryQuery, type PriceChangeHistoryQueryVariables, type PriceHistoryFilter, type Product, type ProductBilling, ProductBillingDataByUserIdDocument, type ProductBillingDataByUserIdQuery, type ProductBillingDataByUserIdQueryVariables, ProductDocument, type ProductExtractionFields, type ProductExtractionResponse, type ProductList, type ProductNutriment, type ProductNutrition, type ProductQuery, type ProductQueryVariables, type ProductReferrer, type ProductSearch, ProductSearchDocument, type ProductSearchFilters, type ProductSearchQuery, type ProductSearchQueryVariables, type ProductSimple, type ProductSummary, type ProductSummaryBranchInput, ProductSummaryDocument, type ProductSummaryQuery, type ProductSummaryQueryVariables, type ProductWeightComponents, type Query, type QueryAllBranchesArgs, type QueryAllBrandsArgs, type QueryAllProductsArgs, type QueryAllStoresArgs, type QueryAppleOAuthArgs, type QueryBarcodeScanArgs, type QueryBranchesWithProductsArgs, type QueryCategorySearchArgs, type QueryCheckAppVersionArgs, type QueryCountGroceryListItemsArgs, type QueryDefaultGroceryListItemsArgs, type QueryExtractProductFieldsArgs, type QueryFindBranchArgs, type QueryFindBranchesByDistanceArgs, type QueryFindStoreArgs, type QueryGetAllBranchListsByListIdArgs, type QueryGetAllListsArgs, type QueryGetAllProductListsByListIdArgs, type QueryGetAllUsersArgs, type QueryGetCategoriesArgs, type QueryGetCategoryArgs, type QueryGetFavoriteBranchesWithPricesArgs, type QueryGetProductNutritionDataArgs, type QueryGetProductStocksArgs, type QueryGetStockFromProductAndBranchIdArgs, type QueryGoogleOAuthArgs, type QueryGroceryListArgs, type QueryGroceryListItemsArgs, type QueryIpToAddressArgs, type QueryLoginArgs, type QueryMyProductBillingDataArgs, type QueryMyProductViewHistoryArgs, type QueryMySearchHistoryArgs, type QueryPopularProductsArgs, type QueryPopularSearchKeywordsArgs, type QueryPriceChangeHistoryArgs, type QueryProductArgs, type QueryProductBillingDataByUserIdArgs, type QueryProductSearchArgs, type QueryProductSummaryArgs, type QuerySearchKeywordsArgs, type QueryStockArgs, type QueryVerifyPasswordResetCodeArgs, type QueryWeightComponentsFromCategoryIdArgs, REGISTER_EXPO_PUSH_TOKEN, REMOVE_BRANCH_FROM_LIST_MUTATION, REMOVE_FROM_LIST_BY_PRODUCT_ID_MUTATION, REMOVE_FROM_LIST_MUTATION, REQUEST_RESET_PASSWORD_MUTATION, RESEND_VERIFICATION_MUTATION, RegisterExpoPushTokenDocument, type RegisterExpoPushTokenMutation, type RegisterExpoPushTokenMutationVariables, RemoveBranchFromListDocument, type RemoveBranchFromListMutation, type RemoveBranchFromListMutationVariables, RemoveFromListDocument, type RemoveFromListMutation, type RemoveFromListMutationVariables, RemoveFromListWithProductIdDocument, type RemoveFromListWithProductIdMutation, type RemoveFromListWithProductIdMutationVariables, RequestResetPasswordDocument, type RequestResetPasswordMutation, type RequestResetPasswordMutationVariables, ResendVerificationDocument, type ResendVerificationMutation, type ResendVerificationMutationVariables, SANITIZE_PRODUCT_MUTATION, SEARCH_KEYWORDS_QUERY, SanitizeProductDocument, type SanitizeProductMutation, type SanitizeProductMutationVariables, type SaveExternalProductInput, type Scalars, type SearchHistory, SearchKeywordsDocument, type SearchKeywordsQuery, type SearchKeywordsQueryVariables, type SearchResult, type Stock, StockDocument, type StockQuery, type StockQueryVariables, type StockSimple, type Store, type StoreUser, type StoreUserData, StoreUserRole, type TimestampRangeBetween, UPDATE_GROCERY_LIST_ITEMS_MUTATION, UPDATE_PASSWORD_WITH_RESET_CODE_MUTATION, UPDATE_PRODUCT_MUTATION, UPDATE_PRODUCT_NUTRITION_MUTATION, UPDATE_PROFILE_MUTATION, UPDATE_USER_BY_ID_MUTATION, UpdateGroceryListItemDocument, type UpdateGroceryListItemMutation, type UpdateGroceryListItemMutationVariables, UpdatePasswordWithResetCodeDocument, type UpdatePasswordWithResetCodeMutation, type UpdatePasswordWithResetCodeMutationVariables, type UpdateProduct, UpdateProductDocument, type UpdateProductMutation, type UpdateProductMutationVariables, UpdateProductNutritionDataDocument, type UpdateProductNutritionDataMutation, type UpdateProductNutritionDataMutationVariables, UpdateProfileDocument, type UpdateProfileMutation, type UpdateProfileMutationVariables, type UpdateUser, UpdateUserByIdDocument, type UpdateUserByIdMutation, type UpdateUserByIdMutationVariables, type UpdateUserFull, type UpdatedByUser, type User, type UserFieldsFragment, UserFieldsFragmentDoc, type UserFilter, UserFragment, UserRole, type UserShallow, VERIFY_EMAIL_MUTATION, VERIFY_PASSWORD_RESET_CODE_QUERY, VerifyEmailDocument, type VerifyEmailMutation, type VerifyEmailMutationVariables, VerifyPasswordResetCodeDocument, type VerifyPasswordResetCodeQuery, type VerifyPasswordResetCodeQueryVariables, type ViewerTrailInput, WEIGHT_COMPONENTS_FROM_CATEGORY_ID_QUERY, WeightComponentsFromCategoryIdDocument, type WeightComponentsFromCategoryIdQuery, type WeightComponentsFromCategoryIdQueryVariables, graphql, isFragmentReady, makeFragmentData, useFragment };

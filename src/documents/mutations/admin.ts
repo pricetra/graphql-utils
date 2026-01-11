@@ -17,3 +17,32 @@ export const UPDATE_USER_BY_ID_MUTATION = gql(`
     }
   }
 `);
+
+export const CREATE_STORE_USER_ADMIN = gql(`
+  mutation CreateStoreUserAdmin($input: CreateStoreUserAdmin!) {
+    createStoreUserAdmin(input:$input) {
+      id
+      storeId
+      branchId
+      userId
+      user {
+        id
+        name
+        avatar
+      }
+      legalName
+      email
+      employeeId
+      role
+      approved
+      createdBy {
+        id
+        name
+        avatar
+        active
+      }
+      createdAt
+      encodedId
+    }
+  }
+`);
