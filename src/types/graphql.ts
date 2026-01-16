@@ -919,6 +919,13 @@ export type ProductSummaryBranchInput = {
   branchSlug?: InputMaybe<Scalars['String']['input']>;
 };
 
+export type ProductViewerMetadata = {
+  browser?: InputMaybe<Scalars['String']['input']>;
+  device?: InputMaybe<Scalars['String']['input']>;
+  ipAddress?: InputMaybe<Scalars['String']['input']>;
+  userAgent?: InputMaybe<Scalars['String']['input']>;
+};
+
 export type ProductWeightComponents = {
   __typename?: 'ProductWeightComponents';
   weightType: Scalars['String']['output'];
@@ -1449,6 +1456,7 @@ export type UserShallow = {
 };
 
 export type ViewerTrailInput = {
+  metadata?: InputMaybe<ProductViewerMetadata>;
   origin?: InputMaybe<Scalars['String']['input']>;
   referrer?: InputMaybe<ProductReferrer>;
   stockId?: InputMaybe<Scalars['ID']['input']>;
