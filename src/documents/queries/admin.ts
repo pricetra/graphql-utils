@@ -113,6 +113,7 @@ export const PAGINATED_ADMIN_PRODUCT_VIEW_ENTRIES = gql(`
         productId
         product {
           id
+          code
           name
           image
         }
