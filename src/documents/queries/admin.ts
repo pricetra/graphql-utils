@@ -72,3 +72,70 @@ export const PRODUCT_BILLING_DATA_BY_USER_ID_QUERY = gql(`
     }
   }
 `);
+
+export const PAGINATED_ADMIN_AUTH_SESSIONS_QUERY = gql(`
+  query PaginatedAdminAuthSessions($paginator: PaginatorInput!, $filters: UserFilter) {
+    paginatedAdminAuthSessions(paginator: $paginator, filters: $filters) {
+      authSessions {
+        id
+        loggedInAt
+        userId
+        user {
+          id
+          name
+          avatar
+          active
+          createdAt
+          updatedAt
+        }
+        ipAddress
+        platform
+        device
+        expoPushToken
+      }
+      paginator {
+        next
+        page
+        prev
+        limit
+        total
+        numPages
+      }
+    }
+  }
+`);
+
+export const PAGINATED_ADMIN_PRODUCT_VIEW_ENTRIES = gql(`
+  query PaginatedAdminProductViewEntries($paginator: PaginatorInput!) {
+    paginatedAdminProductViewEntries(paginator: $paginator) {
+      productViewEntries {
+        id
+        productId
+        product {
+          id
+          name
+          image
+        }
+        stockId
+        stock {
+          id
+        }
+        userId
+        user {
+          id
+          name
+          avatar
+          active
+        }
+      }
+      paginator {
+        next
+        page
+        prev
+        limit
+        total
+        numPages
+      }
+    }
+  }
+`);

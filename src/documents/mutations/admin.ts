@@ -46,3 +46,9 @@ export const CREATE_STORE_USER_ADMIN = gql(`
     }
   }
 `);
+
+export const ADMIN_REMOVE_AUTH_SESSION_MUTATION = gql(`
+  mutation AdminRemoveAuthSession($authStateId: String!) {
+    adminRemoveAuthSession(authStateId: $authStateId)
+  }
+`);
