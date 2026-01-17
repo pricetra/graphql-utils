@@ -127,6 +127,11 @@ export const PAGINATED_ADMIN_PRODUCT_VIEW_ENTRIES = gql(`
           avatar
           active
         }
+        origin
+        platform
+        createdAt
+        referrer
+        metadata
       }
       paginator {
         next
