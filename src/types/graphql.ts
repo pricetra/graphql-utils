@@ -170,7 +170,7 @@ export type CreateAddress = {
   longitude: Scalars['Float']['input'];
   mapsLink: Scalars['String']['input'];
   street?: InputMaybe<Scalars['String']['input']>;
-  zipCode: Scalars['Int']['input'];
+  zipCode: Scalars['String']['input'];
 };
 
 export type CreateBranch = {
