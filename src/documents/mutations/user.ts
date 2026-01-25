@@ -78,6 +78,12 @@ export const UPDATE_PROFILE_MUTATION = gql(`
   }
 `);
 
+export const DELETE_MY_ACCOUNT_MUTATION = gql(`
+  mutation DeleteMyAccount {
+    deleteMyAccount
+  }
+`);
+
 export const REQUEST_RESET_PASSWORD_MUTATION = gql(`
   mutation RequestResetPassword($email: String!) {
     requestPasswordReset(email: $email)
