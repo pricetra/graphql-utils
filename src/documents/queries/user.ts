@@ -142,8 +142,8 @@ export const APPLE_OAUTH_QUERY = gql(`
 `);
 
 export const YAHOO_OAUTH_QUERY = gql(`
-  query YahooOAuth($code: String!, $ipAddress: String, $device: AuthDeviceType) {
-    yahooOAuth(code: $code, ipAddress: $ipAddress, device: $device) {
+  query YahooOAuth($code: String!, $codeVerifier: String, $ipAddress: String, $device: AuthDeviceType) {
+    yahooOAuth(code: $code, codeVerifier: $codeVerifier, ipAddress: $ipAddress, device: $device) {
       token
       user {
         id
