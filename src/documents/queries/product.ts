@@ -139,12 +139,15 @@ export const ALL_PRODUCTS_QUERY = gql(`
             condition
             expiresAt
             unitType
+            outOfStock
+            verified
             createdBy {
               id
               name
               avatar
             }
           }
+          available
           createdBy {
             id
             name
@@ -246,7 +249,10 @@ export const BRANCHES_WITH_PRODUCTS_QUERY = gql(`
               condition
               expiresAt
               unitType
+              outOfStock
+              verified
             }
+            available
             createdBy {
               id
               name
@@ -426,7 +432,10 @@ export const MY_PRODUCT_VIEW_HISTORY_QUERY = gql(`
             condition
             expiresAt
             unitType
+            outOfStock
+            verified
           }
+          available
           createdBy {
             id
             name
@@ -523,7 +532,10 @@ export const POPULAR_PRODUCTS_QUERY = gql(`
             condition
             expiresAt
             unitType
+            outOfStock
+            verified
           }
+          available
           createdBy {
             id
             name

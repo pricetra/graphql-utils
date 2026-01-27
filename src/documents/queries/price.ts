@@ -21,6 +21,8 @@ export const PRICE_CHANGE_HISTORY_QUERY = gql(`
         condition
         unitType
         currencyCode
+        outOfStock
+        verified
         createdBy {
           id
           name

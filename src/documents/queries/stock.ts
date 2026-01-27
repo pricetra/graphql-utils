@@ -47,7 +47,10 @@ export const GET_STOCK_BY_ID = gql(`
         expiresAt
         createdAt
         unitType
+        outOfStock
+        verified
       }
+      available
       createdAt
       updatedAt
       createdBy {
@@ -85,7 +88,10 @@ export const GET_STOCK_FROM_PRODUCT_AND_BRANCH_ID_QUERY = gql(`
         expiresAt
         createdAt
         unitType
+        outOfStock
+        verified
       }
+      available
       createdAt
       updatedAt
     }
@@ -138,7 +144,10 @@ export const GET_PRODUCT_STOCKS_QUERY = gql(`
           condition
           expiresAt
           unitType
+          outOfStock
+          verified
         }
+        available
         createdAt
         updatedAt
         createdBy {

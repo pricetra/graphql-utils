@@ -183,12 +183,15 @@ export const GET_FAVORITE_BRANCHES_WITH_PRICE_DATA_QUERY = gql(`
           condition
           expiresAt
           unitType
+          outOfStock
+          verified
           createdBy {
             id
             name
             avatar
           }
         }
+        available
       }
       approximatePrice
     }

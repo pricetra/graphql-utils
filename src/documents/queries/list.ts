@@ -103,7 +103,10 @@ export const GET_ALL_PRODUCT_LISTS_BY_LIST_ID = gql(`
           condition
           expiresAt
           unitType
+          outOfStock
+            verified
         }
+        available
       }
     }
   }

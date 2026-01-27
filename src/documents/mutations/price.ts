@@ -10,6 +10,8 @@ export const CREATE_PRICE_MUTATION = gql(`
       storeId
       stockId
       branchId
+      outOfStock
+      verified
     }
   }
 `);
