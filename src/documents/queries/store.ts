@@ -33,3 +33,9 @@ export const FIND_STORE_QUERY = gql(`
     }
   }
 `);
+
+export const STORE_SLUG_AVAILABILITY_QUERY = gql(`
+  query StoreSlugAvailability($store: String!) {
+    storeSlugAvailability(store: $store)
+  }
+`);

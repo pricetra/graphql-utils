@@ -52,3 +52,44 @@ export const ADMIN_REMOVE_AUTH_SESSION_MUTATION = gql(`
     adminRemoveAuthSession(authStateId: $authStateId)
   }
 `);
+
+export const CREATE_STORE_WITH_BUSINESS_FORM_MUTATION = gql(`
+  mutation CreateStoreWithBusinessForm($id: String!) {
+    createStoreWithBusinessForm(id: $id) {
+      businessForm {
+        id
+        firstName
+        lastName
+        email
+        phoneNumber
+        storeName
+        storeAddress
+        storeUrl
+        storeLogo
+        additionalInformation
+        storeId
+      }
+      store {
+        id
+        slug
+        name
+        logo
+        website
+      }
+      branch {
+        id
+        slug
+        name
+        addressId
+        address {
+          id
+          fullAddress
+          latitude
+          longitude
+        }
+        storeId
+        storeSlug
+      }
+    }
+  }
+`);

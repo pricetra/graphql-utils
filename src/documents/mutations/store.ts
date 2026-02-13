@@ -10,3 +10,21 @@ export const CREATE_STORE_MUTATION = gql(`
     }
   }
 `);
+
+export const BUSINESS_SIGN_UP_FORM_MUTATION = gql(`
+  mutation BusinessSingUpForm($input: BusinessFormInput!) {
+    businessSingUpForm(input: $input) {
+      id
+      firstName
+      lastName
+      email
+      phoneNumber
+      storeName
+      storeAddress
+      storeUrl
+      storeLogo
+      additionalInformation
+      storeId
+    }
+  }
+`);
