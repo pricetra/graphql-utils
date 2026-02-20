@@ -131,6 +131,112 @@ export const FIND_BRANCHES_BY_DISTANCE_QUERY = gql(`
   }
 `);
 
+export const BRANCHES_WITH_PRODUCTS_QUERY = gql(`
+  query BranchesWithProducts($paginator: PaginatorInput!, $productLimit: Int!, $filters: ProductSearch) {
+    branchesWithProducts(
+      paginator: $paginator
+      productLimit: $productLimit
+      filters: $filters
+    ) {
+      branches {
+        id
+        slug
+        name
+        storeId
+        storeSlug
+        store {
+          id
+          slug
+          name
+          logo
+        }
+        addressId
+        address {
+          id
+          distance
+          latitude
+          longitude
+          mapsLink
+          fullAddress
+          street
+          city
+          administrativeDivision
+          countryCode
+          country
+          zipCode
+        }
+        products {
+          id
+          name
+          image
+          description
+          brand
+          code
+          model
+          categoryId
+          category {
+            id
+            name
+            expandedPathname
+            path
+          }
+          stock {
+            id
+            productId
+            storeId
+            branchId
+            latestPriceId
+            latestPrice {
+              id
+              productId
+              branchId
+              storeId
+              amount
+              currencyCode
+              createdAt
+              sale
+              originalPrice
+              condition
+              expiresAt
+              unitType
+              outOfStock
+              verified
+            }
+            available
+            createdBy {
+              id
+              name
+              avatar
+            }
+            updatedBy {
+              id
+              name
+              avatar
+            }
+          }
+          approximateWeight
+          netWeight
+          weightValue
+          weightType
+          quantityValue
+          quantityType
+          createdAt
+          updatedAt
+          views
+        }
+      }
+      paginator {
+        next
+        page
+        prev
+        limit
+        total
+        numPages
+      }
+    }
+  }
+`);
+
 export const GET_FAVORITE_BRANCHES_WITH_PRICE_DATA_QUERY = gql(`
   query FavoriteBranchesWithPrices($productId: ID!) {
     getFavoriteBranchesWithPrices(productId: $productId) {

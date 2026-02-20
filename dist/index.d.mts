@@ -208,6 +208,15 @@ type Category = {
     name: Scalars['String']['output'];
     path: Scalars['String']['output'];
 };
+type CategoryWithProducts = {
+    __typename?: 'CategoryWithProducts';
+    categoryAlias?: Maybe<Scalars['String']['output']>;
+    expandedPathname: Scalars['String']['output'];
+    id: Scalars['ID']['output'];
+    name: Scalars['String']['output'];
+    path: Scalars['String']['output'];
+    products: Array<Product>;
+};
 type Country = {
     __typename?: 'Country';
     administrativeDivisions: Array<AdministrativeDivision>;
@@ -561,6 +570,11 @@ type PaginatedAuthSessions = {
 type PaginatedBranches = {
     __typename?: 'PaginatedBranches';
     branches: Array<Branch>;
+    paginator: Paginator;
+};
+type PaginatedCategoriesWithProducts = {
+    __typename?: 'PaginatedCategoriesWithProducts';
+    categories: Array<CategoryWithProducts>;
     paginator: Paginator;
 };
 type PaginatedPriceHistory = {
@@ -944,6 +958,7 @@ type Query = {
     appleOAuth: Auth;
     barcodeScan: Product;
     branchesWithProducts: PaginatedBranches;
+    categoriesWithProducts: PaginatedCategoriesWithProducts;
     categorySearch: Array<Category>;
     checkAppVersion: Scalars['Boolean']['output'];
     countGroceryListItems: Scalars['Int']['output'];
@@ -1025,6 +1040,11 @@ type QueryBarcodeScanArgs = {
     searchMode?: InputMaybe<Scalars['Boolean']['input']>;
 };
 type QueryBranchesWithProductsArgs = {
+    filters?: InputMaybe<ProductSearch>;
+    paginator: PaginatorInput;
+    productLimit: Scalars['Int']['input'];
+};
+type QueryCategoriesWithProductsArgs = {
     filters?: InputMaybe<ProductSearch>;
     paginator: PaginatorInput;
     productLimit: Scalars['Int']['input'];
@@ -2430,6 +2450,122 @@ type FindBranchesByDistanceQuery = {
         };
     }>;
 };
+type BranchesWithProductsQueryVariables = Exact<{
+    paginator: PaginatorInput;
+    productLimit: Scalars['Int']['input'];
+    filters?: InputMaybe<ProductSearch>;
+}>;
+type BranchesWithProductsQuery = {
+    __typename?: 'Query';
+    branchesWithProducts: {
+        __typename?: 'PaginatedBranches';
+        branches: Array<{
+            __typename?: 'Branch';
+            id: number;
+            slug: string;
+            name: string;
+            storeId: number;
+            storeSlug?: string | null;
+            addressId: number;
+            store?: {
+                __typename?: 'Store';
+                id: number;
+                slug: string;
+                name: string;
+                logo: string;
+            } | null;
+            address: {
+                __typename?: 'Address';
+                id: number;
+                distance?: number | null;
+                latitude: number;
+                longitude: number;
+                mapsLink: string;
+                fullAddress: string;
+                street?: string | null;
+                city: string;
+                administrativeDivision: string;
+                countryCode: string;
+                country?: string | null;
+                zipCode: string;
+            };
+            products?: Array<{
+                __typename?: 'ProductSimple';
+                id: number;
+                name: string;
+                image: string;
+                description: string;
+                brand: string;
+                code: string;
+                model?: string | null;
+                categoryId: number;
+                approximateWeight: boolean;
+                netWeight: boolean;
+                weightValue?: number | null;
+                weightType?: string | null;
+                quantityValue: number;
+                quantityType: string;
+                createdAt: any;
+                updatedAt: any;
+                views: number;
+                category?: {
+                    __typename?: 'Category';
+                    id: number;
+                    name: string;
+                    expandedPathname: string;
+                    path: string;
+                } | null;
+                stock?: {
+                    __typename?: 'StockSimple';
+                    id: number;
+                    productId: number;
+                    storeId: number;
+                    branchId: number;
+                    latestPriceId: number;
+                    available: boolean;
+                    latestPrice?: {
+                        __typename?: 'Price';
+                        id: number;
+                        productId: number;
+                        branchId: number;
+                        storeId: number;
+                        amount: number;
+                        currencyCode: string;
+                        createdAt: any;
+                        sale: boolean;
+                        originalPrice?: number | null;
+                        condition?: string | null;
+                        expiresAt?: any | null;
+                        unitType: string;
+                        outOfStock: boolean;
+                        verified: boolean;
+                    } | null;
+                    createdBy?: {
+                        __typename?: 'CreatedByUser';
+                        id: number;
+                        name: string;
+                        avatar?: string | null;
+                    } | null;
+                    updatedBy?: {
+                        __typename?: 'UpdatedByUser';
+                        id: number;
+                        name: string;
+                        avatar?: string | null;
+                    } | null;
+                } | null;
+            }> | null;
+        }>;
+        paginator: {
+            __typename?: 'Paginator';
+            next?: number | null;
+            page: number;
+            prev?: number | null;
+            limit: number;
+            total: number;
+            numPages: number;
+        };
+    };
+};
 type FavoriteBranchesWithPricesQueryVariables = Exact<{
     productId: Scalars['ID']['input'];
 }>;
@@ -2556,6 +2692,99 @@ type GetCategoryQuery = {
         path: string;
         expandedPathname: string;
         categoryAlias?: string | null;
+    };
+};
+type CategoriesWithProductsQueryVariables = Exact<{
+    paginator: PaginatorInput;
+    productLimit: Scalars['Int']['input'];
+    filters?: InputMaybe<ProductSearch>;
+}>;
+type CategoriesWithProductsQuery = {
+    __typename?: 'Query';
+    categoriesWithProducts: {
+        __typename?: 'PaginatedCategoriesWithProducts';
+        categories: Array<{
+            __typename?: 'CategoryWithProducts';
+            id: number;
+            name: string;
+            path: string;
+            expandedPathname: string;
+            categoryAlias?: string | null;
+            products: Array<{
+                __typename?: 'Product';
+                id: number;
+                name: string;
+                image: string;
+                description: string;
+                brand: string;
+                code: string;
+                model?: string | null;
+                categoryId: number;
+                approximateWeight: boolean;
+                netWeight: boolean;
+                weightValue?: number | null;
+                weightType?: string | null;
+                quantityValue: number;
+                quantityType: string;
+                createdAt: any;
+                updatedAt: any;
+                views: number;
+                category?: {
+                    __typename?: 'Category';
+                    id: number;
+                    name: string;
+                    expandedPathname: string;
+                    path: string;
+                } | null;
+                stock?: {
+                    __typename?: 'Stock';
+                    id: number;
+                    productId: number;
+                    storeId: number;
+                    branchId: number;
+                    latestPriceId: number;
+                    available: boolean;
+                    latestPrice?: {
+                        __typename?: 'Price';
+                        id: number;
+                        productId: number;
+                        branchId: number;
+                        storeId: number;
+                        amount: number;
+                        currencyCode: string;
+                        createdAt: any;
+                        sale: boolean;
+                        originalPrice?: number | null;
+                        condition?: string | null;
+                        expiresAt?: any | null;
+                        unitType: string;
+                        outOfStock: boolean;
+                        verified: boolean;
+                    } | null;
+                    createdBy?: {
+                        __typename?: 'CreatedByUser';
+                        id: number;
+                        name: string;
+                        avatar?: string | null;
+                    } | null;
+                    updatedBy?: {
+                        __typename?: 'UpdatedByUser';
+                        id: number;
+                        name: string;
+                        avatar?: string | null;
+                    } | null;
+                } | null;
+            }>;
+        }>;
+        paginator: {
+            __typename?: 'Paginator';
+            next?: number | null;
+            page: number;
+            prev?: number | null;
+            limit: number;
+            total: number;
+            numPages: number;
+        };
     };
 };
 type GroceryListsQueryVariables = Exact<{
@@ -3246,122 +3475,6 @@ type AllProductsQuery = {
                     avatar?: string | null;
                 } | null;
             } | null;
-        }>;
-        paginator: {
-            __typename?: 'Paginator';
-            next?: number | null;
-            page: number;
-            prev?: number | null;
-            limit: number;
-            total: number;
-            numPages: number;
-        };
-    };
-};
-type BranchesWithProductsQueryVariables = Exact<{
-    paginator: PaginatorInput;
-    productLimit: Scalars['Int']['input'];
-    filters?: InputMaybe<ProductSearch>;
-}>;
-type BranchesWithProductsQuery = {
-    __typename?: 'Query';
-    branchesWithProducts: {
-        __typename?: 'PaginatedBranches';
-        branches: Array<{
-            __typename?: 'Branch';
-            id: number;
-            slug: string;
-            name: string;
-            storeId: number;
-            storeSlug?: string | null;
-            addressId: number;
-            store?: {
-                __typename?: 'Store';
-                id: number;
-                slug: string;
-                name: string;
-                logo: string;
-            } | null;
-            address: {
-                __typename?: 'Address';
-                id: number;
-                distance?: number | null;
-                latitude: number;
-                longitude: number;
-                mapsLink: string;
-                fullAddress: string;
-                street?: string | null;
-                city: string;
-                administrativeDivision: string;
-                countryCode: string;
-                country?: string | null;
-                zipCode: string;
-            };
-            products?: Array<{
-                __typename?: 'ProductSimple';
-                id: number;
-                name: string;
-                image: string;
-                description: string;
-                brand: string;
-                code: string;
-                model?: string | null;
-                categoryId: number;
-                approximateWeight: boolean;
-                netWeight: boolean;
-                weightValue?: number | null;
-                weightType?: string | null;
-                quantityValue: number;
-                quantityType: string;
-                createdAt: any;
-                updatedAt: any;
-                views: number;
-                category?: {
-                    __typename?: 'Category';
-                    id: number;
-                    name: string;
-                    expandedPathname: string;
-                    path: string;
-                } | null;
-                stock?: {
-                    __typename?: 'StockSimple';
-                    id: number;
-                    productId: number;
-                    storeId: number;
-                    branchId: number;
-                    latestPriceId: number;
-                    available: boolean;
-                    latestPrice?: {
-                        __typename?: 'Price';
-                        id: number;
-                        productId: number;
-                        branchId: number;
-                        storeId: number;
-                        amount: number;
-                        currencyCode: string;
-                        createdAt: any;
-                        sale: boolean;
-                        originalPrice?: number | null;
-                        condition?: string | null;
-                        expiresAt?: any | null;
-                        unitType: string;
-                        outOfStock: boolean;
-                        verified: boolean;
-                    } | null;
-                    createdBy?: {
-                        __typename?: 'CreatedByUser';
-                        id: number;
-                        name: string;
-                        avatar?: string | null;
-                    } | null;
-                    updatedBy?: {
-                        __typename?: 'UpdatedByUser';
-                        id: number;
-                        name: string;
-                        avatar?: string | null;
-                    } | null;
-                } | null;
-            }> | null;
         }>;
         paginator: {
             __typename?: 'Paginator';
@@ -4431,11 +4544,13 @@ declare const AllBranchesDocument: TypedDocumentNode<AllBranchesQuery, AllBranch
 declare const BranchDocument: TypedDocumentNode<BranchQuery, BranchQueryVariables>;
 declare const FindBranchDocument: TypedDocumentNode<FindBranchQuery, FindBranchQueryVariables>;
 declare const FindBranchesByDistanceDocument: TypedDocumentNode<FindBranchesByDistanceQuery, FindBranchesByDistanceQueryVariables>;
+declare const BranchesWithProductsDocument: TypedDocumentNode<BranchesWithProductsQuery, BranchesWithProductsQueryVariables>;
 declare const FavoriteBranchesWithPricesDocument: TypedDocumentNode<FavoriteBranchesWithPricesQuery, FavoriteBranchesWithPricesQueryVariables>;
 declare const AllBrandsDocument: TypedDocumentNode<AllBrandsQuery, AllBrandsQueryVariables>;
 declare const GetCategoriesDocument: TypedDocumentNode<GetCategoriesQuery, GetCategoriesQueryVariables>;
 declare const CategorySearchDocument: TypedDocumentNode<CategorySearchQuery, CategorySearchQueryVariables>;
 declare const GetCategoryDocument: TypedDocumentNode<GetCategoryQuery, GetCategoryQueryVariables>;
+declare const CategoriesWithProductsDocument: TypedDocumentNode<CategoriesWithProductsQuery, CategoriesWithProductsQueryVariables>;
 declare const GroceryListsDocument: TypedDocumentNode<GroceryListsQuery, GroceryListsQueryVariables>;
 declare const GroceryListItemsDocument: TypedDocumentNode<GroceryListItemsQuery, GroceryListItemsQueryVariables>;
 declare const DefaultGroceryListItemsDocument: TypedDocumentNode<DefaultGroceryListItemsQuery, DefaultGroceryListItemsQueryVariables>;
@@ -4451,7 +4566,6 @@ declare const GetProductNutritionDataDocument: TypedDocumentNode<GetProductNutri
 declare const BarcodeScanDocument: TypedDocumentNode<BarcodeScanQuery, BarcodeScanQueryVariables>;
 declare const ProductDocument: TypedDocumentNode<ProductQuery, ProductQueryVariables>;
 declare const AllProductsDocument: TypedDocumentNode<AllProductsQuery, AllProductsQueryVariables>;
-declare const BranchesWithProductsDocument: TypedDocumentNode<BranchesWithProductsQuery, BranchesWithProductsQueryVariables>;
 declare const ProductSummaryDocument: TypedDocumentNode<ProductSummaryQuery, ProductSummaryQueryVariables>;
 declare const ProductSearchDocument: TypedDocumentNode<ProductSearchQuery, ProductSearchQueryVariables>;
 declare const ExtractProductFieldsDocument: TypedDocumentNode<ExtractProductFieldsQuery, ExtractProductFieldsQueryVariables>;
@@ -4551,11 +4665,13 @@ type Documents = {
     "\n  query Branch($branchId: ID, $branchSlug: String, $storeId: ID, $storeSlug: String) {\n    findBranch(id: $branchId, slug: $branchSlug, storeId: $storeId, storeSlug: $storeSlug) {\n      id\n      slug\n      name\n      addressId\n      storeId\n      storeSlug\n      address {\n        id\n        latitude\n        longitude\n        mapsLink\n        fullAddress\n        street\n        city\n        administrativeDivision\n        countryCode\n        country\n        zipCode\n      }\n    }\n\n    findStore(id: $storeId, slug: $storeSlug) {\n      id\n      slug\n      name\n      logo\n      website\n    }\n  }\n": typeof BranchDocument;
     "\n  query FindBranch($branchId: ID, $branchSlug: String, $storeId: ID, $storeSlug: String) {\n    findBranch(id: $branchId, slug: $branchSlug, storeId: $storeId, storeSlug: $storeSlug) {\n      id\n      slug\n      name\n      addressId\n      storeId\n      storeSlug\n      address {\n        id\n        latitude\n        longitude\n        mapsLink\n        fullAddress\n        street\n        city\n        administrativeDivision\n        countryCode\n        country\n        zipCode\n      }\n    }\n  }\n": typeof FindBranchDocument;
     "\n  query FindBranchesByDistance($lat: Float!, $lon: Float!, $radiusMeters: Int!) {\n    findBranchesByDistance(lat: $lat, lon: $lon, radiusMeters: $radiusMeters) {\n      id\n      slug\n      name\n      storeId\n      storeSlug\n      store {\n        id\n        slug\n        name\n        website\n        logo\n      }\n      addressId\n      address {\n        id\n        distance\n        latitude\n        longitude\n        mapsLink\n        fullAddress\n        street\n        city\n        administrativeDivision\n        countryCode\n        country\n        zipCode\n      }\n    }\n  }\n": typeof FindBranchesByDistanceDocument;
+    "\n  query BranchesWithProducts($paginator: PaginatorInput!, $productLimit: Int!, $filters: ProductSearch) {\n    branchesWithProducts(\n      paginator: $paginator\n      productLimit: $productLimit\n      filters: $filters\n    ) {\n      branches {\n        id\n        slug\n        name\n        storeId\n        storeSlug\n        store {\n          id\n          slug\n          name\n          logo\n        }\n        addressId\n        address {\n          id\n          distance\n          latitude\n          longitude\n          mapsLink\n          fullAddress\n          street\n          city\n          administrativeDivision\n          countryCode\n          country\n          zipCode\n        }\n        products {\n          id\n          name\n          image\n          description\n          brand\n          code\n          model\n          categoryId\n          category {\n            id\n            name\n            expandedPathname\n            path\n          }\n          stock {\n            id\n            productId\n            storeId\n            branchId\n            latestPriceId\n            latestPrice {\n              id\n              productId\n              branchId\n              storeId\n              amount\n              currencyCode\n              createdAt\n              sale\n              originalPrice\n              condition\n              expiresAt\n              unitType\n              outOfStock\n              verified\n            }\n            available\n            createdBy {\n              id\n              name\n              avatar\n            }\n            updatedBy {\n              id\n              name\n              avatar\n            }\n          }\n          approximateWeight\n          netWeight\n          weightValue\n          weightType\n          quantityValue\n          quantityType\n          createdAt\n          updatedAt\n          views\n        }\n      }\n      paginator {\n        next\n        page\n        prev\n        limit\n        total\n        numPages\n      }\n    }\n  }\n": typeof BranchesWithProductsDocument;
     "\n  query FavoriteBranchesWithPrices($productId: ID!) {\n    getFavoriteBranchesWithPrices(productId: $productId) {\n      id\n      branchId\n      branch {\n        id\n        slug\n        name\n        storeId\n        storeSlug\n        store {\n          id\n          slug\n          name\n          logo\n        }\n        addressId\n        address {\n          id\n          distance\n          latitude\n          longitude\n          mapsLink\n          fullAddress\n          street\n          city\n          administrativeDivision\n          countryCode\n          country\n          zipCode\n        }\n      }\n      stock {\n        id\n        productId\n        storeId\n        branchId\n        latestPriceId\n        latestPrice {\n          id\n          productId\n          branchId\n          storeId\n          amount\n          currencyCode\n          createdAt\n          sale\n          originalPrice\n          condition\n          expiresAt\n          unitType\n          outOfStock\n          verified\n          createdBy {\n            id\n            name\n            avatar\n          }\n        }\n        available\n      }\n      approximatePrice\n    }\n  }\n": typeof FavoriteBranchesWithPricesDocument;
     "\n  query AllBrands($joinStock: Boolean) {\n    allBrands(joinStock: $joinStock) {\n      brand\n      products\n    }\n  }\n": typeof AllBrandsDocument;
     "\n  query GetCategories($depth: Int, $parentId: ID) {\n    getCategories(depth: $depth, parentId: $parentId) {\n      id\n      name\n      path\n      expandedPathname\n      categoryAlias\n      depth\n    }\n  }\n": typeof GetCategoriesDocument;
     "\n  query CategorySearch($search: String!, $quickSearchMode: Boolean) {\n    categorySearch(search: $search, quickSearchMode: $quickSearchMode) {\n      id\n      name\n    }\n  }\n": typeof CategorySearchDocument;
     "\n  query GetCategory($id: ID!) {\n    getCategory(id: $id) {\n      id\n      name\n      path\n      expandedPathname\n      categoryAlias\n    }\n  }\n": typeof GetCategoryDocument;
+    "\n  query CategoriesWithProducts($paginator: PaginatorInput!, $productLimit: Int!, $filters: ProductSearch) {\n    categoriesWithProducts(\n      paginator: $paginator\n      productLimit: $productLimit\n      filters: $filters\n    ) {\n      categories {\n        id\n        name\n        path\n        expandedPathname\n        categoryAlias\n        products {\n          id\n          name\n          image\n          description\n          brand\n          code\n          model\n          categoryId\n          category {\n            id\n            name\n            expandedPathname\n            path\n          }\n          stock {\n            id\n            productId\n            storeId\n            branchId\n            latestPriceId\n            latestPrice {\n              id\n              productId\n              branchId\n              storeId\n              amount\n              currencyCode\n              createdAt\n              sale\n              originalPrice\n              condition\n              expiresAt\n              unitType\n              outOfStock\n              verified\n            }\n            available\n            createdBy {\n              id\n              name\n              avatar\n            }\n            updatedBy {\n              id\n              name\n              avatar\n            }\n          }\n          approximateWeight\n          netWeight\n          weightValue\n          weightType\n          quantityValue\n          quantityType\n          createdAt\n          updatedAt\n          views\n        }\n      }\n      paginator {\n        next\n        page\n        prev\n        limit\n        total\n        numPages\n      }\n    }\n  }\n": typeof CategoriesWithProductsDocument;
     "\n  query GroceryLists {\n    groceryLists {\n      id\n      name\n      default\n      createdAt\n    }\n  }\n": typeof GroceryListsDocument;
     "\n  query GroceryListItems($groceryListId: ID!, $filters: GroceryListItemsFilters) {\n    groceryListItems(groceryListId: $groceryListId, filters: $filters) {\n      id\n      groceryListId\n      productId\n      product {\n        id\n        code\n        name\n        image\n        categoryId\n        category {\n          id\n          name\n        }\n        approximateWeight\n        netWeight\n        weightValue\n        weightType\n        quantityValue\n        quantityType\n        createdAt\n        updatedAt\n        views\n      }\n      category\n      weight\n      quantity\n      unit\n      completed\n      createdAt\n    }\n  }\n": typeof GroceryListItemsDocument;
     "\n  query DefaultGroceryListItems($filters: GroceryListItemsFilters) {\n    defaultGroceryListItems(filters: $filters) {\n      id\n      groceryListId\n      productId\n      product {\n        id\n        code\n        name\n        image\n        categoryId\n        category {\n          id\n          name\n        }\n        approximateWeight\n        netWeight\n        weightValue\n        weightType\n        quantityValue\n        quantityType\n        createdAt\n        updatedAt\n        views\n      }\n      category\n      weight\n      quantity\n      unit\n      completed\n      createdAt\n    }\n  }\n": typeof DefaultGroceryListItemsDocument;
@@ -4571,7 +4687,6 @@ type Documents = {
     "\n  query BarcodeScan($barcode: String!, $searchMode: Boolean, $location: LocationInput) {\n    barcodeScan(barcode: $barcode, searchMode: $searchMode, location: $location) {\n      id\n      name\n      image\n      description\n      brand\n      code\n      model\n      categoryId\n      category {\n        id\n        name\n        expandedPathname\n        path\n      }\n      approximateWeight\n      netWeight\n      weightValue\n      weightType\n      quantityValue\n      quantityType\n      createdAt\n      updatedAt\n      stock {\n        id\n        productId\n        storeId\n        branchId\n        latestPriceId\n      }\n    }\n  }\n": typeof BarcodeScanDocument;
     "\n  query Product($productId: ID!, $viewerTrail: ViewerTrailInput) {\n    product(id: $productId, viewerTrail: $viewerTrail) {\n      id\n      name\n      image\n      description\n      brand\n      code\n      model\n      categoryId\n      category {\n        id\n        name\n        categoryAlias\n        expandedPathname\n        path\n      }\n      approximateWeight\n      netWeight\n      weightValue\n      weightType\n      quantityValue\n      quantityType\n      createdAt\n      updatedAt\n      views\n      productList {\n        id\n        listId\n        userId\n        productId\n        type\n        stockId\n        createdAt\n      }\n    }\n  }\n": typeof ProductDocument;
     "\n  query AllProducts($paginator: PaginatorInput!, $search: ProductSearch) {\n    allProducts(paginator: $paginator, search: $search) {\n      products {\n        id\n        name\n        image\n        description\n        brand\n        code\n        model\n        categoryId\n        category {\n          id\n          name\n          expandedPathname\n          path\n        }\n        stock {\n          id\n          productId\n          storeId\n          store {\n            id\n            slug\n            name\n            logo\n          }\n          branchId\n          branch {\n            id\n            slug\n            name\n            addressId\n            address {\n              id\n              latitude\n              longitude\n              mapsLink\n              fullAddress\n              street\n              city\n              administrativeDivision\n              countryCode\n              country\n              zipCode\n              distance\n            }\n          }\n          latestPriceId\n          latestPrice {\n            id\n            productId\n            branchId\n            storeId\n            amount\n            currencyCode\n            createdAt\n            sale\n            originalPrice\n            condition\n            expiresAt\n            unitType\n            outOfStock\n            verified\n            createdBy {\n              id\n              name\n              avatar\n            }\n          }\n          available\n          createdBy {\n            id\n            name\n            avatar\n          }\n          updatedBy {\n            id\n            name\n            avatar\n          }\n        }\n        approximateWeight\n        netWeight\n        weightValue\n        weightType\n        quantityValue\n        quantityType\n        createdAt\n        updatedAt\n        views\n      }\n      paginator {\n        next\n        page\n        prev\n        limit\n        total\n        numPages\n      }\n    }\n  }\n": typeof AllProductsDocument;
-    "\n  query BranchesWithProducts($paginator: PaginatorInput!, $productLimit: Int!, $filters: ProductSearch) {\n    branchesWithProducts(\n      paginator: $paginator\n      productLimit: $productLimit\n      filters: $filters\n    ) {\n      branches {\n        id\n        slug\n        name\n        storeId\n        storeSlug\n        store {\n          id\n          slug\n          name\n          logo\n        }\n        addressId\n        address {\n          id\n          distance\n          latitude\n          longitude\n          mapsLink\n          fullAddress\n          street\n          city\n          administrativeDivision\n          countryCode\n          country\n          zipCode\n        }\n        products {\n          id\n          name\n          image\n          description\n          brand\n          code\n          model\n          categoryId\n          category {\n            id\n            name\n            expandedPathname\n            path\n          }\n          stock {\n            id\n            productId\n            storeId\n            branchId\n            latestPriceId\n            latestPrice {\n              id\n              productId\n              branchId\n              storeId\n              amount\n              currencyCode\n              createdAt\n              sale\n              originalPrice\n              condition\n              expiresAt\n              unitType\n              outOfStock\n              verified\n            }\n            available\n            createdBy {\n              id\n              name\n              avatar\n            }\n            updatedBy {\n              id\n              name\n              avatar\n            }\n          }\n          approximateWeight\n          netWeight\n          weightValue\n          weightType\n          quantityValue\n          quantityType\n          createdAt\n          updatedAt\n          views\n        }\n      }\n      paginator {\n        next\n        page\n        prev\n        limit\n        total\n        numPages\n      }\n    }\n  }\n": typeof BranchesWithProductsDocument;
     "\n  query ProductSummary($productId: ID!, $stockId: ID, $branch: ProductSummaryBranchInput) {\n    productSummary(id: $productId, stockId: $stockId, branch: $branch) {\n      id\n      name\n      image\n      description\n      brand\n      code\n      stockId\n      store\n      storeId\n      storeLogo\n      storeSlug\n      branch\n      branchId\n      branchSlug\n      address\n      price\n      priceCurrencyCode\n      originalPrice\n      sale\n      saleExpiresAt\n      priceCreatedAt\n    }\n  }\n": typeof ProductSummaryDocument;
     "\n  query ProductSearch($paginator: PaginatorInput!, $search: String, $filters: ProductSearchFilters) {\n    productSearch(paginator: $paginator, search: $search, filters: $filters) {\n      products {\n        id\n        code\n        brand\n        name\n        category {\n          id\n          name\n          expandedPathname\n        }\n        quantityValue\n        quantityType\n        approximateWeight\n        netWeight\n        weightValue\n        weightType\n        createdAt\n        updatedAt\n      }\n      paginator {\n        next\n        page\n        prev\n        limit\n        total\n        numPages\n      }\n    }\n  }\n": typeof ProductSearchDocument;
     "\n  query ExtractProductFields($base64Image: String!) {\n    extractProductFields(base64Image: $base64Image) {\n      brand\n      name\n      description\n      netWeight\n      weight\n      quantity\n      categoryId\n      category {\n        id\n        name\n        expandedPathname\n        path\n      }\n    }\n  }\n": typeof ExtractProductFieldsDocument;
@@ -4791,6 +4906,10 @@ declare function graphql(source: "\n  query FindBranchesByDistance($lat: Float!,
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
+declare function graphql(source: "\n  query BranchesWithProducts($paginator: PaginatorInput!, $productLimit: Int!, $filters: ProductSearch) {\n    branchesWithProducts(\n      paginator: $paginator\n      productLimit: $productLimit\n      filters: $filters\n    ) {\n      branches {\n        id\n        slug\n        name\n        storeId\n        storeSlug\n        store {\n          id\n          slug\n          name\n          logo\n        }\n        addressId\n        address {\n          id\n          distance\n          latitude\n          longitude\n          mapsLink\n          fullAddress\n          street\n          city\n          administrativeDivision\n          countryCode\n          country\n          zipCode\n        }\n        products {\n          id\n          name\n          image\n          description\n          brand\n          code\n          model\n          categoryId\n          category {\n            id\n            name\n            expandedPathname\n            path\n          }\n          stock {\n            id\n            productId\n            storeId\n            branchId\n            latestPriceId\n            latestPrice {\n              id\n              productId\n              branchId\n              storeId\n              amount\n              currencyCode\n              createdAt\n              sale\n              originalPrice\n              condition\n              expiresAt\n              unitType\n              outOfStock\n              verified\n            }\n            available\n            createdBy {\n              id\n              name\n              avatar\n            }\n            updatedBy {\n              id\n              name\n              avatar\n            }\n          }\n          approximateWeight\n          netWeight\n          weightValue\n          weightType\n          quantityValue\n          quantityType\n          createdAt\n          updatedAt\n          views\n        }\n      }\n      paginator {\n        next\n        page\n        prev\n        limit\n        total\n        numPages\n      }\n    }\n  }\n"): (typeof documents)["\n  query BranchesWithProducts($paginator: PaginatorInput!, $productLimit: Int!, $filters: ProductSearch) {\n    branchesWithProducts(\n      paginator: $paginator\n      productLimit: $productLimit\n      filters: $filters\n    ) {\n      branches {\n        id\n        slug\n        name\n        storeId\n        storeSlug\n        store {\n          id\n          slug\n          name\n          logo\n        }\n        addressId\n        address {\n          id\n          distance\n          latitude\n          longitude\n          mapsLink\n          fullAddress\n          street\n          city\n          administrativeDivision\n          countryCode\n          country\n          zipCode\n        }\n        products {\n          id\n          name\n          image\n          description\n          brand\n          code\n          model\n          categoryId\n          category {\n            id\n            name\n            expandedPathname\n            path\n          }\n          stock {\n            id\n            productId\n            storeId\n            branchId\n            latestPriceId\n            latestPrice {\n              id\n              productId\n              branchId\n              storeId\n              amount\n              currencyCode\n              createdAt\n              sale\n              originalPrice\n              condition\n              expiresAt\n              unitType\n              outOfStock\n              verified\n            }\n            available\n            createdBy {\n              id\n              name\n              avatar\n            }\n            updatedBy {\n              id\n              name\n              avatar\n            }\n          }\n          approximateWeight\n          netWeight\n          weightValue\n          weightType\n          quantityValue\n          quantityType\n          createdAt\n          updatedAt\n          views\n        }\n      }\n      paginator {\n        next\n        page\n        prev\n        limit\n        total\n        numPages\n      }\n    }\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
 declare function graphql(source: "\n  query FavoriteBranchesWithPrices($productId: ID!) {\n    getFavoriteBranchesWithPrices(productId: $productId) {\n      id\n      branchId\n      branch {\n        id\n        slug\n        name\n        storeId\n        storeSlug\n        store {\n          id\n          slug\n          name\n          logo\n        }\n        addressId\n        address {\n          id\n          distance\n          latitude\n          longitude\n          mapsLink\n          fullAddress\n          street\n          city\n          administrativeDivision\n          countryCode\n          country\n          zipCode\n        }\n      }\n      stock {\n        id\n        productId\n        storeId\n        branchId\n        latestPriceId\n        latestPrice {\n          id\n          productId\n          branchId\n          storeId\n          amount\n          currencyCode\n          createdAt\n          sale\n          originalPrice\n          condition\n          expiresAt\n          unitType\n          outOfStock\n          verified\n          createdBy {\n            id\n            name\n            avatar\n          }\n        }\n        available\n      }\n      approximatePrice\n    }\n  }\n"): (typeof documents)["\n  query FavoriteBranchesWithPrices($productId: ID!) {\n    getFavoriteBranchesWithPrices(productId: $productId) {\n      id\n      branchId\n      branch {\n        id\n        slug\n        name\n        storeId\n        storeSlug\n        store {\n          id\n          slug\n          name\n          logo\n        }\n        addressId\n        address {\n          id\n          distance\n          latitude\n          longitude\n          mapsLink\n          fullAddress\n          street\n          city\n          administrativeDivision\n          countryCode\n          country\n          zipCode\n        }\n      }\n      stock {\n        id\n        productId\n        storeId\n        branchId\n        latestPriceId\n        latestPrice {\n          id\n          productId\n          branchId\n          storeId\n          amount\n          currencyCode\n          createdAt\n          sale\n          originalPrice\n          condition\n          expiresAt\n          unitType\n          outOfStock\n          verified\n          createdBy {\n            id\n            name\n            avatar\n          }\n        }\n        available\n      }\n      approximatePrice\n    }\n  }\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
@@ -4808,6 +4927,10 @@ declare function graphql(source: "\n  query CategorySearch($search: String!, $qu
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 declare function graphql(source: "\n  query GetCategory($id: ID!) {\n    getCategory(id: $id) {\n      id\n      name\n      path\n      expandedPathname\n      categoryAlias\n    }\n  }\n"): (typeof documents)["\n  query GetCategory($id: ID!) {\n    getCategory(id: $id) {\n      id\n      name\n      path\n      expandedPathname\n      categoryAlias\n    }\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+declare function graphql(source: "\n  query CategoriesWithProducts($paginator: PaginatorInput!, $productLimit: Int!, $filters: ProductSearch) {\n    categoriesWithProducts(\n      paginator: $paginator\n      productLimit: $productLimit\n      filters: $filters\n    ) {\n      categories {\n        id\n        name\n        path\n        expandedPathname\n        categoryAlias\n        products {\n          id\n          name\n          image\n          description\n          brand\n          code\n          model\n          categoryId\n          category {\n            id\n            name\n            expandedPathname\n            path\n          }\n          stock {\n            id\n            productId\n            storeId\n            branchId\n            latestPriceId\n            latestPrice {\n              id\n              productId\n              branchId\n              storeId\n              amount\n              currencyCode\n              createdAt\n              sale\n              originalPrice\n              condition\n              expiresAt\n              unitType\n              outOfStock\n              verified\n            }\n            available\n            createdBy {\n              id\n              name\n              avatar\n            }\n            updatedBy {\n              id\n              name\n              avatar\n            }\n          }\n          approximateWeight\n          netWeight\n          weightValue\n          weightType\n          quantityValue\n          quantityType\n          createdAt\n          updatedAt\n          views\n        }\n      }\n      paginator {\n        next\n        page\n        prev\n        limit\n        total\n        numPages\n      }\n    }\n  }\n"): (typeof documents)["\n  query CategoriesWithProducts($paginator: PaginatorInput!, $productLimit: Int!, $filters: ProductSearch) {\n    categoriesWithProducts(\n      paginator: $paginator\n      productLimit: $productLimit\n      filters: $filters\n    ) {\n      categories {\n        id\n        name\n        path\n        expandedPathname\n        categoryAlias\n        products {\n          id\n          name\n          image\n          description\n          brand\n          code\n          model\n          categoryId\n          category {\n            id\n            name\n            expandedPathname\n            path\n          }\n          stock {\n            id\n            productId\n            storeId\n            branchId\n            latestPriceId\n            latestPrice {\n              id\n              productId\n              branchId\n              storeId\n              amount\n              currencyCode\n              createdAt\n              sale\n              originalPrice\n              condition\n              expiresAt\n              unitType\n              outOfStock\n              verified\n            }\n            available\n            createdBy {\n              id\n              name\n              avatar\n            }\n            updatedBy {\n              id\n              name\n              avatar\n            }\n          }\n          approximateWeight\n          netWeight\n          weightValue\n          weightType\n          quantityValue\n          quantityType\n          createdAt\n          updatedAt\n          views\n        }\n      }\n      paginator {\n        next\n        page\n        prev\n        limit\n        total\n        numPages\n      }\n    }\n  }\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
@@ -4868,10 +4991,6 @@ declare function graphql(source: "\n  query Product($productId: ID!, $viewerTrai
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 declare function graphql(source: "\n  query AllProducts($paginator: PaginatorInput!, $search: ProductSearch) {\n    allProducts(paginator: $paginator, search: $search) {\n      products {\n        id\n        name\n        image\n        description\n        brand\n        code\n        model\n        categoryId\n        category {\n          id\n          name\n          expandedPathname\n          path\n        }\n        stock {\n          id\n          productId\n          storeId\n          store {\n            id\n            slug\n            name\n            logo\n          }\n          branchId\n          branch {\n            id\n            slug\n            name\n            addressId\n            address {\n              id\n              latitude\n              longitude\n              mapsLink\n              fullAddress\n              street\n              city\n              administrativeDivision\n              countryCode\n              country\n              zipCode\n              distance\n            }\n          }\n          latestPriceId\n          latestPrice {\n            id\n            productId\n            branchId\n            storeId\n            amount\n            currencyCode\n            createdAt\n            sale\n            originalPrice\n            condition\n            expiresAt\n            unitType\n            outOfStock\n            verified\n            createdBy {\n              id\n              name\n              avatar\n            }\n          }\n          available\n          createdBy {\n            id\n            name\n            avatar\n          }\n          updatedBy {\n            id\n            name\n            avatar\n          }\n        }\n        approximateWeight\n        netWeight\n        weightValue\n        weightType\n        quantityValue\n        quantityType\n        createdAt\n        updatedAt\n        views\n      }\n      paginator {\n        next\n        page\n        prev\n        limit\n        total\n        numPages\n      }\n    }\n  }\n"): (typeof documents)["\n  query AllProducts($paginator: PaginatorInput!, $search: ProductSearch) {\n    allProducts(paginator: $paginator, search: $search) {\n      products {\n        id\n        name\n        image\n        description\n        brand\n        code\n        model\n        categoryId\n        category {\n          id\n          name\n          expandedPathname\n          path\n        }\n        stock {\n          id\n          productId\n          storeId\n          store {\n            id\n            slug\n            name\n            logo\n          }\n          branchId\n          branch {\n            id\n            slug\n            name\n            addressId\n            address {\n              id\n              latitude\n              longitude\n              mapsLink\n              fullAddress\n              street\n              city\n              administrativeDivision\n              countryCode\n              country\n              zipCode\n              distance\n            }\n          }\n          latestPriceId\n          latestPrice {\n            id\n            productId\n            branchId\n            storeId\n            amount\n            currencyCode\n            createdAt\n            sale\n            originalPrice\n            condition\n            expiresAt\n            unitType\n            outOfStock\n            verified\n            createdBy {\n              id\n              name\n              avatar\n            }\n          }\n          available\n          createdBy {\n            id\n            name\n            avatar\n          }\n          updatedBy {\n            id\n            name\n            avatar\n          }\n        }\n        approximateWeight\n        netWeight\n        weightValue\n        weightType\n        quantityValue\n        quantityType\n        createdAt\n        updatedAt\n        views\n      }\n      paginator {\n        next\n        page\n        prev\n        limit\n        total\n        numPages\n      }\n    }\n  }\n"];
-/**
- * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
- */
-declare function graphql(source: "\n  query BranchesWithProducts($paginator: PaginatorInput!, $productLimit: Int!, $filters: ProductSearch) {\n    branchesWithProducts(\n      paginator: $paginator\n      productLimit: $productLimit\n      filters: $filters\n    ) {\n      branches {\n        id\n        slug\n        name\n        storeId\n        storeSlug\n        store {\n          id\n          slug\n          name\n          logo\n        }\n        addressId\n        address {\n          id\n          distance\n          latitude\n          longitude\n          mapsLink\n          fullAddress\n          street\n          city\n          administrativeDivision\n          countryCode\n          country\n          zipCode\n        }\n        products {\n          id\n          name\n          image\n          description\n          brand\n          code\n          model\n          categoryId\n          category {\n            id\n            name\n            expandedPathname\n            path\n          }\n          stock {\n            id\n            productId\n            storeId\n            branchId\n            latestPriceId\n            latestPrice {\n              id\n              productId\n              branchId\n              storeId\n              amount\n              currencyCode\n              createdAt\n              sale\n              originalPrice\n              condition\n              expiresAt\n              unitType\n              outOfStock\n              verified\n            }\n            available\n            createdBy {\n              id\n              name\n              avatar\n            }\n            updatedBy {\n              id\n              name\n              avatar\n            }\n          }\n          approximateWeight\n          netWeight\n          weightValue\n          weightType\n          quantityValue\n          quantityType\n          createdAt\n          updatedAt\n          views\n        }\n      }\n      paginator {\n        next\n        page\n        prev\n        limit\n        total\n        numPages\n      }\n    }\n  }\n"): (typeof documents)["\n  query BranchesWithProducts($paginator: PaginatorInput!, $productLimit: Int!, $filters: ProductSearch) {\n    branchesWithProducts(\n      paginator: $paginator\n      productLimit: $productLimit\n      filters: $filters\n    ) {\n      branches {\n        id\n        slug\n        name\n        storeId\n        storeSlug\n        store {\n          id\n          slug\n          name\n          logo\n        }\n        addressId\n        address {\n          id\n          distance\n          latitude\n          longitude\n          mapsLink\n          fullAddress\n          street\n          city\n          administrativeDivision\n          countryCode\n          country\n          zipCode\n        }\n        products {\n          id\n          name\n          image\n          description\n          brand\n          code\n          model\n          categoryId\n          category {\n            id\n            name\n            expandedPathname\n            path\n          }\n          stock {\n            id\n            productId\n            storeId\n            branchId\n            latestPriceId\n            latestPrice {\n              id\n              productId\n              branchId\n              storeId\n              amount\n              currencyCode\n              createdAt\n              sale\n              originalPrice\n              condition\n              expiresAt\n              unitType\n              outOfStock\n              verified\n            }\n            available\n            createdBy {\n              id\n              name\n              avatar\n            }\n            updatedBy {\n              id\n              name\n              avatar\n            }\n          }\n          approximateWeight\n          netWeight\n          weightValue\n          weightType\n          quantityValue\n          quantityType\n          createdAt\n          updatedAt\n          views\n        }\n      }\n      paginator {\n        next\n        page\n        prev\n        limit\n        total\n        numPages\n      }\n    }\n  }\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
@@ -4983,6 +5102,7 @@ declare const ALL_BRANCHES_QUERY: graphql$1.DocumentNode;
 declare const BRANCH_QUERY: graphql$1.DocumentNode;
 declare const FIND_BRANCH_QUERY: graphql$1.DocumentNode;
 declare const FIND_BRANCHES_BY_DISTANCE_QUERY: graphql$1.DocumentNode;
+declare const BRANCHES_WITH_PRODUCTS_QUERY: graphql$1.DocumentNode;
 declare const GET_FAVORITE_BRANCHES_WITH_PRICE_DATA_QUERY: graphql$1.DocumentNode;
 
 declare const ALL_BRANDS_QUERY: graphql$1.DocumentNode;
@@ -4990,6 +5110,7 @@ declare const ALL_BRANDS_QUERY: graphql$1.DocumentNode;
 declare const GET_CATEGORIES_QUERY: graphql$1.DocumentNode;
 declare const CATEGORY_SEARCH_QUERY: graphql$1.DocumentNode;
 declare const GET_CATEGORY_QUERY: graphql$1.DocumentNode;
+declare const CATEGORIES_WITH_PRODUCTS_QUERY: graphql$1.DocumentNode;
 
 declare const GROCERY_LISTS_QUERY: graphql$1.DocumentNode;
 declare const GET_GROCERY_LIST_ITEMS_QUERY: graphql$1.DocumentNode;
@@ -5011,7 +5132,6 @@ declare const GET_PRODUCT_NUTRITION_DATA_QUERY: graphql$1.DocumentNode;
 declare const BARCODE_SCAN_QUERY: graphql$1.DocumentNode;
 declare const PRODUCT_BY_ID_QUERY: graphql$1.DocumentNode;
 declare const ALL_PRODUCTS_QUERY: graphql$1.DocumentNode;
-declare const BRANCHES_WITH_PRODUCTS_QUERY: graphql$1.DocumentNode;
 declare const PRODUCT_SUMMARY_QUERY: graphql$1.DocumentNode;
 declare const PRODUCT_SEARCH_QUERY: graphql$1.DocumentNode;
 declare const EXTRACT_PRODUCT_FIELDS_QUERY: graphql$1.DocumentNode;
@@ -5085,4 +5205,4 @@ declare const REQUEST_RESET_PASSWORD_MUTATION: graphql$1.DocumentNode;
 declare const UPDATE_PASSWORD_WITH_RESET_CODE_MUTATION: graphql$1.DocumentNode;
 declare const REGISTER_EXPO_PUSH_TOKEN: graphql$1.DocumentNode;
 
-export { ADD_BRANCH_TO_LIST_MUTATION, ADD_GROCERY_LIST_ITEMS_MUTATION, ADD_TO_LIST_MUTATION, ADMIN_REMOVE_AUTH_SESSION_MUTATION, ALL_BRANCHES_QUERY, ALL_BRANDS_QUERY, ALL_PRODUCTS_QUERY, ALL_STORES_QUERY, APPLE_OAUTH_QUERY, AcceptPendingStoreUserInviteDocument, type AcceptPendingStoreUserInviteMutation, type AcceptPendingStoreUserInviteMutationVariables, AddBranchToListDocument, type AddBranchToListMutation, type AddBranchToListMutationVariables, AddGroceryListItemDocument, type AddGroceryListItemMutation, type AddGroceryListItemMutationVariables, AddToListDocument, type AddToListMutation, type AddToListMutationVariables, type Address, AdminRemoveAuthSessionDocument, type AdminRemoveAuthSessionMutation, type AdminRemoveAuthSessionMutationVariables, type AdministrativeDivision, AllBranchesDocument, type AllBranchesQuery, type AllBranchesQueryVariables, AllBrandsDocument, type AllBrandsQuery, type AllBrandsQueryVariables, AllProductsDocument, type AllProductsQuery, type AllProductsQueryVariables, AllStoresDocument, type AllStoresQuery, type AllStoresQueryVariables, type AmazonGetProductInput, AppleOAuthDocument, type AppleOAuthQuery, type AppleOAuthQueryVariables, type ApprovedByUser, type Auth, AuthDeviceType, AuthPlatformType, type AuthSession, BARCODE_SCAN_QUERY, BRANCHES_WITH_PRODUCTS_QUERY, BRANCH_QUERY, BULK_ADD_BRANCHES_TO_LIST_MUTATION, BUSINESS_SIGN_UP_FORM_MUTATION, BarcodeScanDocument, type BarcodeScanQuery, type BarcodeScanQueryVariables, type Branch, BranchDocument, type BranchFlat, type BranchList, type BranchListWithPrices, type BranchQuery, type BranchQueryVariables, BranchesWithProductsDocument, type BranchesWithProductsQuery, type BranchesWithProductsQueryVariables, type Brand, BulkAddBranchesToListDocument, type BulkAddBranchesToListMutation, type BulkAddBranchesToListMutationVariables, type BusinessForm, type BusinessFormInput, type BusinessFormSignedUp, BusinessSingUpFormDocument, type BusinessSingUpFormMutation, type BusinessSingUpFormMutationVariables, CATEGORY_SEARCH_QUERY, CHECK_APP_VERSION_QUERY, COUNT_GROCERY_LIST_ITEMS_QUERY, CREATE_BRANCH_MUTATION, CREATE_BRANCH_WITH_FULL_ADDRESS_MUTATION, CREATE_CATEGORY_MUTATION, CREATE_PRICE_MUTATION, CREATE_PRODUCT_MUTATION, CREATE_STORE_MUTATION, CREATE_STORE_USER_ADMIN, CREATE_STORE_WITH_BUSINESS_FORM_MUTATION, CREATE_USER_MUTATION, type Category, CategorySearchDocument, type CategorySearchQuery, type CategorySearchQueryVariables, CheckAppVersionDocument, type CheckAppVersionQuery, type CheckAppVersionQueryVariables, CountGroceryListItemsDocument, type CountGroceryListItemsQuery, type CountGroceryListItemsQueryVariables, type Country, CreateAccountDocument, type CreateAccountInput, type CreateAccountMutation, type CreateAccountMutationVariables, type CreateAddress, type CreateBranch, CreateBranchDocument, CreateBranchFromFullAddressDocument, type CreateBranchFromFullAddressMutation, type CreateBranchFromFullAddressMutationVariables, type CreateBranchMutation, type CreateBranchMutationVariables, type CreateCategory, CreateCategoryDocument, type CreateCategoryMutation, type CreateCategoryMutationVariables, type CreateGroceryListInput, type CreateGroceryListItemInput, type CreatePrice, CreatePriceDocument, type CreatePriceMutation, type CreatePriceMutationVariables, type CreateProduct, CreateProductDocument, type CreateProductMutation, type CreateProductMutationVariables, type CreateStock, type CreateStore, CreateStoreDocument, type CreateStoreMutation, type CreateStoreMutationVariables, type CreateStoreUserAdmin, CreateStoreUserAdminDocument, type CreateStoreUserAdminMutation, type CreateStoreUserAdminMutationVariables, CreateStoreWithBusinessFormDocument, type CreateStoreWithBusinessFormMutation, type CreateStoreWithBusinessFormMutationVariables, type CreatedByUser, type Currency, DEFAULT_GROCERY_LIST_ITEMS_QUERY, DELETE_GROCERY_LIST_ITEMS_MUTATION, DELETE_MY_ACCOUNT_MUTATION, DeclinePendingStoreUserInviteDocument, type DeclinePendingStoreUserInviteMutation, type DeclinePendingStoreUserInviteMutationVariables, DefaultGroceryListItemsDocument, type DefaultGroceryListItemsQuery, type DefaultGroceryListItemsQueryVariables, DeleteGroceryListItemDocument, type DeleteGroceryListItemMutation, type DeleteGroceryListItemMutationVariables, DeleteMyAccountDocument, type DeleteMyAccountMutation, type DeleteMyAccountMutationVariables, type DocumentType, EXTRACT_AND_CREATE_PRODUCT_FIELDS_QUERY, EXTRACT_PRODUCT_FIELDS_QUERY, type Exact, ExtractAndCreateProductDocument, type ExtractAndCreateProductMutation, type ExtractAndCreateProductMutationVariables, ExtractProductFieldsDocument, type ExtractProductFieldsQuery, type ExtractProductFieldsQueryVariables, FIND_BRANCHES_BY_DISTANCE_QUERY, FIND_BRANCH_QUERY, FIND_STORE_QUERY, FavoriteBranchesWithPricesDocument, type FavoriteBranchesWithPricesQuery, type FavoriteBranchesWithPricesQueryVariables, FindBranchDocument, type FindBranchQuery, type FindBranchQueryVariables, FindBranchesByDistanceDocument, type FindBranchesByDistanceQuery, type FindBranchesByDistanceQueryVariables, FindStoreDocument, type FindStoreQuery, type FindStoreQueryVariables, type FragmentType, GET_ALL_BRANCH_LISTS_BY_LIST_ID, GET_ALL_COUNTRIES_QUERY, GET_ALL_LISTS, GET_ALL_PRODUCT_LISTS_BY_LIST_ID, GET_ALL_USERS_QUERY, GET_CATEGORIES_QUERY, GET_CATEGORY_QUERY, GET_FAVORITE_BRANCHES_WITH_PRICE_DATA_QUERY, GET_GROCERY_LIST_ITEMS_QUERY, GET_PRODUCT_NUTRITION_DATA_QUERY, GET_PRODUCT_STOCKS_QUERY, GET_STOCK_BY_ID, GET_STOCK_FROM_PRODUCT_AND_BRANCH_ID_QUERY, GOOGLE_OAUTH_QUERY, GROCERY_LISTS_QUERY, GetAllBranchListsByListIdDocument, type GetAllBranchListsByListIdQuery, type GetAllBranchListsByListIdQueryVariables, GetAllCountriesDocument, type GetAllCountriesQuery, type GetAllCountriesQueryVariables, GetAllListsDocument, type GetAllListsQuery, type GetAllListsQueryVariables, GetAllProductListsByListIdDocument, type GetAllProductListsByListIdQuery, type GetAllProductListsByListIdQueryVariables, GetAllUsersDocument, type GetAllUsersQuery, type GetAllUsersQueryVariables, GetCategoriesDocument, type GetCategoriesQuery, type GetCategoriesQueryVariables, GetCategoryDocument, type GetCategoryQuery, type GetCategoryQueryVariables, GetProductNutritionDataDocument, type GetProductNutritionDataQuery, type GetProductNutritionDataQueryVariables, GetProductStocksDocument, type GetProductStocksQuery, type GetProductStocksQueryVariables, GetStockFromProductAndBranchIdDocument, type GetStockFromProductAndBranchIdQuery, type GetStockFromProductAndBranchIdQueryVariables, GoogleOAuthDocument, type GoogleOAuthQuery, type GoogleOAuthQueryVariables, type GroceryList, type GroceryListItem, GroceryListItemsDocument, type GroceryListItemsFilters, type GroceryListItemsQuery, type GroceryListItemsQueryVariables, GroceryListsDocument, type GroceryListsQuery, type GroceryListsQueryVariables, IP_TO_ADDRESS_QUERY, type Incremental, type InputMaybe, IpToAddressDocument, type IpToAddressQuery, type IpToAddressQueryVariables, type KrogerGetProductInput, LOGIN_INTERNAL_QUERY, LOGOUT_MUTATION, type List, ListType, type LocationInput, LoginInternalDocument, type LoginInternalQuery, type LoginInternalQueryVariables, LogoutDocument, type LogoutMutation, type LogoutMutationVariables, MARK_GROCERY_ITEM_MUTATION, ME_QUERY, MY_PRODUCT_BILLING_DATA_QUERY, MY_PRODUCT_VIEW_HISTORY_QUERY, MY_SEARCH_HISTORY_QUERY, type MakeEmpty, type MakeMaybe, type MakeOptional, MarkGroceryListItemDocument, type MarkGroceryListItemMutation, type MarkGroceryListItemMutationVariables, type Maybe, MeDocument, type MeQuery, type MeQueryVariables, type Mutation, type MutationAcceptPendingStoreUserInviteArgs, type MutationAddBranchToListArgs, type MutationAddGroceryListItemArgs, type MutationAddToListArgs, type MutationAdminRemoveAuthSessionArgs, type MutationBulkAddBranchesToListArgs, type MutationBusinessSingUpFormArgs, type MutationCreateAccountArgs, type MutationCreateBranchArgs, type MutationCreateBranchWithFullAddressArgs, type MutationCreateCategoryArgs, type MutationCreateListArgs, type MutationCreatePriceArgs, type MutationCreateProductArgs, type MutationCreateStoreArgs, type MutationCreateStoreUserAdminArgs, type MutationCreateStoreWithBusinessFormArgs, type MutationDeclinePendingStoreUserInviteArgs, type MutationDeleteGroceryListItemArgs, type MutationDeleteListArgs, type MutationDeleteSearchByIdArgs, type MutationExtractAndCreateProductArgs, type MutationMarkGroceryListItemArgs, type MutationRegisterExpoPushTokenArgs, type MutationRemoveBranchFromListArgs, type MutationRemoveFromListArgs, type MutationRemoveFromListWithProductIdArgs, type MutationRequestPasswordResetArgs, type MutationResendEmailVerificationCodeArgs, type MutationSanitizeProductArgs, type MutationSaveProductsFromUpcItemDbArgs, type MutationUpdateGroceryListItemArgs, type MutationUpdatePasswordWithResetCodeArgs, type MutationUpdateProductArgs, type MutationUpdateProductNutritionDataArgs, type MutationUpdateProfileArgs, type MutationUpdateUserByIdArgs, type MutationVerifyEmailArgs, MyProductBillingDataDocument, type MyProductBillingDataQuery, type MyProductBillingDataQueryVariables, MyProductViewHistoryDocument, type MyProductViewHistoryQuery, type MyProductViewHistoryQueryVariables, MySearchHistoryDocument, type MySearchHistoryQuery, type MySearchHistoryQueryVariables, MyStoreUserDocument, type MyStoreUserQuery, type MyStoreUserQueryVariables, OrderByType, PAGINATED_ADMIN_AUTH_SESSIONS_QUERY, PAGINATED_ADMIN_PRODUCT_VIEW_ENTRIES, POPULAR_PRODUCTS_QUERY, POPULAR_SEARCH_KEYWORDS_QUERY, POST_AUTH_USER_DATA_QUERIES, PRICE_CHANGE_HISTORY_QUERY, PRODUCT_BILLING_DATA_BY_USER_ID_QUERY, PRODUCT_BY_ID_QUERY, PRODUCT_SEARCH_QUERY, PRODUCT_SUMMARY_QUERY, PaginatedAdminAuthSessionsDocument, type PaginatedAdminAuthSessionsQuery, type PaginatedAdminAuthSessionsQueryVariables, PaginatedAdminProductViewEntriesDocument, type PaginatedAdminProductViewEntriesQuery, type PaginatedAdminProductViewEntriesQueryVariables, type PaginatedAuthSessions, type PaginatedBranches, type PaginatedPriceHistory, type PaginatedProductBilling, type PaginatedProductViews, type PaginatedProducts, type PaginatedSearch, type PaginatedSearchKeywords, type PaginatedStocks, type PaginatedStores, type PaginatedUsers, type Paginator, type PaginatorInput, PopularProductsDocument, type PopularProductsQuery, type PopularProductsQueryVariables, PopularSearchKeywordsDocument, type PopularSearchKeywordsQuery, type PopularSearchKeywordsQueryVariables, PostAuthUserDataDocument, type PostAuthUserDataQuery, type PostAuthUserDataQueryVariables, type Price, PriceChangeHistoryDocument, type PriceChangeHistoryQuery, type PriceChangeHistoryQueryVariables, type PriceHistoryFilter, type Product, type ProductBilling, ProductBillingDataByUserIdDocument, type ProductBillingDataByUserIdQuery, type ProductBillingDataByUserIdQueryVariables, ProductDocument, type ProductExtractionFields, type ProductExtractionResponse, type ProductList, type ProductNutriment, type ProductNutrition, type ProductQuery, type ProductQueryVariables, type ProductReferrer, type ProductSearch, ProductSearchDocument, type ProductSearchFilters, type ProductSearchQuery, type ProductSearchQueryVariables, type ProductSimple, type ProductSummary, type ProductSummaryBranchInput, ProductSummaryDocument, type ProductSummaryQuery, type ProductSummaryQueryVariables, type ProductView, type ProductViewerMetadata, type ProductWeightComponents, type Query, type QueryAllBranchesArgs, type QueryAllBrandsArgs, type QueryAllProductsArgs, type QueryAllStoresArgs, type QueryAmazonProductArgs, type QueryAppleOAuthArgs, type QueryBarcodeScanArgs, type QueryBranchesWithProductsArgs, type QueryCategorySearchArgs, type QueryCheckAppVersionArgs, type QueryCountGroceryListItemsArgs, type QueryDefaultGroceryListItemsArgs, type QueryExtractProductFieldsArgs, type QueryFindBranchArgs, type QueryFindBranchesByDistanceArgs, type QueryFindStoreArgs, type QueryGetAllBranchListsByListIdArgs, type QueryGetAllListsArgs, type QueryGetAllProductListsByListIdArgs, type QueryGetAllUsersArgs, type QueryGetCategoriesArgs, type QueryGetCategoryArgs, type QueryGetFavoriteBranchesWithPricesArgs, type QueryGetProductNutritionDataArgs, type QueryGetProductStocksArgs, type QueryGetStockFromProductAndBranchIdArgs, type QueryGoogleOAuthArgs, type QueryGroceryListArgs, type QueryGroceryListItemsArgs, type QueryIpToAddressArgs, type QueryKrogerProductArgs, type QueryLoginArgs, type QueryMyProductBillingDataArgs, type QueryMyProductViewHistoryArgs, type QueryMySearchHistoryArgs, type QueryPaginatedAdminAuthSessionsArgs, type QueryPaginatedAdminProductViewEntriesArgs, type QueryPopularProductsArgs, type QueryPopularSearchKeywordsArgs, type QueryPriceChangeHistoryArgs, type QueryProductArgs, type QueryProductBillingDataByUserIdArgs, type QueryProductSearchArgs, type QueryProductSummaryArgs, type QuerySearchKeywordsArgs, type QueryStockArgs, type QueryStoreSlugAvailabilityArgs, type QueryVerifyPasswordResetCodeArgs, type QueryWalmartProductArgs, type QueryWeightComponentsFromCategoryIdArgs, type QueryYahooOAuthArgs, REGISTER_EXPO_PUSH_TOKEN, REMOVE_BRANCH_FROM_LIST_MUTATION, REMOVE_FROM_LIST_BY_PRODUCT_ID_MUTATION, REMOVE_FROM_LIST_MUTATION, REQUEST_RESET_PASSWORD_MUTATION, RESEND_VERIFICATION_MUTATION, RegisterExpoPushTokenDocument, type RegisterExpoPushTokenMutation, type RegisterExpoPushTokenMutationVariables, RemoveBranchFromListDocument, type RemoveBranchFromListMutation, type RemoveBranchFromListMutationVariables, RemoveFromListDocument, type RemoveFromListMutation, type RemoveFromListMutationVariables, RemoveFromListWithProductIdDocument, type RemoveFromListWithProductIdMutation, type RemoveFromListWithProductIdMutationVariables, RequestResetPasswordDocument, type RequestResetPasswordMutation, type RequestResetPasswordMutationVariables, ResendVerificationDocument, type ResendVerificationMutation, type ResendVerificationMutationVariables, SANITIZE_PRODUCT_MUTATION, SEARCH_KEYWORDS_QUERY, STORE_SLUG_AVAILABILITY_QUERY, SanitizeProductDocument, type SanitizeProductMutation, type SanitizeProductMutationVariables, type SaveExternalProductInput, type Scalars, type SearchHistory, SearchKeywordsDocument, type SearchKeywordsQuery, type SearchKeywordsQueryVariables, type SearchResult, type Stock, StockDocument, type StockQuery, type StockQueryVariables, type StockSimple, type Store, StoreSlugAvailabilityDocument, type StoreSlugAvailabilityQuery, type StoreSlugAvailabilityQueryVariables, type StoreUser, type StoreUserData, StoreUserRole, type TimestampRangeBetween, UPDATE_GROCERY_LIST_ITEMS_MUTATION, UPDATE_PASSWORD_WITH_RESET_CODE_MUTATION, UPDATE_PRODUCT_MUTATION, UPDATE_PRODUCT_NUTRITION_MUTATION, UPDATE_PROFILE_MUTATION, UPDATE_USER_BY_ID_MUTATION, UpdateGroceryListItemDocument, type UpdateGroceryListItemMutation, type UpdateGroceryListItemMutationVariables, UpdatePasswordWithResetCodeDocument, type UpdatePasswordWithResetCodeMutation, type UpdatePasswordWithResetCodeMutationVariables, type UpdateProduct, UpdateProductDocument, type UpdateProductMutation, type UpdateProductMutationVariables, UpdateProductNutritionDataDocument, type UpdateProductNutritionDataMutation, type UpdateProductNutritionDataMutationVariables, UpdateProfileDocument, type UpdateProfileMutation, type UpdateProfileMutationVariables, type UpdateUser, UpdateUserByIdDocument, type UpdateUserByIdMutation, type UpdateUserByIdMutationVariables, type UpdateUserFull, type UpdatedByUser, type User, type UserFieldsFragment, UserFieldsFragmentDoc, type UserFilter, UserFragment, UserRole, type UserShallow, VERIFY_EMAIL_MUTATION, VERIFY_PASSWORD_RESET_CODE_QUERY, VerifyEmailDocument, type VerifyEmailMutation, type VerifyEmailMutationVariables, VerifyPasswordResetCodeDocument, type VerifyPasswordResetCodeQuery, type VerifyPasswordResetCodeQueryVariables, type ViewerTrailInput, WEIGHT_COMPONENTS_FROM_CATEGORY_ID_QUERY, type WalmartGetProductInput, WeightComponentsFromCategoryIdDocument, type WeightComponentsFromCategoryIdQuery, type WeightComponentsFromCategoryIdQueryVariables, YAHOO_OAUTH_QUERY, YahooOAuthDocument, type YahooOAuthQuery, type YahooOAuthQueryVariables, graphql, isFragmentReady, makeFragmentData, useFragment };
+export { ADD_BRANCH_TO_LIST_MUTATION, ADD_GROCERY_LIST_ITEMS_MUTATION, ADD_TO_LIST_MUTATION, ADMIN_REMOVE_AUTH_SESSION_MUTATION, ALL_BRANCHES_QUERY, ALL_BRANDS_QUERY, ALL_PRODUCTS_QUERY, ALL_STORES_QUERY, APPLE_OAUTH_QUERY, AcceptPendingStoreUserInviteDocument, type AcceptPendingStoreUserInviteMutation, type AcceptPendingStoreUserInviteMutationVariables, AddBranchToListDocument, type AddBranchToListMutation, type AddBranchToListMutationVariables, AddGroceryListItemDocument, type AddGroceryListItemMutation, type AddGroceryListItemMutationVariables, AddToListDocument, type AddToListMutation, type AddToListMutationVariables, type Address, AdminRemoveAuthSessionDocument, type AdminRemoveAuthSessionMutation, type AdminRemoveAuthSessionMutationVariables, type AdministrativeDivision, AllBranchesDocument, type AllBranchesQuery, type AllBranchesQueryVariables, AllBrandsDocument, type AllBrandsQuery, type AllBrandsQueryVariables, AllProductsDocument, type AllProductsQuery, type AllProductsQueryVariables, AllStoresDocument, type AllStoresQuery, type AllStoresQueryVariables, type AmazonGetProductInput, AppleOAuthDocument, type AppleOAuthQuery, type AppleOAuthQueryVariables, type ApprovedByUser, type Auth, AuthDeviceType, AuthPlatformType, type AuthSession, BARCODE_SCAN_QUERY, BRANCHES_WITH_PRODUCTS_QUERY, BRANCH_QUERY, BULK_ADD_BRANCHES_TO_LIST_MUTATION, BUSINESS_SIGN_UP_FORM_MUTATION, BarcodeScanDocument, type BarcodeScanQuery, type BarcodeScanQueryVariables, type Branch, BranchDocument, type BranchFlat, type BranchList, type BranchListWithPrices, type BranchQuery, type BranchQueryVariables, BranchesWithProductsDocument, type BranchesWithProductsQuery, type BranchesWithProductsQueryVariables, type Brand, BulkAddBranchesToListDocument, type BulkAddBranchesToListMutation, type BulkAddBranchesToListMutationVariables, type BusinessForm, type BusinessFormInput, type BusinessFormSignedUp, BusinessSingUpFormDocument, type BusinessSingUpFormMutation, type BusinessSingUpFormMutationVariables, CATEGORIES_WITH_PRODUCTS_QUERY, CATEGORY_SEARCH_QUERY, CHECK_APP_VERSION_QUERY, COUNT_GROCERY_LIST_ITEMS_QUERY, CREATE_BRANCH_MUTATION, CREATE_BRANCH_WITH_FULL_ADDRESS_MUTATION, CREATE_CATEGORY_MUTATION, CREATE_PRICE_MUTATION, CREATE_PRODUCT_MUTATION, CREATE_STORE_MUTATION, CREATE_STORE_USER_ADMIN, CREATE_STORE_WITH_BUSINESS_FORM_MUTATION, CREATE_USER_MUTATION, CategoriesWithProductsDocument, type CategoriesWithProductsQuery, type CategoriesWithProductsQueryVariables, type Category, CategorySearchDocument, type CategorySearchQuery, type CategorySearchQueryVariables, type CategoryWithProducts, CheckAppVersionDocument, type CheckAppVersionQuery, type CheckAppVersionQueryVariables, CountGroceryListItemsDocument, type CountGroceryListItemsQuery, type CountGroceryListItemsQueryVariables, type Country, CreateAccountDocument, type CreateAccountInput, type CreateAccountMutation, type CreateAccountMutationVariables, type CreateAddress, type CreateBranch, CreateBranchDocument, CreateBranchFromFullAddressDocument, type CreateBranchFromFullAddressMutation, type CreateBranchFromFullAddressMutationVariables, type CreateBranchMutation, type CreateBranchMutationVariables, type CreateCategory, CreateCategoryDocument, type CreateCategoryMutation, type CreateCategoryMutationVariables, type CreateGroceryListInput, type CreateGroceryListItemInput, type CreatePrice, CreatePriceDocument, type CreatePriceMutation, type CreatePriceMutationVariables, type CreateProduct, CreateProductDocument, type CreateProductMutation, type CreateProductMutationVariables, type CreateStock, type CreateStore, CreateStoreDocument, type CreateStoreMutation, type CreateStoreMutationVariables, type CreateStoreUserAdmin, CreateStoreUserAdminDocument, type CreateStoreUserAdminMutation, type CreateStoreUserAdminMutationVariables, CreateStoreWithBusinessFormDocument, type CreateStoreWithBusinessFormMutation, type CreateStoreWithBusinessFormMutationVariables, type CreatedByUser, type Currency, DEFAULT_GROCERY_LIST_ITEMS_QUERY, DELETE_GROCERY_LIST_ITEMS_MUTATION, DELETE_MY_ACCOUNT_MUTATION, DeclinePendingStoreUserInviteDocument, type DeclinePendingStoreUserInviteMutation, type DeclinePendingStoreUserInviteMutationVariables, DefaultGroceryListItemsDocument, type DefaultGroceryListItemsQuery, type DefaultGroceryListItemsQueryVariables, DeleteGroceryListItemDocument, type DeleteGroceryListItemMutation, type DeleteGroceryListItemMutationVariables, DeleteMyAccountDocument, type DeleteMyAccountMutation, type DeleteMyAccountMutationVariables, type DocumentType, EXTRACT_AND_CREATE_PRODUCT_FIELDS_QUERY, EXTRACT_PRODUCT_FIELDS_QUERY, type Exact, ExtractAndCreateProductDocument, type ExtractAndCreateProductMutation, type ExtractAndCreateProductMutationVariables, ExtractProductFieldsDocument, type ExtractProductFieldsQuery, type ExtractProductFieldsQueryVariables, FIND_BRANCHES_BY_DISTANCE_QUERY, FIND_BRANCH_QUERY, FIND_STORE_QUERY, FavoriteBranchesWithPricesDocument, type FavoriteBranchesWithPricesQuery, type FavoriteBranchesWithPricesQueryVariables, FindBranchDocument, type FindBranchQuery, type FindBranchQueryVariables, FindBranchesByDistanceDocument, type FindBranchesByDistanceQuery, type FindBranchesByDistanceQueryVariables, FindStoreDocument, type FindStoreQuery, type FindStoreQueryVariables, type FragmentType, GET_ALL_BRANCH_LISTS_BY_LIST_ID, GET_ALL_COUNTRIES_QUERY, GET_ALL_LISTS, GET_ALL_PRODUCT_LISTS_BY_LIST_ID, GET_ALL_USERS_QUERY, GET_CATEGORIES_QUERY, GET_CATEGORY_QUERY, GET_FAVORITE_BRANCHES_WITH_PRICE_DATA_QUERY, GET_GROCERY_LIST_ITEMS_QUERY, GET_PRODUCT_NUTRITION_DATA_QUERY, GET_PRODUCT_STOCKS_QUERY, GET_STOCK_BY_ID, GET_STOCK_FROM_PRODUCT_AND_BRANCH_ID_QUERY, GOOGLE_OAUTH_QUERY, GROCERY_LISTS_QUERY, GetAllBranchListsByListIdDocument, type GetAllBranchListsByListIdQuery, type GetAllBranchListsByListIdQueryVariables, GetAllCountriesDocument, type GetAllCountriesQuery, type GetAllCountriesQueryVariables, GetAllListsDocument, type GetAllListsQuery, type GetAllListsQueryVariables, GetAllProductListsByListIdDocument, type GetAllProductListsByListIdQuery, type GetAllProductListsByListIdQueryVariables, GetAllUsersDocument, type GetAllUsersQuery, type GetAllUsersQueryVariables, GetCategoriesDocument, type GetCategoriesQuery, type GetCategoriesQueryVariables, GetCategoryDocument, type GetCategoryQuery, type GetCategoryQueryVariables, GetProductNutritionDataDocument, type GetProductNutritionDataQuery, type GetProductNutritionDataQueryVariables, GetProductStocksDocument, type GetProductStocksQuery, type GetProductStocksQueryVariables, GetStockFromProductAndBranchIdDocument, type GetStockFromProductAndBranchIdQuery, type GetStockFromProductAndBranchIdQueryVariables, GoogleOAuthDocument, type GoogleOAuthQuery, type GoogleOAuthQueryVariables, type GroceryList, type GroceryListItem, GroceryListItemsDocument, type GroceryListItemsFilters, type GroceryListItemsQuery, type GroceryListItemsQueryVariables, GroceryListsDocument, type GroceryListsQuery, type GroceryListsQueryVariables, IP_TO_ADDRESS_QUERY, type Incremental, type InputMaybe, IpToAddressDocument, type IpToAddressQuery, type IpToAddressQueryVariables, type KrogerGetProductInput, LOGIN_INTERNAL_QUERY, LOGOUT_MUTATION, type List, ListType, type LocationInput, LoginInternalDocument, type LoginInternalQuery, type LoginInternalQueryVariables, LogoutDocument, type LogoutMutation, type LogoutMutationVariables, MARK_GROCERY_ITEM_MUTATION, ME_QUERY, MY_PRODUCT_BILLING_DATA_QUERY, MY_PRODUCT_VIEW_HISTORY_QUERY, MY_SEARCH_HISTORY_QUERY, type MakeEmpty, type MakeMaybe, type MakeOptional, MarkGroceryListItemDocument, type MarkGroceryListItemMutation, type MarkGroceryListItemMutationVariables, type Maybe, MeDocument, type MeQuery, type MeQueryVariables, type Mutation, type MutationAcceptPendingStoreUserInviteArgs, type MutationAddBranchToListArgs, type MutationAddGroceryListItemArgs, type MutationAddToListArgs, type MutationAdminRemoveAuthSessionArgs, type MutationBulkAddBranchesToListArgs, type MutationBusinessSingUpFormArgs, type MutationCreateAccountArgs, type MutationCreateBranchArgs, type MutationCreateBranchWithFullAddressArgs, type MutationCreateCategoryArgs, type MutationCreateListArgs, type MutationCreatePriceArgs, type MutationCreateProductArgs, type MutationCreateStoreArgs, type MutationCreateStoreUserAdminArgs, type MutationCreateStoreWithBusinessFormArgs, type MutationDeclinePendingStoreUserInviteArgs, type MutationDeleteGroceryListItemArgs, type MutationDeleteListArgs, type MutationDeleteSearchByIdArgs, type MutationExtractAndCreateProductArgs, type MutationMarkGroceryListItemArgs, type MutationRegisterExpoPushTokenArgs, type MutationRemoveBranchFromListArgs, type MutationRemoveFromListArgs, type MutationRemoveFromListWithProductIdArgs, type MutationRequestPasswordResetArgs, type MutationResendEmailVerificationCodeArgs, type MutationSanitizeProductArgs, type MutationSaveProductsFromUpcItemDbArgs, type MutationUpdateGroceryListItemArgs, type MutationUpdatePasswordWithResetCodeArgs, type MutationUpdateProductArgs, type MutationUpdateProductNutritionDataArgs, type MutationUpdateProfileArgs, type MutationUpdateUserByIdArgs, type MutationVerifyEmailArgs, MyProductBillingDataDocument, type MyProductBillingDataQuery, type MyProductBillingDataQueryVariables, MyProductViewHistoryDocument, type MyProductViewHistoryQuery, type MyProductViewHistoryQueryVariables, MySearchHistoryDocument, type MySearchHistoryQuery, type MySearchHistoryQueryVariables, MyStoreUserDocument, type MyStoreUserQuery, type MyStoreUserQueryVariables, OrderByType, PAGINATED_ADMIN_AUTH_SESSIONS_QUERY, PAGINATED_ADMIN_PRODUCT_VIEW_ENTRIES, POPULAR_PRODUCTS_QUERY, POPULAR_SEARCH_KEYWORDS_QUERY, POST_AUTH_USER_DATA_QUERIES, PRICE_CHANGE_HISTORY_QUERY, PRODUCT_BILLING_DATA_BY_USER_ID_QUERY, PRODUCT_BY_ID_QUERY, PRODUCT_SEARCH_QUERY, PRODUCT_SUMMARY_QUERY, PaginatedAdminAuthSessionsDocument, type PaginatedAdminAuthSessionsQuery, type PaginatedAdminAuthSessionsQueryVariables, PaginatedAdminProductViewEntriesDocument, type PaginatedAdminProductViewEntriesQuery, type PaginatedAdminProductViewEntriesQueryVariables, type PaginatedAuthSessions, type PaginatedBranches, type PaginatedCategoriesWithProducts, type PaginatedPriceHistory, type PaginatedProductBilling, type PaginatedProductViews, type PaginatedProducts, type PaginatedSearch, type PaginatedSearchKeywords, type PaginatedStocks, type PaginatedStores, type PaginatedUsers, type Paginator, type PaginatorInput, PopularProductsDocument, type PopularProductsQuery, type PopularProductsQueryVariables, PopularSearchKeywordsDocument, type PopularSearchKeywordsQuery, type PopularSearchKeywordsQueryVariables, PostAuthUserDataDocument, type PostAuthUserDataQuery, type PostAuthUserDataQueryVariables, type Price, PriceChangeHistoryDocument, type PriceChangeHistoryQuery, type PriceChangeHistoryQueryVariables, type PriceHistoryFilter, type Product, type ProductBilling, ProductBillingDataByUserIdDocument, type ProductBillingDataByUserIdQuery, type ProductBillingDataByUserIdQueryVariables, ProductDocument, type ProductExtractionFields, type ProductExtractionResponse, type ProductList, type ProductNutriment, type ProductNutrition, type ProductQuery, type ProductQueryVariables, type ProductReferrer, type ProductSearch, ProductSearchDocument, type ProductSearchFilters, type ProductSearchQuery, type ProductSearchQueryVariables, type ProductSimple, type ProductSummary, type ProductSummaryBranchInput, ProductSummaryDocument, type ProductSummaryQuery, type ProductSummaryQueryVariables, type ProductView, type ProductViewerMetadata, type ProductWeightComponents, type Query, type QueryAllBranchesArgs, type QueryAllBrandsArgs, type QueryAllProductsArgs, type QueryAllStoresArgs, type QueryAmazonProductArgs, type QueryAppleOAuthArgs, type QueryBarcodeScanArgs, type QueryBranchesWithProductsArgs, type QueryCategoriesWithProductsArgs, type QueryCategorySearchArgs, type QueryCheckAppVersionArgs, type QueryCountGroceryListItemsArgs, type QueryDefaultGroceryListItemsArgs, type QueryExtractProductFieldsArgs, type QueryFindBranchArgs, type QueryFindBranchesByDistanceArgs, type QueryFindStoreArgs, type QueryGetAllBranchListsByListIdArgs, type QueryGetAllListsArgs, type QueryGetAllProductListsByListIdArgs, type QueryGetAllUsersArgs, type QueryGetCategoriesArgs, type QueryGetCategoryArgs, type QueryGetFavoriteBranchesWithPricesArgs, type QueryGetProductNutritionDataArgs, type QueryGetProductStocksArgs, type QueryGetStockFromProductAndBranchIdArgs, type QueryGoogleOAuthArgs, type QueryGroceryListArgs, type QueryGroceryListItemsArgs, type QueryIpToAddressArgs, type QueryKrogerProductArgs, type QueryLoginArgs, type QueryMyProductBillingDataArgs, type QueryMyProductViewHistoryArgs, type QueryMySearchHistoryArgs, type QueryPaginatedAdminAuthSessionsArgs, type QueryPaginatedAdminProductViewEntriesArgs, type QueryPopularProductsArgs, type QueryPopularSearchKeywordsArgs, type QueryPriceChangeHistoryArgs, type QueryProductArgs, type QueryProductBillingDataByUserIdArgs, type QueryProductSearchArgs, type QueryProductSummaryArgs, type QuerySearchKeywordsArgs, type QueryStockArgs, type QueryStoreSlugAvailabilityArgs, type QueryVerifyPasswordResetCodeArgs, type QueryWalmartProductArgs, type QueryWeightComponentsFromCategoryIdArgs, type QueryYahooOAuthArgs, REGISTER_EXPO_PUSH_TOKEN, REMOVE_BRANCH_FROM_LIST_MUTATION, REMOVE_FROM_LIST_BY_PRODUCT_ID_MUTATION, REMOVE_FROM_LIST_MUTATION, REQUEST_RESET_PASSWORD_MUTATION, RESEND_VERIFICATION_MUTATION, RegisterExpoPushTokenDocument, type RegisterExpoPushTokenMutation, type RegisterExpoPushTokenMutationVariables, RemoveBranchFromListDocument, type RemoveBranchFromListMutation, type RemoveBranchFromListMutationVariables, RemoveFromListDocument, type RemoveFromListMutation, type RemoveFromListMutationVariables, RemoveFromListWithProductIdDocument, type RemoveFromListWithProductIdMutation, type RemoveFromListWithProductIdMutationVariables, RequestResetPasswordDocument, type RequestResetPasswordMutation, type RequestResetPasswordMutationVariables, ResendVerificationDocument, type ResendVerificationMutation, type ResendVerificationMutationVariables, SANITIZE_PRODUCT_MUTATION, SEARCH_KEYWORDS_QUERY, STORE_SLUG_AVAILABILITY_QUERY, SanitizeProductDocument, type SanitizeProductMutation, type SanitizeProductMutationVariables, type SaveExternalProductInput, type Scalars, type SearchHistory, SearchKeywordsDocument, type SearchKeywordsQuery, type SearchKeywordsQueryVariables, type SearchResult, type Stock, StockDocument, type StockQuery, type StockQueryVariables, type StockSimple, type Store, StoreSlugAvailabilityDocument, type StoreSlugAvailabilityQuery, type StoreSlugAvailabilityQueryVariables, type StoreUser, type StoreUserData, StoreUserRole, type TimestampRangeBetween, UPDATE_GROCERY_LIST_ITEMS_MUTATION, UPDATE_PASSWORD_WITH_RESET_CODE_MUTATION, UPDATE_PRODUCT_MUTATION, UPDATE_PRODUCT_NUTRITION_MUTATION, UPDATE_PROFILE_MUTATION, UPDATE_USER_BY_ID_MUTATION, UpdateGroceryListItemDocument, type UpdateGroceryListItemMutation, type UpdateGroceryListItemMutationVariables, UpdatePasswordWithResetCodeDocument, type UpdatePasswordWithResetCodeMutation, type UpdatePasswordWithResetCodeMutationVariables, type UpdateProduct, UpdateProductDocument, type UpdateProductMutation, type UpdateProductMutationVariables, UpdateProductNutritionDataDocument, type UpdateProductNutritionDataMutation, type UpdateProductNutritionDataMutationVariables, UpdateProfileDocument, type UpdateProfileMutation, type UpdateProfileMutationVariables, type UpdateUser, UpdateUserByIdDocument, type UpdateUserByIdMutation, type UpdateUserByIdMutationVariables, type UpdateUserFull, type UpdatedByUser, type User, type UserFieldsFragment, UserFieldsFragmentDoc, type UserFilter, UserFragment, UserRole, type UserShallow, VERIFY_EMAIL_MUTATION, VERIFY_PASSWORD_RESET_CODE_QUERY, VerifyEmailDocument, type VerifyEmailMutation, type VerifyEmailMutationVariables, VerifyPasswordResetCodeDocument, type VerifyPasswordResetCodeQuery, type VerifyPasswordResetCodeQueryVariables, type ViewerTrailInput, WEIGHT_COMPONENTS_FROM_CATEGORY_ID_QUERY, type WalmartGetProductInput, WeightComponentsFromCategoryIdDocument, type WeightComponentsFromCategoryIdQuery, type WeightComponentsFromCategoryIdQueryVariables, YAHOO_OAUTH_QUERY, YahooOAuthDocument, type YahooOAuthQuery, type YahooOAuthQueryVariables, graphql, isFragmentReady, makeFragmentData, useFragment };
