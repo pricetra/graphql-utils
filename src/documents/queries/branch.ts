@@ -5,11 +5,12 @@ export const ALL_BRANCHES_QUERY = gql(`
     allBranches(storeId: $storeId, storeSlug: $storeSlug, paginator: $paginator, search: $search, location: $location) {
       branches {
         id
+        type
         slug
         name
-        addressId
         storeId
         storeSlug
+        addressId
         address {
           id
           latitude
@@ -23,6 +24,15 @@ export const ALL_BRANCHES_QUERY = gql(`
           country
           zipCode
           distance
+        }
+        onlineAddressId
+        onlineAddress {
+          id
+          storeId
+          url
+          itemUrlTemplate
+          referralCode
+          referralQueryParam
         }
       }
       paginator {
@@ -41,11 +51,12 @@ export const BRANCH_QUERY = gql(`
   query Branch($branchId: ID, $branchSlug: String, $storeId: ID, $storeSlug: String) {
     findBranch(id: $branchId, slug: $branchSlug, storeId: $storeId, storeSlug: $storeSlug) {
       id
+      type
       slug
       name
-      addressId
       storeId
       storeSlug
+      addressId
       address {
         id
         latitude
@@ -58,6 +69,15 @@ export const BRANCH_QUERY = gql(`
         countryCode
         country
         zipCode
+      }
+      onlineAddressId
+      onlineAddress {
+        id
+        storeId
+        url
+        itemUrlTemplate
+        referralCode
+        referralQueryParam
       }
     }
 
@@ -75,11 +95,12 @@ export const FIND_BRANCH_QUERY = gql(`
   query FindBranch($branchId: ID, $branchSlug: String, $storeId: ID, $storeSlug: String) {
     findBranch(id: $branchId, slug: $branchSlug, storeId: $storeId, storeSlug: $storeSlug) {
       id
+      type
       slug
       name
-      addressId
       storeId
       storeSlug
+      addressId
       address {
         id
         latitude
@@ -93,6 +114,15 @@ export const FIND_BRANCH_QUERY = gql(`
         country
         zipCode
       }
+      onlineAddressId
+      onlineAddress {
+        id
+        storeId
+        url
+        itemUrlTemplate
+        referralCode
+        referralQueryParam
+      }
     }
   }
 `);
@@ -101,6 +131,7 @@ export const FIND_BRANCHES_BY_DISTANCE_QUERY = gql(`
   query FindBranchesByDistance($lat: Float!, $lon: Float!, $radiusMeters: Int!) {
     findBranchesByDistance(lat: $lat, lon: $lon, radiusMeters: $radiusMeters) {
       id
+      type
       slug
       name
       storeId
@@ -127,6 +158,15 @@ export const FIND_BRANCHES_BY_DISTANCE_QUERY = gql(`
         country
         zipCode
       }
+      onlineAddressId
+      onlineAddress {
+        id
+        storeId
+        url
+        itemUrlTemplate
+        referralCode
+        referralQueryParam
+      }
     }
   }
 `);
@@ -140,6 +180,7 @@ export const BRANCHES_WITH_PRODUCTS_QUERY = gql(`
     ) {
       branches {
         id
+        type
         slug
         name
         storeId
@@ -164,6 +205,15 @@ export const BRANCHES_WITH_PRODUCTS_QUERY = gql(`
           countryCode
           country
           zipCode
+        }
+        onlineAddressId
+        onlineAddress {
+          id
+          storeId
+          url
+          itemUrlTemplate
+          referralCode
+          referralQueryParam
         }
         products {
           id
@@ -244,6 +294,7 @@ export const GET_FAVORITE_BRANCHES_WITH_PRICE_DATA_QUERY = gql(`
       branchId
       branch {
         id
+        type
         slug
         name
         storeId
@@ -268,6 +319,15 @@ export const GET_FAVORITE_BRANCHES_WITH_PRICE_DATA_QUERY = gql(`
           countryCode
           country
           zipCode
+        }
+        onlineAddressId
+        onlineAddress {
+          id
+          storeId
+          url
+          itemUrlTemplate
+          referralCode
+          referralQueryParam
         }
       }
       stock {

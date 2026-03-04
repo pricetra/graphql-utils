@@ -107,6 +107,7 @@ export const ALL_PRODUCTS_QUERY = gql(`
           branchId
           branch {
             id
+            type
             slug
             name
             addressId
@@ -123,6 +124,15 @@ export const ALL_PRODUCTS_QUERY = gql(`
               country
               zipCode
               distance
+            }
+            onlineAddressId
+            onlineAddress {
+              id
+              storeId
+              url
+              itemUrlTemplate
+              referralCode
+              referralQueryParam
             }
           }
           latestPriceId
@@ -199,6 +209,7 @@ export const PRODUCT_SUMMARY_QUERY = gql(`
       branchId
       branchSlug
       address
+      onlineAddress
       price
       priceCurrencyCode
       originalPrice
@@ -294,6 +305,7 @@ export const MY_PRODUCT_VIEW_HISTORY_QUERY = gql(`
           branchId
           branch {
             id
+            type
             slug
             name
             addressId
@@ -310,6 +322,15 @@ export const MY_PRODUCT_VIEW_HISTORY_QUERY = gql(`
               country
               zipCode
               distance
+            }
+            onlineAddressId
+            onlineAddress {
+              id
+              storeId
+              url
+              itemUrlTemplate
+              referralCode
+              referralQueryParam
             }
           }
           latestPriceId
@@ -394,6 +415,7 @@ export const POPULAR_PRODUCTS_QUERY = gql(`
           branchId
           branch {
             id
+            type
             slug
             name
             addressId
@@ -410,6 +432,15 @@ export const POPULAR_PRODUCTS_QUERY = gql(`
               country
               zipCode
               distance
+            }
+            onlineAddressId
+            onlineAddress {
+              id
+              storeId
+              url
+              itemUrlTemplate
+              referralCode
+              referralQueryParam
             }
           }
           latestPriceId

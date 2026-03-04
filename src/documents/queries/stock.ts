@@ -32,6 +32,15 @@ export const GET_STOCK_BY_ID = gql(`
           zipCode
           distance
         }
+        onlineAddressId
+        onlineAddress {
+          id
+          storeId
+          url
+          itemUrlTemplate
+          referralCode
+          referralQueryParam
+        }
       }
       latestPriceId
       latestPrice {
@@ -51,6 +60,13 @@ export const GET_STOCK_BY_ID = gql(`
         verified
       }
       available
+      onlineItem {
+        id
+        storeId
+        productId
+        itemId
+        url
+      }
       createdAt
       updatedAt
       createdBy {
@@ -92,6 +108,13 @@ export const GET_STOCK_FROM_PRODUCT_AND_BRANCH_ID_QUERY = gql(`
         verified
       }
       available
+      onlineItem {
+        id
+        storeId
+        productId
+        itemId
+        url
+      }
       createdAt
       updatedAt
     }
@@ -99,8 +122,18 @@ export const GET_STOCK_FROM_PRODUCT_AND_BRANCH_ID_QUERY = gql(`
 `);
 
 export const GET_PRODUCT_STOCKS_QUERY = gql(`
-  query GetProductStocks($paginator: PaginatorInput!, $productId: ID!, $location: LocationInput) {
-    getProductStocks(paginator: $paginator, productId: $productId, location: $location) {
+  query GetProductStocks(
+    $paginator: PaginatorInput!
+    $productId: ID!
+    $branchType: BranchType
+    $location: LocationInput
+  ) {
+    getProductStocks(
+      paginator: $paginator
+      productId: $productId
+      branchType: $branchType
+      location: $location
+    ) {
       stocks {
         id
         productId
@@ -116,6 +149,7 @@ export const GET_PRODUCT_STOCKS_QUERY = gql(`
           id
           slug
           name
+          addressId
           address {
             id
             latitude
@@ -129,6 +163,15 @@ export const GET_PRODUCT_STOCKS_QUERY = gql(`
             country
             zipCode
             distance
+          }
+          onlineAddressId
+          onlineAddress {
+            id
+            storeId
+            url
+            itemUrlTemplate
+            referralCode
+            referralQueryParam
           }
         }
         latestPriceId
@@ -148,6 +191,13 @@ export const GET_PRODUCT_STOCKS_QUERY = gql(`
           verified
         }
         available
+        onlineItem {
+          id
+          storeId
+          productId
+          itemId
+          url
+        }
         createdAt
         updatedAt
         createdBy {

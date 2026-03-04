@@ -72,6 +72,7 @@ export const GET_ALL_PRODUCT_LISTS_BY_LIST_ID = gql(`
         branchId
         branch {
           id
+          type
           slug
           name
           addressId
@@ -87,6 +88,15 @@ export const GET_ALL_PRODUCT_LISTS_BY_LIST_ID = gql(`
             countryCode
             country
             zipCode
+          }
+          onlineAddressId
+          onlineAddress {
+            id
+            storeId
+            url
+            itemUrlTemplate
+            referralCode
+            referralQueryParam
           }
         }
         latestPriceId
@@ -120,6 +130,7 @@ export const GET_ALL_BRANCH_LISTS_BY_LIST_ID = gql(`
       branchId
       branch {
         id
+        type
         slug
         name
         addressId
@@ -135,6 +146,15 @@ export const GET_ALL_BRANCH_LISTS_BY_LIST_ID = gql(`
           countryCode
           country
           zipCode
+        }
+        onlineAddressId
+        onlineAddress {
+          id
+          storeId
+          url
+          itemUrlTemplate
+          referralCode
+          referralQueryParam
         }
         storeId
         storeSlug
