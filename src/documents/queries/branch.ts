@@ -358,6 +358,13 @@ export const GET_FAVORITE_BRANCHES_WITH_PRICE_DATA_QUERY = gql(`
           }
         }
         available
+        onlineItem {
+          id
+          storeId
+          productId
+          itemId
+          url
+        }
       }
       approximatePrice
     }
