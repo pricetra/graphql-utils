@@ -24,6 +24,13 @@ export const ALL_BRANCHES_QUERY = gql(`
         name
         storeId
         storeSlug
+        store {
+          id
+          slug
+          name
+          website
+          logo
+        }
         addressId
         address {
           id
