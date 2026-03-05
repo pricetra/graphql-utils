@@ -1,8 +1,22 @@
 import { gql } from "@apollo/client";
 
 export const ALL_BRANCHES_QUERY = gql(`
-  query AllBranches($storeId: ID, $storeSlug: String, $paginator: PaginatorInput!, $search: String, $location: LocationInput) {
-    allBranches(storeId: $storeId, storeSlug: $storeSlug, paginator: $paginator, search: $search, location: $location) {
+  query AllBranches(
+    $paginator: PaginatorInput!
+    $storeId: ID
+    $storeSlug: String
+    $search: String
+    $location: LocationInput
+    $branchType: BranchType
+  ) {
+    allBranches(
+      paginator: $paginator
+      storeId: $storeId
+      storeSlug: $storeSlug
+      search: $search
+      location: $location
+      branchType: $branchType
+    ) {
       branches {
         id
         type
