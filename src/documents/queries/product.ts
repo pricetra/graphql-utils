@@ -192,8 +192,18 @@ export const ALL_PRODUCTS_QUERY = gql(`
 `);
 
 export const PRODUCT_SUMMARY_QUERY = gql(`
-  query ProductSummary($productId: ID!, $stockId: ID, $branch: ProductSummaryBranchInput) {
-    productSummary(id: $productId, stockId: $stockId, branch: $branch) {
+  query ProductSummary(
+    $productId: ID
+    $sid: String
+    $stockId: ID
+    $branch: ProductSummaryBranchInput
+  ) {
+    productSummary(
+      id: $productId
+      sid: $sid
+      stockId: $stockId
+      branch: $branch
+    ) {
       id
       name
       image
