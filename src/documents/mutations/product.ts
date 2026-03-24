@@ -25,6 +25,31 @@ export const CREATE_PRODUCT_MUTATION = gql(`
   }
 `);
 
+export const CREATE_PRODUCT_AND_SANITIZE_MUTATION = gql(`
+  mutation CreateProductAndSanitize($input: CreateProductRaw!) {
+    createProductAndSanitize(input: $input) {
+      id
+      name
+      image
+      description
+      brand
+      code
+      model
+      categoryId
+      category {
+        id
+        name
+        expandedPathname
+        path
+      }
+      weightValue
+      weightType
+      createdAt
+      updatedAt
+    }
+  }
+`);
+
 export const UPDATE_PRODUCT_MUTATION = gql(`
   mutation UpdateProduct($id: ID!, $input: UpdateProduct!) {
     updateProduct(id: $id, input: $input) {
