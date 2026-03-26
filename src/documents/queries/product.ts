@@ -1,8 +1,18 @@
 import { gql } from "@apollo/client";
 
 export const BARCODE_SCAN_QUERY = gql(`
-  query BarcodeScan($barcode: String!, $searchMode: Boolean, $location: LocationInput) {
-    barcodeScan(barcode: $barcode, searchMode: $searchMode, location: $location) {
+  query BarcodeScan(
+    $barcode: String!
+    $searchMode: Boolean
+    $location: LocationInput
+    $productData: CreatePendingProduct
+  ) {
+    barcodeScan(
+      barcode: $barcode
+      searchMode: $searchMode
+      location: $location
+      productData: $productData
+    ) {
       id
       name
       image
