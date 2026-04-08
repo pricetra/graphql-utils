@@ -58,7 +58,7 @@ export const CREATE_BRANCH_MUTATION = gql(`
 `);
 
 export const UPDATE_BRANCH_MUTATION = gql(`
-  mutation UpdateBranch(storeId: ID!, $branchId: ID!, $input: UpdateBranch!) {
+  mutation UpdateBranch($storeId: ID!, $branchId: ID!, $input: UpdateBranch!) {
     updateBranch(storeId: $storeId, branchId: $branchId, input: $input) {
       id
       name
