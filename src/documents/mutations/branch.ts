@@ -5,8 +5,8 @@ export const CREATE_BRANCH_WITH_FULL_ADDRESS_MUTATION = gql(`
     createBranchWithFullAddress(storeId: $storeId, fullAddress: $fullAddress) {
       id
       name
-      addressId
       storeId
+      addressId
       address {
         id
         latitude
@@ -29,8 +29,8 @@ export const CREATE_BRANCH_MUTATION = gql(`
     createBranch(input: $input) {
       id
       name
-      addressId
       storeId
+      addressId
       address {
         id
         latitude
@@ -43,6 +43,48 @@ export const CREATE_BRANCH_MUTATION = gql(`
         countryCode
         country
         zipCode
+      }
+      onlineAddressId
+      onlineAddress {
+        id
+        storeId
+        url
+        itemUrlTemplate
+        referralCode
+        referralQueryParam
+      }
+    }
+  }
+`);
+
+export const UPDATE_BRANCH_MUTATION = gql(`
+  mutation UpdateBranch(storeId: ID!, $branchId: ID!, $input: UpdateBranch!) {
+    updateBranch(storeId: $storeId, branchId: $branchId, input: $input) {
+      id
+      name
+      storeId
+      addressId
+      address {
+        id
+        latitude
+        longitude
+        mapsLink
+        fullAddress
+        street
+        city
+        administrativeDivision
+        countryCode
+        country
+        zipCode
+      }
+      onlineAddressId
+      onlineAddress {
+        id
+        storeId
+        url
+        itemUrlTemplate
+        referralCode
+        referralQueryParam
       }
     }
   }

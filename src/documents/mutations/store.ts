@@ -28,3 +28,14 @@ export const BUSINESS_SIGN_UP_FORM_MUTATION = gql(`
     }
   }
 `);
+
+export const UPDATE_STORE_MUTATION = gql(`
+  mutation UpdateStore(storeId: ID!, $input: UpdateStore!) {
+    updateStore(storeId: $storeId, input: $input) {
+      id
+      name
+      logo
+      website
+    }
+  }
+`);
