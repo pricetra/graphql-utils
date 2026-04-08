@@ -61,7 +61,9 @@ export const UPDATE_BRANCH_MUTATION = gql(`
   mutation UpdateBranch($storeId: ID!, $branchId: ID!, $input: UpdateBranch!) {
     updateBranch(storeId: $storeId, branchId: $branchId, input: $input) {
       id
+      slug
       name
+      type
       storeId
       addressId
       address {
