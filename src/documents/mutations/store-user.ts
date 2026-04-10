@@ -1,5 +1,22 @@
 import { gql } from "@apollo/client";
 
+export const STORE_USER_AUTHORIZED_QUERY = gql(`
+  query StoreUserAuthorized($storeId: ID!, $branchId: ID) {
+    storeUserAuthorized(storeId: $storeId, branchId: $branchId) {
+      id
+      storeId
+      branchId
+      userId
+      legalName
+      email
+      employeeId
+      role
+      approvedAt
+      approved
+    }
+  }
+`);
+
 export const ACCEPT_PENDING_STORE_USER_INVITE_MUTATION = gql(`
   mutation AcceptPendingStoreUserInvite($data: String!) {
     acceptPendingStoreUserInvite(data: $data) {
