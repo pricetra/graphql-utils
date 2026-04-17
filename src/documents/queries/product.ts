@@ -522,3 +522,31 @@ export const WEIGHT_COMPONENTS_FROM_CATEGORY_ID_QUERY = gql(`
     }
   }
 `);
+
+export const PAGINATED_PENDING_CRAWLED_PRODUCTS_QUERY = gql(`
+  query PaginatedPendingCrawledProducts($paginator: PaginatorInput!){
+    paginatedPendingCrawledProducts(paginator: $paginator) {
+      pendingCrawledProducts {
+        upc
+        brand
+        name
+        description
+        category
+        weightOrQuantity
+        imageUrl
+        productPageUrl
+        productPageHtmlDump
+        manufacturer_id
+        createdAt
+      }
+      paginator {
+        next
+        page
+        prev
+        limit
+        total
+        numPages
+      }
+    }
+  }
+`);
