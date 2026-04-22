@@ -104,7 +104,7 @@ export const STOREFRONT_FLYER_QUERY = gql(`
 `);
 
 export const STOREFRONT_FLYERS_QUERY = gql(`
-  query StorefrontFlyers(storeId: ID!, branchId: ID, paginator: PaginatorInput!) {
+  query StorefrontFlyers($storeId: ID!, $branchId: ID, $paginator: PaginatorInput!) {
     storefrontFlyers(storeId: $storeId, branchId: $branchId, paginator: $paginator) {
       flyers {
         id

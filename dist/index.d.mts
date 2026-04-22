@@ -472,6 +472,8 @@ type Mutation = {
     createStoreUserAdmin: StoreUser;
     createStoreWithBusinessForm: BusinessFormSignedUp;
     createStorefrontBannerItems: Array<StorefrontBannerItem>;
+    createStorefrontFlyer: StorefrontFlyer;
+    createStorefrontFlyerPage: StorefrontFlyerPage;
     declinePendingStoreUserInvite: Scalars['Boolean']['output'];
     deleteAllStorefrontBannerItems: Scalars['Boolean']['output'];
     deleteGroceryListItem: GroceryListItem;
@@ -483,6 +485,7 @@ type Mutation = {
     logout: Scalars['Boolean']['output'];
     markGroceryListItem: GroceryListItem;
     popAndSavePendingProduct: Product;
+    publishDraftStorefrontFlyer: StorefrontFlyer;
     registerExpoPushToken: User;
     removeBranchFromList: BranchList;
     removeFromList: ProductList;
@@ -574,6 +577,12 @@ type MutationCreateStoreWithBusinessFormArgs = {
 type MutationCreateStorefrontBannerItemsArgs = {
     input: CreateStorefrontBannerInput;
 };
+type MutationCreateStorefrontFlyerArgs = {
+    input: StorefrontFlyerInput;
+};
+type MutationCreateStorefrontFlyerPageArgs = {
+    input: StorefrontFlyerPageInput;
+};
 type MutationDeclinePendingStoreUserInviteArgs = {
     data: Scalars['String']['input'];
 };
@@ -599,6 +608,9 @@ type MutationExtractAndCreateProductArgs = {
 type MutationMarkGroceryListItemArgs = {
     completed: Scalars['Boolean']['input'];
     groceryListItemId: Scalars['ID']['input'];
+};
+type MutationPublishDraftStorefrontFlyerArgs = {
+    id: Scalars['ID']['input'];
 };
 type MutationRegisterExpoPushTokenArgs = {
     expoPushToken: Scalars['String']['input'];
@@ -744,6 +756,11 @@ type PaginatedStocks = {
     __typename?: 'PaginatedStocks';
     paginator: Paginator;
     stocks: Array<Stock>;
+};
+type PaginatedStorefrontFlyers = {
+    __typename?: 'PaginatedStorefrontFlyers';
+    flyers: Array<StorefrontFlyer>;
+    paginator: Paginator;
 };
 type PaginatedStores = {
     __typename?: 'PaginatedStores';
@@ -1155,6 +1172,8 @@ type Query = {
     stock: Stock;
     storeSlugAvailability: Scalars['Boolean']['output'];
     storeUserAuthorized?: Maybe<StoreUser>;
+    storefrontFlyer: StorefrontFlyer;
+    storefrontFlyers: PaginatedStorefrontFlyers;
     verifyPasswordResetCode: Scalars['Boolean']['output'];
     walmartProduct: Product;
     weightComponentsFromCategoryId: Array<ProductWeightComponents>;
@@ -1370,6 +1389,14 @@ type QueryStoreUserAuthorizedArgs = {
     branchId?: InputMaybe<Scalars['ID']['input']>;
     storeId: Scalars['ID']['input'];
 };
+type QueryStorefrontFlyerArgs = {
+    uid: Scalars['String']['input'];
+};
+type QueryStorefrontFlyersArgs = {
+    branchId?: InputMaybe<Scalars['ID']['input']>;
+    paginator: PaginatorInput;
+    storeId: Scalars['ID']['input'];
+};
 type QueryVerifyPasswordResetCodeArgs = {
     code: Scalars['String']['input'];
     email: Scalars['String']['input'];
@@ -1513,6 +1540,111 @@ type StorefrontBannerItem = {
     title?: Maybe<Scalars['String']['output']>;
     updatedAt: Scalars['Time']['output'];
 };
+type StorefrontFlyer = {
+    __typename?: 'StorefrontFlyer';
+    branch?: Maybe<Branch>;
+    branchId?: Maybe<Scalars['ID']['output']>;
+    createdAt: Scalars['Time']['output'];
+    description?: Maybe<Scalars['String']['output']>;
+    expiresAt: Scalars['Time']['output'];
+    flyerImageId?: Maybe<Scalars['String']['output']>;
+    flyerStyles?: Maybe<Scalars['String']['output']>;
+    id: Scalars['ID']['output'];
+    pages: Array<StorefrontFlyerPage>;
+    startsAt: Scalars['Time']['output'];
+    status: StorefrontFlyerStatus;
+    store?: Maybe<Store>;
+    storeId: Scalars['ID']['output'];
+    title: Scalars['String']['output'];
+    uid: Scalars['String']['output'];
+};
+type StorefrontFlyerInput = {
+    branchId?: InputMaybe<Scalars['ID']['input']>;
+    description?: InputMaybe<Scalars['String']['input']>;
+    expiresAt: Scalars['Time']['input'];
+    flyerStyles?: InputMaybe<Scalars['String']['input']>;
+    startsAt: Scalars['Time']['input'];
+    storeId: Scalars['ID']['input'];
+    title: Scalars['String']['input'];
+};
+type StorefrontFlyerItem = {
+    __typename?: 'StorefrontFlyerItem';
+    id: Scalars['ID']['output'];
+    label?: Maybe<Scalars['String']['output']>;
+    layout?: Maybe<Scalars['String']['output']>;
+    price: Price;
+    priceId: Scalars['ID']['output'];
+    product: Product;
+    productId: Scalars['ID']['output'];
+    sortOrder: Scalars['Int']['output'];
+    stock: Stock;
+    stockId: Scalars['ID']['output'];
+    storefrontFlyerSectionId: Scalars['ID']['output'];
+    styles?: Maybe<Scalars['String']['output']>;
+};
+type StorefrontFlyerItemInput = {
+    label?: InputMaybe<Scalars['String']['input']>;
+    layout?: InputMaybe<Scalars['String']['input']>;
+    productId: Scalars['ID']['input'];
+    sortOrder: Scalars['Int']['input'];
+    stockId: Scalars['ID']['input'];
+    styles?: InputMaybe<Scalars['String']['input']>;
+};
+type StorefrontFlyerPage = {
+    __typename?: 'StorefrontFlyerPage';
+    bgImageId?: Maybe<Scalars['String']['output']>;
+    description?: Maybe<Scalars['String']['output']>;
+    heroImageId?: Maybe<Scalars['String']['output']>;
+    id: Scalars['ID']['output'];
+    layout?: Maybe<Scalars['String']['output']>;
+    pageImageId: Scalars['String']['output'];
+    pageNumber: Scalars['Int']['output'];
+    sections: Array<StorefrontFlyerSection>;
+    storefrontFlyerId: Scalars['ID']['output'];
+    styles?: Maybe<Scalars['String']['output']>;
+    title?: Maybe<Scalars['String']['output']>;
+};
+type StorefrontFlyerPageInput = {
+    bgImage?: InputMaybe<Scalars['Upload']['input']>;
+    description?: InputMaybe<Scalars['String']['input']>;
+    heroImage?: InputMaybe<Scalars['Upload']['input']>;
+    layout?: InputMaybe<Scalars['String']['input']>;
+    pageImage: Scalars['Upload']['input'];
+    sections: Array<StorefrontFlyerSectionInput>;
+    storefrontFlyerId: Scalars['ID']['input'];
+    styles?: InputMaybe<Scalars['String']['input']>;
+    title?: InputMaybe<Scalars['String']['input']>;
+};
+type StorefrontFlyerSection = {
+    __typename?: 'StorefrontFlyerSection';
+    bgImageId?: Maybe<Scalars['String']['output']>;
+    description?: Maybe<Scalars['String']['output']>;
+    heroImageId?: Maybe<Scalars['String']['output']>;
+    id: Scalars['ID']['output'];
+    items: Array<StorefrontFlyerItem>;
+    layout?: Maybe<Scalars['String']['output']>;
+    sortOrder: Scalars['Int']['output'];
+    storefrontFlyerPageId: Scalars['ID']['output'];
+    styles?: Maybe<Scalars['String']['output']>;
+    title?: Maybe<Scalars['String']['output']>;
+};
+type StorefrontFlyerSectionInput = {
+    bgImage?: InputMaybe<Scalars['Upload']['input']>;
+    description?: InputMaybe<Scalars['String']['input']>;
+    heroImage?: InputMaybe<Scalars['Upload']['input']>;
+    items: Array<StorefrontFlyerItemInput>;
+    layout?: InputMaybe<Scalars['String']['input']>;
+    sortOrder: Scalars['Int']['input'];
+    styles?: InputMaybe<Scalars['String']['input']>;
+    title?: InputMaybe<Scalars['String']['input']>;
+};
+declare enum StorefrontFlyerStatus {
+    Archived = "ARCHIVED",
+    Deleted = "DELETED",
+    Draft = "DRAFT",
+    Published = "PUBLISHED",
+    Scheduled = "SCHEDULED"
+}
 type TimestampRangeBetween = {
     from: Scalars['Time']['input'];
     to: Scalars['Time']['input'];
@@ -2421,6 +2553,145 @@ type DeleteAllStorefrontBannerItemsMutationVariables = Exact<{
 type DeleteAllStorefrontBannerItemsMutation = {
     __typename?: 'Mutation';
     deleteAllStorefrontBannerItems: boolean;
+};
+type CreateStorefrontFlyerMutationVariables = Exact<{
+    input: StorefrontFlyerInput;
+}>;
+type CreateStorefrontFlyerMutation = {
+    __typename?: 'Mutation';
+    createStorefrontFlyer: {
+        __typename?: 'StorefrontFlyer';
+        id: number;
+        uid: string;
+        storeId: number;
+        branchId?: number | null;
+        title: string;
+        description?: string | null;
+        flyerImageId?: string | null;
+        flyerStyles?: string | null;
+        status: StorefrontFlyerStatus;
+        createdAt: any;
+        startsAt: any;
+        expiresAt: any;
+        store?: {
+            __typename?: 'Store';
+            id: number;
+            slug: string;
+            name: string;
+        } | null;
+    };
+};
+type CreateStorefrontFlyerPageMutationVariables = Exact<{
+    input: StorefrontFlyerPageInput;
+}>;
+type CreateStorefrontFlyerPageMutation = {
+    __typename?: 'Mutation';
+    createStorefrontFlyerPage: {
+        __typename?: 'StorefrontFlyerPage';
+        id: number;
+        storefrontFlyerId: number;
+        pageNumber: number;
+        title?: string | null;
+        description?: string | null;
+        pageImageId: string;
+        heroImageId?: string | null;
+        bgImageId?: string | null;
+        styles?: string | null;
+        layout?: string | null;
+        sections: Array<{
+            __typename?: 'StorefrontFlyerSection';
+            id: number;
+            storefrontFlyerPageId: number;
+            title?: string | null;
+            description?: string | null;
+            bgImageId?: string | null;
+            styles?: string | null;
+            layout?: string | null;
+            sortOrder: number;
+            items: Array<{
+                __typename?: 'StorefrontFlyerItem';
+                id: number;
+                storefrontFlyerSectionId: number;
+                sortOrder: number;
+                productId: number;
+                stockId: number;
+                priceId: number;
+                product: {
+                    __typename?: 'Product';
+                    id: number;
+                    name: string;
+                    image: string;
+                    description: string;
+                    brand: string;
+                    code: string;
+                    model?: string | null;
+                    categoryId: number;
+                    approximateWeight: boolean;
+                    netWeight: boolean;
+                    weightValue?: number | null;
+                    weightType?: string | null;
+                    quantityValue: number;
+                    quantityType: string;
+                    createdAt: any;
+                    updatedAt: any;
+                    views: number;
+                };
+                stock: {
+                    __typename?: 'Stock';
+                    id: number;
+                    productId: number;
+                    storeId: number;
+                    branchId: number;
+                    latestPriceId: number;
+                    available: boolean;
+                };
+                price: {
+                    __typename?: 'Price';
+                    id: number;
+                    productId: number;
+                    branchId: number;
+                    storeId: number;
+                    amount: number;
+                    currencyCode: string;
+                    createdAt: any;
+                    sale: boolean;
+                    originalPrice?: number | null;
+                    condition?: string | null;
+                    expiresAt?: any | null;
+                    unitType: string;
+                    outOfStock: boolean;
+                    verified: boolean;
+                };
+            }>;
+        }>;
+    };
+};
+type PublishDraftStorefrontFlyerMutationVariables = Exact<{
+    id: Scalars['ID']['input'];
+}>;
+type PublishDraftStorefrontFlyerMutation = {
+    __typename?: 'Mutation';
+    publishDraftStorefrontFlyer: {
+        __typename?: 'StorefrontFlyer';
+        id: number;
+        uid: string;
+        storeId: number;
+        branchId?: number | null;
+        title: string;
+        description?: string | null;
+        flyerImageId?: string | null;
+        flyerStyles?: string | null;
+        status: StorefrontFlyerStatus;
+        createdAt: any;
+        startsAt: any;
+        expiresAt: any;
+        store?: {
+            __typename?: 'Store';
+            id: number;
+            slug: string;
+            name: string;
+        } | null;
+    };
 };
 type CreateAccountMutationVariables = Exact<{
     email: Scalars['String']['input'];
@@ -4842,6 +5113,154 @@ type StoreSlugAvailabilityQuery = {
     __typename?: 'Query';
     storeSlugAvailability: boolean;
 };
+type StorefrontFlyerQueryVariables = Exact<{
+    uid: Scalars['String']['input'];
+}>;
+type StorefrontFlyerQuery = {
+    __typename?: 'Query';
+    storefrontFlyer: {
+        __typename?: 'StorefrontFlyer';
+        id: number;
+        uid: string;
+        storeId: number;
+        branchId?: number | null;
+        title: string;
+        description?: string | null;
+        flyerImageId?: string | null;
+        flyerStyles?: string | null;
+        status: StorefrontFlyerStatus;
+        createdAt: any;
+        startsAt: any;
+        expiresAt: any;
+        store?: {
+            __typename?: 'Store';
+            id: number;
+            slug: string;
+            name: string;
+            logo: string;
+        } | null;
+        branch?: {
+            __typename?: 'Branch';
+            id: number;
+            slug: string;
+            name: string;
+        } | null;
+        pages: Array<{
+            __typename?: 'StorefrontFlyerPage';
+            id: number;
+            storefrontFlyerId: number;
+            pageNumber: number;
+            title?: string | null;
+            description?: string | null;
+            pageImageId: string;
+            heroImageId?: string | null;
+            bgImageId?: string | null;
+            styles?: string | null;
+            layout?: string | null;
+            sections: Array<{
+                __typename?: 'StorefrontFlyerSection';
+                id: number;
+                storefrontFlyerPageId: number;
+                title?: string | null;
+                description?: string | null;
+                bgImageId?: string | null;
+                styles?: string | null;
+                layout?: string | null;
+                sortOrder: number;
+                items: Array<{
+                    __typename?: 'StorefrontFlyerItem';
+                    id: number;
+                    storefrontFlyerSectionId: number;
+                    sortOrder: number;
+                    productId: number;
+                    stockId: number;
+                    priceId: number;
+                    product: {
+                        __typename?: 'Product';
+                        id: number;
+                        name: string;
+                        image: string;
+                        description: string;
+                        brand: string;
+                        code: string;
+                        model?: string | null;
+                        categoryId: number;
+                        approximateWeight: boolean;
+                        netWeight: boolean;
+                        weightValue?: number | null;
+                        weightType?: string | null;
+                        quantityValue: number;
+                        quantityType: string;
+                        createdAt: any;
+                        updatedAt: any;
+                        views: number;
+                    };
+                    stock: {
+                        __typename?: 'Stock';
+                        id: number;
+                        productId: number;
+                        storeId: number;
+                        branchId: number;
+                        latestPriceId: number;
+                        available: boolean;
+                    };
+                    price: {
+                        __typename?: 'Price';
+                        id: number;
+                        productId: number;
+                        branchId: number;
+                        storeId: number;
+                        amount: number;
+                        currencyCode: string;
+                        createdAt: any;
+                        sale: boolean;
+                        originalPrice?: number | null;
+                        condition?: string | null;
+                        expiresAt?: any | null;
+                        unitType: string;
+                        outOfStock: boolean;
+                        verified: boolean;
+                    };
+                }>;
+            }>;
+        }>;
+    };
+};
+type StorefrontFlyersQueryVariables = Exact<{
+    storeId: Scalars['ID']['input'];
+    branchId?: InputMaybe<Scalars['ID']['input']>;
+    paginator: PaginatorInput;
+}>;
+type StorefrontFlyersQuery = {
+    __typename?: 'Query';
+    storefrontFlyers: {
+        __typename?: 'PaginatedStorefrontFlyers';
+        flyers: Array<{
+            __typename?: 'StorefrontFlyer';
+            id: number;
+            uid: string;
+            storeId: number;
+            branchId?: number | null;
+            title: string;
+            description?: string | null;
+            flyerImageId?: string | null;
+            flyerStyles?: string | null;
+            status: StorefrontFlyerStatus;
+            createdAt: any;
+            startsAt: any;
+            expiresAt: any;
+        }>;
+        paginator: {
+            __typename?: 'Paginator';
+            next?: number | null;
+            page: number;
+            prev?: number | null;
+            limit: number;
+            total: number;
+            numPages: number;
+        };
+    };
+};
 type GetStorefrontBannerQueryVariables = Exact<{
     storeId: Scalars['ID']['input'];
     branchId?: InputMaybe<Scalars['ID']['input']>;
@@ -5233,6 +5652,9 @@ declare const AppendStorefrontBannerItemsDocument: TypedDocumentNode<AppendStore
 declare const UpdateStorefrontBannerItemDocument: TypedDocumentNode<UpdateStorefrontBannerItemMutation, UpdateStorefrontBannerItemMutationVariables>;
 declare const DeleteStorefrontBannerItemDocument: TypedDocumentNode<DeleteStorefrontBannerItemMutation, DeleteStorefrontBannerItemMutationVariables>;
 declare const DeleteAllStorefrontBannerItemsDocument: TypedDocumentNode<DeleteAllStorefrontBannerItemsMutation, DeleteAllStorefrontBannerItemsMutationVariables>;
+declare const CreateStorefrontFlyerDocument: TypedDocumentNode<CreateStorefrontFlyerMutation, CreateStorefrontFlyerMutationVariables>;
+declare const CreateStorefrontFlyerPageDocument: TypedDocumentNode<CreateStorefrontFlyerPageMutation, CreateStorefrontFlyerPageMutationVariables>;
+declare const PublishDraftStorefrontFlyerDocument: TypedDocumentNode<PublishDraftStorefrontFlyerMutation, PublishDraftStorefrontFlyerMutationVariables>;
 declare const CreateAccountDocument: TypedDocumentNode<CreateAccountMutation, CreateAccountMutationVariables>;
 declare const VerifyEmailDocument: TypedDocumentNode<VerifyEmailMutation, VerifyEmailMutationVariables>;
 declare const ResendVerificationDocument: TypedDocumentNode<ResendVerificationMutation, ResendVerificationMutationVariables>;
@@ -5289,6 +5711,8 @@ declare const MyStoreUserDocument: TypedDocumentNode<MyStoreUserQuery, MyStoreUs
 declare const AllStoresDocument: TypedDocumentNode<AllStoresQuery, AllStoresQueryVariables>;
 declare const FindStoreDocument: TypedDocumentNode<FindStoreQuery, FindStoreQueryVariables>;
 declare const StoreSlugAvailabilityDocument: TypedDocumentNode<StoreSlugAvailabilityQuery, StoreSlugAvailabilityQueryVariables>;
+declare const StorefrontFlyerDocument: TypedDocumentNode<StorefrontFlyerQuery, StorefrontFlyerQueryVariables>;
+declare const StorefrontFlyersDocument: TypedDocumentNode<StorefrontFlyersQuery, StorefrontFlyersQueryVariables>;
 declare const GetStorefrontBannerDocument: TypedDocumentNode<GetStorefrontBannerQuery, GetStorefrontBannerQueryVariables>;
 declare const LoginInternalDocument: TypedDocumentNode<LoginInternalQuery, LoginInternalQueryVariables>;
 declare const GoogleOAuthDocument: TypedDocumentNode<GoogleOAuthQuery, GoogleOAuthQueryVariables>;
@@ -5366,6 +5790,9 @@ type Documents = {
     "\n  mutation UpdateStorefrontBannerItem($input: UpdateStorefrontBannerItemInput!) {\n    updateStorefrontBannerItem(input: $input) {\n      id\n      bannerId\n      imageId\n      link\n      isExternal\n      title\n      description\n      sortOrder\n      createdAt\n      updatedAt\n    }\n  }\n": typeof UpdateStorefrontBannerItemDocument;
     "\n  mutation DeleteStorefrontBannerItem($bannerItemId: ID!) {\n    deleteStorefrontBannerItem(bannerItemId: $bannerItemId) {\n      id\n      bannerId\n      imageId\n      link\n      isExternal\n      title\n      description\n      sortOrder\n      createdAt\n      updatedAt\n    }\n  }\n": typeof DeleteStorefrontBannerItemDocument;
     "\n  mutation DeleteAllStorefrontBannerItems($storefrontBannerId: ID!) {\n    deleteAllStorefrontBannerItems(storefrontBannerId: $storefrontBannerId)\n  }\n": typeof DeleteAllStorefrontBannerItemsDocument;
+    "\n  mutation CreateStorefrontFlyer($input: StorefrontFlyerInput!) {\n    createStorefrontFlyer(input: $input) {\n      id\n      uid\n      storeId\n      store {\n        id\n        slug\n        name\n      }\n      branchId\n      title\n      description\n      flyerImageId\n      flyerStyles\n      status\n      createdAt\n      startsAt\n      expiresAt\n    }\n  }\n": typeof CreateStorefrontFlyerDocument;
+    "\n  mutation CreateStorefrontFlyerPage($input: StorefrontFlyerPageInput!) {\n    createStorefrontFlyerPage(input: $input) {\n      id\n      storefrontFlyerId\n      pageNumber\n      title\n      description\n      pageImageId\n      heroImageId\n      bgImageId\n      styles\n      layout\n      sections {\n        id\n        storefrontFlyerPageId\n        title\n        description\n        bgImageId\n        styles\n        layout\n        sortOrder\n        items {\n          id\n          storefrontFlyerSectionId\n          sortOrder\n          productId\n          product {\n            id\n            name\n            image\n            description\n            brand\n            code\n            model\n            categoryId\n            approximateWeight\n            netWeight\n            weightValue\n            weightType\n            quantityValue\n            quantityType\n            createdAt\n            updatedAt\n            views\n          }\n          stockId\n          stock {\n            id\n            productId\n            storeId\n            branchId\n            latestPriceId\n            available\n          }\n          priceId\n          price {\n            id\n            productId\n            branchId\n            storeId\n            amount\n            currencyCode\n            createdAt\n            sale\n            originalPrice\n            condition\n            expiresAt\n            unitType\n            outOfStock\n            verified\n          }\n        }\n      }\n    }\n  }\n": typeof CreateStorefrontFlyerPageDocument;
+    "\n  mutation PublishDraftStorefrontFlyer($id: ID!) {\n    publishDraftStorefrontFlyer(id: $id) {\n      id\n      uid\n      storeId\n      store {\n        id\n        slug\n        name\n      }\n      branchId\n      title\n      description\n      flyerImageId\n      flyerStyles\n      status\n      createdAt\n      startsAt\n      expiresAt\n    }\n  }\n": typeof PublishDraftStorefrontFlyerDocument;
     "\n  mutation CreateAccount($email: String!, $name: String!, $password: String!) {\n    createAccount(input: { email: $email, name: $name, password: $password }) {\n      id\n      name\n      email\n      phoneNumber\n      createdAt\n      updatedAt\n      authPlatform\n      role\n    }\n  }\n": typeof CreateAccountDocument;
     "\n  mutation VerifyEmail($verificationCode: String!) {\n    verifyEmail(verificationCode: $verificationCode) {\n      id\n      name\n      email\n      avatar\n      createdAt\n      updatedAt\n      active\n      authPlatform\n      authStateId\n      role\n    }\n  }\n": typeof VerifyEmailDocument;
     "\n  mutation ResendVerification($email: String!) {\n    resendEmailVerificationCode(email: $email)\n  }\n": typeof ResendVerificationDocument;
@@ -5422,6 +5849,8 @@ type Documents = {
     "\n  query AllStores($paginator: PaginatorInput!, $search: String) {\n    allStores(paginator: $paginator, search: $search) {\n      stores {\n        id\n        slug\n        name\n        logo\n        website\n      }\n      paginator {\n        next\n        page\n        prev\n        limit\n        total\n        numPages\n      }\n    }\n  }\n": typeof AllStoresDocument;
     "\n  query FindStore($storeId: ID, $storeSlug: String) {\n    findStore(id: $storeId, slug: $storeSlug) {\n      id\n      slug\n      name\n      logo\n      website\n    }\n  }\n": typeof FindStoreDocument;
     "\n  query StoreSlugAvailability($store: String!) {\n    storeSlugAvailability(store: $store)\n  }\n": typeof StoreSlugAvailabilityDocument;
+    "\n  query StorefrontFlyer($uid: String!) {\n    storefrontFlyer(uid: $uid) {\n      id\n      uid\n      storeId\n      store {\n        id\n        slug\n        name\n        logo\n      }\n      branchId\n      branch {\n        id\n        slug\n        name\n      }\n      title\n      description\n      flyerImageId\n      flyerStyles\n      status\n      createdAt\n      startsAt\n      expiresAt\n      pages {\n        id\n        storefrontFlyerId\n        pageNumber\n        title\n        description\n        pageImageId\n        heroImageId\n        bgImageId\n        styles\n        layout\n        sections {\n          id\n          storefrontFlyerPageId\n          title\n          description\n          bgImageId\n          styles\n          layout\n          sortOrder\n          items {\n            id\n            storefrontFlyerSectionId\n            sortOrder\n            productId\n            product {\n              id\n              name\n              image\n              description\n              brand\n              code\n              model\n              categoryId\n              approximateWeight\n              netWeight\n              weightValue\n              weightType\n              quantityValue\n              quantityType\n              createdAt\n              updatedAt\n              views\n            }\n            stockId\n            stock {\n              id\n              productId\n              storeId\n              branchId\n              latestPriceId\n              available\n            }\n            priceId\n            price {\n              id\n              productId\n              branchId\n              storeId\n              amount\n              currencyCode\n              createdAt\n              sale\n              originalPrice\n              condition\n              expiresAt\n              unitType\n              outOfStock\n              verified\n            }\n          }\n        }\n      }\n    }\n  }\n": typeof StorefrontFlyerDocument;
+    "\n  query StorefrontFlyers($storeId: ID!, $branchId: ID, $paginator: PaginatorInput!) {\n    storefrontFlyers(storeId: $storeId, branchId: $branchId, paginator: $paginator) {\n      flyers {\n        id\n        uid\n        storeId\n        branchId\n        title\n        description\n        flyerImageId\n        flyerStyles\n        status\n        createdAt\n        startsAt\n        expiresAt\n      }\n      paginator {\n        next\n        page\n        prev\n        limit\n        total\n        numPages\n      }\n    }\n  }\n": typeof StorefrontFlyersDocument;
     "\n  query GetStorefrontBanner($storeId: ID!, $branchId: ID) {\n    getStorefrontBanner(storeId: $storeId, branchId: $branchId) {\n      id\n      storeId\n      branchId\n      bannerItems {\n        id\n        bannerId\n        imageId\n        link\n        isExternal\n        title\n        description\n        sortOrder\n        createdAt\n        updatedAt\n      }\n      createdAt\n      updatedAt\n    }\n  }\n": typeof GetStorefrontBannerDocument;
     "\n  fragment UserFields on User {\n    id\n    name\n    email\n    avatar\n    createdAt\n    updatedAt\n    active\n    authDevice\n    authPlatform\n    authStateId\n    role\n  }\n": typeof UserFieldsFragmentDoc;
     "\n  query LoginInternal(\n    $email: String!\n    $password: String!\n    $ipAddress: String\n    $device: AuthDeviceType\n  ) {\n    login(email: $email, password: $password, ipAddress: $ipAddress, device: $device) {\n      token\n      user {\n        id\n        name\n        email\n        avatar\n        createdAt\n        updatedAt\n        active\n        authDevice\n        authPlatform\n        authStateId\n        expoPushToken\n        role\n        addressId\n        address {\n          id\n          latitude\n          longitude\n          mapsLink\n          fullAddress\n          street\n          city\n          administrativeDivision\n          countryCode\n          country\n          zipCode\n        }\n      }\n    }\n  }\n": typeof LoginInternalDocument;
@@ -5595,6 +6024,18 @@ declare function graphql(source: "\n  mutation DeleteStorefrontBannerItem($banne
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 declare function graphql(source: "\n  mutation DeleteAllStorefrontBannerItems($storefrontBannerId: ID!) {\n    deleteAllStorefrontBannerItems(storefrontBannerId: $storefrontBannerId)\n  }\n"): (typeof documents)["\n  mutation DeleteAllStorefrontBannerItems($storefrontBannerId: ID!) {\n    deleteAllStorefrontBannerItems(storefrontBannerId: $storefrontBannerId)\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+declare function graphql(source: "\n  mutation CreateStorefrontFlyer($input: StorefrontFlyerInput!) {\n    createStorefrontFlyer(input: $input) {\n      id\n      uid\n      storeId\n      store {\n        id\n        slug\n        name\n      }\n      branchId\n      title\n      description\n      flyerImageId\n      flyerStyles\n      status\n      createdAt\n      startsAt\n      expiresAt\n    }\n  }\n"): (typeof documents)["\n  mutation CreateStorefrontFlyer($input: StorefrontFlyerInput!) {\n    createStorefrontFlyer(input: $input) {\n      id\n      uid\n      storeId\n      store {\n        id\n        slug\n        name\n      }\n      branchId\n      title\n      description\n      flyerImageId\n      flyerStyles\n      status\n      createdAt\n      startsAt\n      expiresAt\n    }\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+declare function graphql(source: "\n  mutation CreateStorefrontFlyerPage($input: StorefrontFlyerPageInput!) {\n    createStorefrontFlyerPage(input: $input) {\n      id\n      storefrontFlyerId\n      pageNumber\n      title\n      description\n      pageImageId\n      heroImageId\n      bgImageId\n      styles\n      layout\n      sections {\n        id\n        storefrontFlyerPageId\n        title\n        description\n        bgImageId\n        styles\n        layout\n        sortOrder\n        items {\n          id\n          storefrontFlyerSectionId\n          sortOrder\n          productId\n          product {\n            id\n            name\n            image\n            description\n            brand\n            code\n            model\n            categoryId\n            approximateWeight\n            netWeight\n            weightValue\n            weightType\n            quantityValue\n            quantityType\n            createdAt\n            updatedAt\n            views\n          }\n          stockId\n          stock {\n            id\n            productId\n            storeId\n            branchId\n            latestPriceId\n            available\n          }\n          priceId\n          price {\n            id\n            productId\n            branchId\n            storeId\n            amount\n            currencyCode\n            createdAt\n            sale\n            originalPrice\n            condition\n            expiresAt\n            unitType\n            outOfStock\n            verified\n          }\n        }\n      }\n    }\n  }\n"): (typeof documents)["\n  mutation CreateStorefrontFlyerPage($input: StorefrontFlyerPageInput!) {\n    createStorefrontFlyerPage(input: $input) {\n      id\n      storefrontFlyerId\n      pageNumber\n      title\n      description\n      pageImageId\n      heroImageId\n      bgImageId\n      styles\n      layout\n      sections {\n        id\n        storefrontFlyerPageId\n        title\n        description\n        bgImageId\n        styles\n        layout\n        sortOrder\n        items {\n          id\n          storefrontFlyerSectionId\n          sortOrder\n          productId\n          product {\n            id\n            name\n            image\n            description\n            brand\n            code\n            model\n            categoryId\n            approximateWeight\n            netWeight\n            weightValue\n            weightType\n            quantityValue\n            quantityType\n            createdAt\n            updatedAt\n            views\n          }\n          stockId\n          stock {\n            id\n            productId\n            storeId\n            branchId\n            latestPriceId\n            available\n          }\n          priceId\n          price {\n            id\n            productId\n            branchId\n            storeId\n            amount\n            currencyCode\n            createdAt\n            sale\n            originalPrice\n            condition\n            expiresAt\n            unitType\n            outOfStock\n            verified\n          }\n        }\n      }\n    }\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+declare function graphql(source: "\n  mutation PublishDraftStorefrontFlyer($id: ID!) {\n    publishDraftStorefrontFlyer(id: $id) {\n      id\n      uid\n      storeId\n      store {\n        id\n        slug\n        name\n      }\n      branchId\n      title\n      description\n      flyerImageId\n      flyerStyles\n      status\n      createdAt\n      startsAt\n      expiresAt\n    }\n  }\n"): (typeof documents)["\n  mutation PublishDraftStorefrontFlyer($id: ID!) {\n    publishDraftStorefrontFlyer(id: $id) {\n      id\n      uid\n      storeId\n      store {\n        id\n        slug\n        name\n      }\n      branchId\n      title\n      description\n      flyerImageId\n      flyerStyles\n      status\n      createdAt\n      startsAt\n      expiresAt\n    }\n  }\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
@@ -5822,6 +6263,14 @@ declare function graphql(source: "\n  query StoreSlugAvailability($store: String
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
+declare function graphql(source: "\n  query StorefrontFlyer($uid: String!) {\n    storefrontFlyer(uid: $uid) {\n      id\n      uid\n      storeId\n      store {\n        id\n        slug\n        name\n        logo\n      }\n      branchId\n      branch {\n        id\n        slug\n        name\n      }\n      title\n      description\n      flyerImageId\n      flyerStyles\n      status\n      createdAt\n      startsAt\n      expiresAt\n      pages {\n        id\n        storefrontFlyerId\n        pageNumber\n        title\n        description\n        pageImageId\n        heroImageId\n        bgImageId\n        styles\n        layout\n        sections {\n          id\n          storefrontFlyerPageId\n          title\n          description\n          bgImageId\n          styles\n          layout\n          sortOrder\n          items {\n            id\n            storefrontFlyerSectionId\n            sortOrder\n            productId\n            product {\n              id\n              name\n              image\n              description\n              brand\n              code\n              model\n              categoryId\n              approximateWeight\n              netWeight\n              weightValue\n              weightType\n              quantityValue\n              quantityType\n              createdAt\n              updatedAt\n              views\n            }\n            stockId\n            stock {\n              id\n              productId\n              storeId\n              branchId\n              latestPriceId\n              available\n            }\n            priceId\n            price {\n              id\n              productId\n              branchId\n              storeId\n              amount\n              currencyCode\n              createdAt\n              sale\n              originalPrice\n              condition\n              expiresAt\n              unitType\n              outOfStock\n              verified\n            }\n          }\n        }\n      }\n    }\n  }\n"): (typeof documents)["\n  query StorefrontFlyer($uid: String!) {\n    storefrontFlyer(uid: $uid) {\n      id\n      uid\n      storeId\n      store {\n        id\n        slug\n        name\n        logo\n      }\n      branchId\n      branch {\n        id\n        slug\n        name\n      }\n      title\n      description\n      flyerImageId\n      flyerStyles\n      status\n      createdAt\n      startsAt\n      expiresAt\n      pages {\n        id\n        storefrontFlyerId\n        pageNumber\n        title\n        description\n        pageImageId\n        heroImageId\n        bgImageId\n        styles\n        layout\n        sections {\n          id\n          storefrontFlyerPageId\n          title\n          description\n          bgImageId\n          styles\n          layout\n          sortOrder\n          items {\n            id\n            storefrontFlyerSectionId\n            sortOrder\n            productId\n            product {\n              id\n              name\n              image\n              description\n              brand\n              code\n              model\n              categoryId\n              approximateWeight\n              netWeight\n              weightValue\n              weightType\n              quantityValue\n              quantityType\n              createdAt\n              updatedAt\n              views\n            }\n            stockId\n            stock {\n              id\n              productId\n              storeId\n              branchId\n              latestPriceId\n              available\n            }\n            priceId\n            price {\n              id\n              productId\n              branchId\n              storeId\n              amount\n              currencyCode\n              createdAt\n              sale\n              originalPrice\n              condition\n              expiresAt\n              unitType\n              outOfStock\n              verified\n            }\n          }\n        }\n      }\n    }\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+declare function graphql(source: "\n  query StorefrontFlyers($storeId: ID!, $branchId: ID, $paginator: PaginatorInput!) {\n    storefrontFlyers(storeId: $storeId, branchId: $branchId, paginator: $paginator) {\n      flyers {\n        id\n        uid\n        storeId\n        branchId\n        title\n        description\n        flyerImageId\n        flyerStyles\n        status\n        createdAt\n        startsAt\n        expiresAt\n      }\n      paginator {\n        next\n        page\n        prev\n        limit\n        total\n        numPages\n      }\n    }\n  }\n"): (typeof documents)["\n  query StorefrontFlyers($storeId: ID!, $branchId: ID, $paginator: PaginatorInput!) {\n    storefrontFlyers(storeId: $storeId, branchId: $branchId, paginator: $paginator) {\n      flyers {\n        id\n        uid\n        storeId\n        branchId\n        title\n        description\n        flyerImageId\n        flyerStyles\n        status\n        createdAt\n        startsAt\n        expiresAt\n      }\n      paginator {\n        next\n        page\n        prev\n        limit\n        total\n        numPages\n      }\n    }\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
 declare function graphql(source: "\n  query GetStorefrontBanner($storeId: ID!, $branchId: ID) {\n    getStorefrontBanner(storeId: $storeId, branchId: $branchId) {\n      id\n      storeId\n      branchId\n      bannerItems {\n        id\n        bannerId\n        imageId\n        link\n        isExternal\n        title\n        description\n        sortOrder\n        createdAt\n        updatedAt\n      }\n      createdAt\n      updatedAt\n    }\n  }\n"): (typeof documents)["\n  query GetStorefrontBanner($storeId: ID!, $branchId: ID) {\n    getStorefrontBanner(storeId: $storeId, branchId: $branchId) {\n      id\n      storeId\n      branchId\n      bannerItems {\n        id\n        bannerId\n        imageId\n        link\n        isExternal\n        title\n        description\n        sortOrder\n        createdAt\n        updatedAt\n      }\n      createdAt\n      updatedAt\n    }\n  }\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
@@ -5978,4 +6427,4 @@ declare const REQUEST_RESET_PASSWORD_MUTATION: graphql$1.DocumentNode;
 declare const UPDATE_PASSWORD_WITH_RESET_CODE_MUTATION: graphql$1.DocumentNode;
 declare const REGISTER_EXPO_PUSH_TOKEN: graphql$1.DocumentNode;
 
-export { ADD_BRANCH_TO_LIST_MUTATION, ADD_GROCERY_LIST_ITEMS_MUTATION, ADD_TO_LIST_MUTATION, ADMIN_REMOVE_AUTH_SESSION_MUTATION, ALL_BRANCHES_QUERY, ALL_BRANDS_QUERY, ALL_PRODUCTS_QUERY, ALL_STORES_QUERY, APPLE_OAUTH_QUERY, AcceptPendingStoreUserInviteDocument, type AcceptPendingStoreUserInviteMutation, type AcceptPendingStoreUserInviteMutationVariables, AddBranchToListDocument, type AddBranchToListMutation, type AddBranchToListMutationVariables, AddGroceryListItemDocument, type AddGroceryListItemMutation, type AddGroceryListItemMutationVariables, AddToListDocument, type AddToListMutation, type AddToListMutationVariables, type Address, AdminRemoveAuthSessionDocument, type AdminRemoveAuthSessionMutation, type AdminRemoveAuthSessionMutationVariables, type AdministrativeDivision, AllBranchesDocument, type AllBranchesQuery, type AllBranchesQueryVariables, AllBrandsDocument, type AllBrandsQuery, type AllBrandsQueryVariables, AllProductsDocument, type AllProductsQuery, type AllProductsQueryVariables, AllStoresDocument, type AllStoresQuery, type AllStoresQueryVariables, type AmazonGetProductInput, AppendStorefrontBannerItemsDocument, type AppendStorefrontBannerItemsMutation, type AppendStorefrontBannerItemsMutationVariables, AppleOAuthDocument, type AppleOAuthQuery, type AppleOAuthQueryVariables, type ApprovedByUser, type Auth, AuthDeviceType, AuthPlatformType, type AuthSession, BARCODE_SCAN_QUERY, BRANCHES_WITH_PRODUCTS_QUERY, BRANCH_QUERY, BULK_ADD_BRANCHES_TO_LIST_MUTATION, BUSINESS_SIGN_UP_FORM_MUTATION, BarcodeScanDocument, type BarcodeScanQuery, type BarcodeScanQueryVariables, type BestBuyGetProductInput, type Branch, BranchDocument, type BranchFlat, type BranchList, type BranchListWithPrices, type BranchQuery, type BranchQueryVariables, BranchType, BranchesWithProductsDocument, type BranchesWithProductsQuery, type BranchesWithProductsQueryVariables, type Brand, BulkAddBranchesToListDocument, type BulkAddBranchesToListMutation, type BulkAddBranchesToListMutationVariables, type BusinessForm, type BusinessFormInput, type BusinessFormSignedUp, BusinessSingUpFormDocument, type BusinessSingUpFormMutation, type BusinessSingUpFormMutationVariables, CATEGORIES_WITH_PRODUCTS_QUERY, CATEGORY_SEARCH_QUERY, CHECK_APP_VERSION_QUERY, COUNT_GROCERY_LIST_ITEMS_QUERY, CREATE_BRANCH_MUTATION, CREATE_BRANCH_WITH_FULL_ADDRESS_MUTATION, CREATE_CATEGORY_MUTATION, CREATE_PRICE_MUTATION, CREATE_PRODUCT_AND_SANITIZE_MUTATION, CREATE_PRODUCT_MUTATION, CREATE_STORE_MUTATION, CREATE_STORE_USER_ADMIN, CREATE_STORE_WITH_BUSINESS_FORM_MUTATION, CREATE_USER_MUTATION, CategoriesWithProductsDocument, type CategoriesWithProductsQuery, type CategoriesWithProductsQueryVariables, type Category, CategorySearchDocument, type CategorySearchQuery, type CategorySearchQueryVariables, type CategoryWithProducts, CheckAppVersionDocument, type CheckAppVersionQuery, type CheckAppVersionQueryVariables, CountGroceryListItemsDocument, type CountGroceryListItemsQuery, type CountGroceryListItemsQueryVariables, type Country, CreateAccountDocument, type CreateAccountInput, type CreateAccountMutation, type CreateAccountMutationVariables, type CreateAddress, type CreateBranch, CreateBranchDocument, CreateBranchFromFullAddressDocument, type CreateBranchFromFullAddressMutation, type CreateBranchFromFullAddressMutationVariables, type CreateBranchMutation, type CreateBranchMutationVariables, type CreateCategory, CreateCategoryDocument, type CreateCategoryMutation, type CreateCategoryMutationVariables, type CreateGroceryListInput, type CreateGroceryListItemInput, type CreateOnlineAddress, type CreateOnlineItem, type CreatePendingProduct, type CreatePrice, CreatePriceDocument, type CreatePriceMutation, type CreatePriceMutationVariables, type CreateProduct, CreateProductAndSanitizeDocument, type CreateProductAndSanitizeMutation, type CreateProductAndSanitizeMutationVariables, CreateProductDocument, type CreateProductMutation, type CreateProductMutationVariables, type CreateProductRaw, type CreateStock, type CreateStore, CreateStoreDocument, type CreateStoreMutation, type CreateStoreMutationVariables, type CreateStoreUserAdmin, CreateStoreUserAdminDocument, type CreateStoreUserAdminMutation, type CreateStoreUserAdminMutationVariables, CreateStoreWithBusinessFormDocument, type CreateStoreWithBusinessFormMutation, type CreateStoreWithBusinessFormMutationVariables, type CreateStorefrontBannerInput, type CreateStorefrontBannerItemInput, CreateStorefrontBannerItemsDocument, type CreateStorefrontBannerItemsMutation, type CreateStorefrontBannerItemsMutationVariables, type CreatedByUser, type Currency, DEFAULT_GROCERY_LIST_ITEMS_QUERY, DELETE_GROCERY_LIST_ITEMS_MUTATION, DELETE_MY_ACCOUNT_MUTATION, DeclinePendingStoreUserInviteDocument, type DeclinePendingStoreUserInviteMutation, type DeclinePendingStoreUserInviteMutationVariables, DefaultGroceryListItemsDocument, type DefaultGroceryListItemsQuery, type DefaultGroceryListItemsQueryVariables, DeleteAllStorefrontBannerItemsDocument, type DeleteAllStorefrontBannerItemsMutation, type DeleteAllStorefrontBannerItemsMutationVariables, DeleteGroceryListItemDocument, type DeleteGroceryListItemMutation, type DeleteGroceryListItemMutationVariables, DeleteMyAccountDocument, type DeleteMyAccountMutation, type DeleteMyAccountMutationVariables, DeleteStorefrontBannerItemDocument, type DeleteStorefrontBannerItemMutation, type DeleteStorefrontBannerItemMutationVariables, type DocumentType, EXTRACT_AND_CREATE_PRODUCT_FIELDS_QUERY, EXTRACT_PRODUCT_FIELDS_QUERY, type Exact, ExtractAndCreateProductDocument, type ExtractAndCreateProductMutation, type ExtractAndCreateProductMutationVariables, ExtractProductFieldsDocument, type ExtractProductFieldsQuery, type ExtractProductFieldsQueryVariables, FIND_BRANCHES_BY_DISTANCE_QUERY, FIND_BRANCH_QUERY, FIND_STORE_QUERY, FavoriteBranchesWithPricesDocument, type FavoriteBranchesWithPricesQuery, type FavoriteBranchesWithPricesQueryVariables, FindBranchDocument, type FindBranchQuery, type FindBranchQueryVariables, FindBranchesByDistanceDocument, type FindBranchesByDistanceQuery, type FindBranchesByDistanceQueryVariables, FindStoreDocument, type FindStoreQuery, type FindStoreQueryVariables, type FragmentType, GET_ALL_BRANCH_LISTS_BY_LIST_ID, GET_ALL_COUNTRIES_QUERY, GET_ALL_LISTS, GET_ALL_PRODUCT_LISTS_BY_LIST_ID, GET_ALL_USERS_QUERY, GET_CATEGORIES_QUERY, GET_CATEGORY_QUERY, GET_FAVORITE_BRANCHES_WITH_PRICE_DATA_QUERY, GET_GROCERY_LIST_ITEMS_QUERY, GET_PRODUCT_NUTRITION_DATA_QUERY, GET_PRODUCT_STOCKS_QUERY, GET_STOCK_BY_ID, GET_STOCK_FROM_PRODUCT_AND_BRANCH_ID_QUERY, GOOGLE_OAUTH_QUERY, GROCERY_LISTS_QUERY, GetAllBranchListsByListIdDocument, type GetAllBranchListsByListIdQuery, type GetAllBranchListsByListIdQueryVariables, GetAllCountriesDocument, type GetAllCountriesQuery, type GetAllCountriesQueryVariables, GetAllListsDocument, type GetAllListsQuery, type GetAllListsQueryVariables, GetAllProductListsByListIdDocument, type GetAllProductListsByListIdQuery, type GetAllProductListsByListIdQueryVariables, GetAllUsersDocument, type GetAllUsersQuery, type GetAllUsersQueryVariables, GetCategoriesDocument, type GetCategoriesQuery, type GetCategoriesQueryVariables, GetCategoryDocument, type GetCategoryQuery, type GetCategoryQueryVariables, GetProductNutritionDataDocument, type GetProductNutritionDataQuery, type GetProductNutritionDataQueryVariables, GetProductStocksDocument, type GetProductStocksQuery, type GetProductStocksQueryVariables, GetStockFromProductAndBranchIdDocument, type GetStockFromProductAndBranchIdQuery, type GetStockFromProductAndBranchIdQueryVariables, GetStorefrontBannerDocument, type GetStorefrontBannerQuery, type GetStorefrontBannerQueryVariables, GoogleOAuthDocument, type GoogleOAuthQuery, type GoogleOAuthQueryVariables, type GroceryList, type GroceryListItem, GroceryListItemsDocument, type GroceryListItemsFilters, type GroceryListItemsQuery, type GroceryListItemsQueryVariables, GroceryListsDocument, type GroceryListsQuery, type GroceryListsQueryVariables, IP_TO_ADDRESS_QUERY, type Incremental, type InputMaybe, IpToAddressDocument, type IpToAddressQuery, type IpToAddressQueryVariables, type KrogerGetProductInput, LOGIN_INTERNAL_QUERY, LOGOUT_MUTATION, type List, ListType, type LocationInput, LoginInternalDocument, type LoginInternalQuery, type LoginInternalQueryVariables, LogoutDocument, type LogoutMutation, type LogoutMutationVariables, MARK_GROCERY_ITEM_MUTATION, ME_QUERY, MY_PRODUCT_BILLING_DATA_QUERY, MY_PRODUCT_VIEW_HISTORY_QUERY, MY_SEARCH_HISTORY_QUERY, type MakeEmpty, type MakeMaybe, type MakeOptional, MarkGroceryListItemDocument, type MarkGroceryListItemMutation, type MarkGroceryListItemMutationVariables, type Maybe, MeDocument, type MeQuery, type MeQueryVariables, type Mutation, type MutationAcceptPendingStoreUserInviteArgs, type MutationAddBranchToListArgs, type MutationAddGroceryListItemArgs, type MutationAddToListArgs, type MutationAdminRemoveAuthSessionArgs, type MutationAppendStorefrontBannerItemsArgs, type MutationBulkAddBranchesToListArgs, type MutationBusinessSingUpFormArgs, type MutationCreateAccountArgs, type MutationCreateBranchArgs, type MutationCreateBranchWithFullAddressArgs, type MutationCreateCategoryArgs, type MutationCreateListArgs, type MutationCreateOnlineItemArgs, type MutationCreatePriceArgs, type MutationCreateProductAndSanitizeArgs, type MutationCreateProductArgs, type MutationCreateStoreArgs, type MutationCreateStoreUserAdminArgs, type MutationCreateStoreWithBusinessFormArgs, type MutationCreateStorefrontBannerItemsArgs, type MutationDeclinePendingStoreUserInviteArgs, type MutationDeleteAllStorefrontBannerItemsArgs, type MutationDeleteGroceryListItemArgs, type MutationDeleteListArgs, type MutationDeleteSearchByIdArgs, type MutationDeleteStorefrontBannerItemArgs, type MutationExtractAndCreateProductArgs, type MutationMarkGroceryListItemArgs, type MutationRegisterExpoPushTokenArgs, type MutationRemoveBranchFromListArgs, type MutationRemoveFromListArgs, type MutationRemoveFromListWithProductIdArgs, type MutationRequestPasswordResetArgs, type MutationResendEmailVerificationCodeArgs, type MutationSanitizeProductArgs, type MutationSavePendingProductArgs, type MutationSaveProductsFromUpcItemDbArgs, type MutationUpdateBranchArgs, type MutationUpdateGroceryListItemArgs, type MutationUpdatePasswordWithResetCodeArgs, type MutationUpdateProductArgs, type MutationUpdateProductNutritionDataArgs, type MutationUpdateProfileArgs, type MutationUpdateStoreArgs, type MutationUpdateStorefrontBannerItemArgs, type MutationUpdateUserByIdArgs, type MutationVerifyEmailArgs, MyProductBillingDataDocument, type MyProductBillingDataQuery, type MyProductBillingDataQueryVariables, MyProductViewHistoryDocument, type MyProductViewHistoryQuery, type MyProductViewHistoryQueryVariables, MySearchHistoryDocument, type MySearchHistoryQuery, type MySearchHistoryQueryVariables, MyStoreUserDocument, type MyStoreUserQuery, type MyStoreUserQueryVariables, type OnlineAddress, type OnlineItem, OrderByType, PAGINATED_ADMIN_AUTH_SESSIONS_QUERY, PAGINATED_ADMIN_PRODUCT_VIEW_ENTRIES, PAGINATED_PENDING_CRAWLED_PRODUCTS_QUERY, POPULAR_PRODUCTS_QUERY, POPULAR_SEARCH_KEYWORDS_QUERY, POST_AUTH_USER_DATA_QUERIES, PRICE_CHANGE_HISTORY_QUERY, PRODUCT_BILLING_DATA_BY_USER_ID_QUERY, PRODUCT_BY_ID_QUERY, PRODUCT_SEARCH_QUERY, PRODUCT_SUMMARY_QUERY, PaginatedAdminAuthSessionsDocument, type PaginatedAdminAuthSessionsQuery, type PaginatedAdminAuthSessionsQueryVariables, PaginatedAdminProductViewEntriesDocument, type PaginatedAdminProductViewEntriesQuery, type PaginatedAdminProductViewEntriesQueryVariables, type PaginatedAuthSessions, type PaginatedBranches, type PaginatedCategoriesWithProducts, type PaginatedPendingCrawledProducts, PaginatedPendingCrawledProductsDocument, type PaginatedPendingCrawledProductsQuery, type PaginatedPendingCrawledProductsQueryVariables, type PaginatedPriceHistory, type PaginatedProductBilling, type PaginatedProductViews, type PaginatedProducts, type PaginatedSearch, type PaginatedSearchKeywords, type PaginatedStocks, type PaginatedStores, type PaginatedUsers, type Paginator, type PaginatorInput, type PendingCrawledProduct, PopularProductsDocument, type PopularProductsQuery, type PopularProductsQueryVariables, PopularSearchKeywordsDocument, type PopularSearchKeywordsQuery, type PopularSearchKeywordsQueryVariables, PostAuthUserDataDocument, type PostAuthUserDataQuery, type PostAuthUserDataQueryVariables, type Price, PriceChangeHistoryDocument, type PriceChangeHistoryQuery, type PriceChangeHistoryQueryVariables, type PriceHistoryFilter, type Product, type ProductBilling, ProductBillingDataByUserIdDocument, type ProductBillingDataByUserIdQuery, type ProductBillingDataByUserIdQueryVariables, ProductDocument, type ProductExtractionFields, type ProductExtractionResponse, type ProductList, type ProductNutriment, type ProductNutrition, type ProductQuery, type ProductQueryVariables, type ProductReferrer, type ProductSearch, ProductSearchDocument, type ProductSearchFilters, type ProductSearchQuery, type ProductSearchQueryVariables, type ProductSimple, type ProductSummary, type ProductSummaryBranchInput, ProductSummaryDocument, type ProductSummaryQuery, type ProductSummaryQueryVariables, type ProductView, type ProductViewerMetadata, type ProductWeightComponents, type Query, type QueryAllBranchesArgs, type QueryAllBrandsArgs, type QueryAllProductsArgs, type QueryAllStoresArgs, type QueryAmazonProductArgs, type QueryAppleOAuthArgs, type QueryBarcodeScanArgs, type QueryBestBuyProductArgs, type QueryBranchesWithProductsArgs, type QueryCategoriesWithProductsArgs, type QueryCategorySearchArgs, type QueryCheckAppVersionArgs, type QueryCountGroceryListItemsArgs, type QueryDefaultGroceryListItemsArgs, type QueryExtractProductFieldsArgs, type QueryFindBranchArgs, type QueryFindBranchesByDistanceArgs, type QueryFindStoreArgs, type QueryGetAllBranchListsByListIdArgs, type QueryGetAllListsArgs, type QueryGetAllProductListsByListIdArgs, type QueryGetAllUsersArgs, type QueryGetCategoriesArgs, type QueryGetCategoryArgs, type QueryGetFavoriteBranchesWithPricesArgs, type QueryGetProductNutritionDataArgs, type QueryGetProductStocksArgs, type QueryGetStockFromProductAndBranchIdArgs, type QueryGetStorefrontBannerArgs, type QueryGoogleOAuthArgs, type QueryGroceryListArgs, type QueryGroceryListItemsArgs, type QueryIpToAddressArgs, type QueryKrogerProductArgs, type QueryLoginArgs, type QueryMyProductBillingDataArgs, type QueryMyProductViewHistoryArgs, type QueryMySearchHistoryArgs, type QueryPaginatedAdminAuthSessionsArgs, type QueryPaginatedAdminProductViewEntriesArgs, type QueryPaginatedPendingCrawledProductsArgs, type QueryPopularProductsArgs, type QueryPopularSearchKeywordsArgs, type QueryPriceChangeHistoryArgs, type QueryProductArgs, type QueryProductBillingDataByUserIdArgs, type QueryProductSearchArgs, type QueryProductSummaryArgs, type QuerySearchKeywordsArgs, type QueryStockArgs, type QueryStoreSlugAvailabilityArgs, type QueryStoreUserAuthorizedArgs, type QueryVerifyPasswordResetCodeArgs, type QueryWalmartProductArgs, type QueryWeightComponentsFromCategoryIdArgs, type QueryYahooOAuthArgs, REGISTER_EXPO_PUSH_TOKEN, REMOVE_BRANCH_FROM_LIST_MUTATION, REMOVE_FROM_LIST_BY_PRODUCT_ID_MUTATION, REMOVE_FROM_LIST_MUTATION, REQUEST_RESET_PASSWORD_MUTATION, RESEND_VERIFICATION_MUTATION, RegisterExpoPushTokenDocument, type RegisterExpoPushTokenMutation, type RegisterExpoPushTokenMutationVariables, RemoveBranchFromListDocument, type RemoveBranchFromListMutation, type RemoveBranchFromListMutationVariables, RemoveFromListDocument, type RemoveFromListMutation, type RemoveFromListMutationVariables, RemoveFromListWithProductIdDocument, type RemoveFromListWithProductIdMutation, type RemoveFromListWithProductIdMutationVariables, RequestResetPasswordDocument, type RequestResetPasswordMutation, type RequestResetPasswordMutationVariables, ResendVerificationDocument, type ResendVerificationMutation, type ResendVerificationMutationVariables, SANITIZE_PRODUCT_MUTATION, SAVE_PENDING_PRODUCT_MUTATION, SEARCH_KEYWORDS_QUERY, STORE_SLUG_AVAILABILITY_QUERY, SanitizeProductDocument, type SanitizeProductMutation, type SanitizeProductMutationVariables, type SaveExternalProductInput, SavePendingProductDocument, type SavePendingProductMutation, type SavePendingProductMutationVariables, type Scalars, type SearchHistory, SearchKeywordsDocument, type SearchKeywordsQuery, type SearchKeywordsQueryVariables, type SearchResult, type Stock, StockDocument, type StockQuery, type StockQueryVariables, type StockSimple, type Store, StoreSlugAvailabilityDocument, type StoreSlugAvailabilityQuery, type StoreSlugAvailabilityQueryVariables, type StoreUser, StoreUserAuthorizedDocument, type StoreUserAuthorizedQuery, type StoreUserAuthorizedQueryVariables, type StoreUserData, StoreUserRole, type StorefrontBanner, type StorefrontBannerItem, type TimestampRangeBetween, UPDATE_BRANCH_MUTATION, UPDATE_GROCERY_LIST_ITEMS_MUTATION, UPDATE_PASSWORD_WITH_RESET_CODE_MUTATION, UPDATE_PRODUCT_MUTATION, UPDATE_PRODUCT_NUTRITION_MUTATION, UPDATE_PROFILE_MUTATION, UPDATE_STORE_MUTATION, UPDATE_USER_BY_ID_MUTATION, type UpdateBranch, UpdateBranchDocument, type UpdateBranchMutation, type UpdateBranchMutationVariables, UpdateGroceryListItemDocument, type UpdateGroceryListItemMutation, type UpdateGroceryListItemMutationVariables, UpdatePasswordWithResetCodeDocument, type UpdatePasswordWithResetCodeMutation, type UpdatePasswordWithResetCodeMutationVariables, type UpdateProduct, UpdateProductDocument, type UpdateProductMutation, type UpdateProductMutationVariables, UpdateProductNutritionDataDocument, type UpdateProductNutritionDataMutation, type UpdateProductNutritionDataMutationVariables, UpdateProfileDocument, type UpdateProfileMutation, type UpdateProfileMutationVariables, type UpdateStore, UpdateStoreDocument, type UpdateStoreMutation, type UpdateStoreMutationVariables, UpdateStorefrontBannerItemDocument, type UpdateStorefrontBannerItemInput, type UpdateStorefrontBannerItemMutation, type UpdateStorefrontBannerItemMutationVariables, type UpdateUser, UpdateUserByIdDocument, type UpdateUserByIdMutation, type UpdateUserByIdMutationVariables, type UpdateUserFull, type UpdatedByUser, type User, type UserFieldsFragment, UserFieldsFragmentDoc, type UserFilter, UserFragment, UserRole, type UserShallow, VERIFY_EMAIL_MUTATION, VERIFY_PASSWORD_RESET_CODE_QUERY, VerifyEmailDocument, type VerifyEmailMutation, type VerifyEmailMutationVariables, VerifyPasswordResetCodeDocument, type VerifyPasswordResetCodeQuery, type VerifyPasswordResetCodeQueryVariables, type ViewerTrailInput, WEIGHT_COMPONENTS_FROM_CATEGORY_ID_QUERY, type WalmartGetProductInput, WeightComponentsFromCategoryIdDocument, type WeightComponentsFromCategoryIdQuery, type WeightComponentsFromCategoryIdQueryVariables, YAHOO_OAUTH_QUERY, YahooOAuthDocument, type YahooOAuthQuery, type YahooOAuthQueryVariables, graphql, isFragmentReady, makeFragmentData, useFragment };
+export { ADD_BRANCH_TO_LIST_MUTATION, ADD_GROCERY_LIST_ITEMS_MUTATION, ADD_TO_LIST_MUTATION, ADMIN_REMOVE_AUTH_SESSION_MUTATION, ALL_BRANCHES_QUERY, ALL_BRANDS_QUERY, ALL_PRODUCTS_QUERY, ALL_STORES_QUERY, APPLE_OAUTH_QUERY, AcceptPendingStoreUserInviteDocument, type AcceptPendingStoreUserInviteMutation, type AcceptPendingStoreUserInviteMutationVariables, AddBranchToListDocument, type AddBranchToListMutation, type AddBranchToListMutationVariables, AddGroceryListItemDocument, type AddGroceryListItemMutation, type AddGroceryListItemMutationVariables, AddToListDocument, type AddToListMutation, type AddToListMutationVariables, type Address, AdminRemoveAuthSessionDocument, type AdminRemoveAuthSessionMutation, type AdminRemoveAuthSessionMutationVariables, type AdministrativeDivision, AllBranchesDocument, type AllBranchesQuery, type AllBranchesQueryVariables, AllBrandsDocument, type AllBrandsQuery, type AllBrandsQueryVariables, AllProductsDocument, type AllProductsQuery, type AllProductsQueryVariables, AllStoresDocument, type AllStoresQuery, type AllStoresQueryVariables, type AmazonGetProductInput, AppendStorefrontBannerItemsDocument, type AppendStorefrontBannerItemsMutation, type AppendStorefrontBannerItemsMutationVariables, AppleOAuthDocument, type AppleOAuthQuery, type AppleOAuthQueryVariables, type ApprovedByUser, type Auth, AuthDeviceType, AuthPlatformType, type AuthSession, BARCODE_SCAN_QUERY, BRANCHES_WITH_PRODUCTS_QUERY, BRANCH_QUERY, BULK_ADD_BRANCHES_TO_LIST_MUTATION, BUSINESS_SIGN_UP_FORM_MUTATION, BarcodeScanDocument, type BarcodeScanQuery, type BarcodeScanQueryVariables, type BestBuyGetProductInput, type Branch, BranchDocument, type BranchFlat, type BranchList, type BranchListWithPrices, type BranchQuery, type BranchQueryVariables, BranchType, BranchesWithProductsDocument, type BranchesWithProductsQuery, type BranchesWithProductsQueryVariables, type Brand, BulkAddBranchesToListDocument, type BulkAddBranchesToListMutation, type BulkAddBranchesToListMutationVariables, type BusinessForm, type BusinessFormInput, type BusinessFormSignedUp, BusinessSingUpFormDocument, type BusinessSingUpFormMutation, type BusinessSingUpFormMutationVariables, CATEGORIES_WITH_PRODUCTS_QUERY, CATEGORY_SEARCH_QUERY, CHECK_APP_VERSION_QUERY, COUNT_GROCERY_LIST_ITEMS_QUERY, CREATE_BRANCH_MUTATION, CREATE_BRANCH_WITH_FULL_ADDRESS_MUTATION, CREATE_CATEGORY_MUTATION, CREATE_PRICE_MUTATION, CREATE_PRODUCT_AND_SANITIZE_MUTATION, CREATE_PRODUCT_MUTATION, CREATE_STORE_MUTATION, CREATE_STORE_USER_ADMIN, CREATE_STORE_WITH_BUSINESS_FORM_MUTATION, CREATE_USER_MUTATION, CategoriesWithProductsDocument, type CategoriesWithProductsQuery, type CategoriesWithProductsQueryVariables, type Category, CategorySearchDocument, type CategorySearchQuery, type CategorySearchQueryVariables, type CategoryWithProducts, CheckAppVersionDocument, type CheckAppVersionQuery, type CheckAppVersionQueryVariables, CountGroceryListItemsDocument, type CountGroceryListItemsQuery, type CountGroceryListItemsQueryVariables, type Country, CreateAccountDocument, type CreateAccountInput, type CreateAccountMutation, type CreateAccountMutationVariables, type CreateAddress, type CreateBranch, CreateBranchDocument, CreateBranchFromFullAddressDocument, type CreateBranchFromFullAddressMutation, type CreateBranchFromFullAddressMutationVariables, type CreateBranchMutation, type CreateBranchMutationVariables, type CreateCategory, CreateCategoryDocument, type CreateCategoryMutation, type CreateCategoryMutationVariables, type CreateGroceryListInput, type CreateGroceryListItemInput, type CreateOnlineAddress, type CreateOnlineItem, type CreatePendingProduct, type CreatePrice, CreatePriceDocument, type CreatePriceMutation, type CreatePriceMutationVariables, type CreateProduct, CreateProductAndSanitizeDocument, type CreateProductAndSanitizeMutation, type CreateProductAndSanitizeMutationVariables, CreateProductDocument, type CreateProductMutation, type CreateProductMutationVariables, type CreateProductRaw, type CreateStock, type CreateStore, CreateStoreDocument, type CreateStoreMutation, type CreateStoreMutationVariables, type CreateStoreUserAdmin, CreateStoreUserAdminDocument, type CreateStoreUserAdminMutation, type CreateStoreUserAdminMutationVariables, CreateStoreWithBusinessFormDocument, type CreateStoreWithBusinessFormMutation, type CreateStoreWithBusinessFormMutationVariables, type CreateStorefrontBannerInput, type CreateStorefrontBannerItemInput, CreateStorefrontBannerItemsDocument, type CreateStorefrontBannerItemsMutation, type CreateStorefrontBannerItemsMutationVariables, CreateStorefrontFlyerDocument, type CreateStorefrontFlyerMutation, type CreateStorefrontFlyerMutationVariables, CreateStorefrontFlyerPageDocument, type CreateStorefrontFlyerPageMutation, type CreateStorefrontFlyerPageMutationVariables, type CreatedByUser, type Currency, DEFAULT_GROCERY_LIST_ITEMS_QUERY, DELETE_GROCERY_LIST_ITEMS_MUTATION, DELETE_MY_ACCOUNT_MUTATION, DeclinePendingStoreUserInviteDocument, type DeclinePendingStoreUserInviteMutation, type DeclinePendingStoreUserInviteMutationVariables, DefaultGroceryListItemsDocument, type DefaultGroceryListItemsQuery, type DefaultGroceryListItemsQueryVariables, DeleteAllStorefrontBannerItemsDocument, type DeleteAllStorefrontBannerItemsMutation, type DeleteAllStorefrontBannerItemsMutationVariables, DeleteGroceryListItemDocument, type DeleteGroceryListItemMutation, type DeleteGroceryListItemMutationVariables, DeleteMyAccountDocument, type DeleteMyAccountMutation, type DeleteMyAccountMutationVariables, DeleteStorefrontBannerItemDocument, type DeleteStorefrontBannerItemMutation, type DeleteStorefrontBannerItemMutationVariables, type DocumentType, EXTRACT_AND_CREATE_PRODUCT_FIELDS_QUERY, EXTRACT_PRODUCT_FIELDS_QUERY, type Exact, ExtractAndCreateProductDocument, type ExtractAndCreateProductMutation, type ExtractAndCreateProductMutationVariables, ExtractProductFieldsDocument, type ExtractProductFieldsQuery, type ExtractProductFieldsQueryVariables, FIND_BRANCHES_BY_DISTANCE_QUERY, FIND_BRANCH_QUERY, FIND_STORE_QUERY, FavoriteBranchesWithPricesDocument, type FavoriteBranchesWithPricesQuery, type FavoriteBranchesWithPricesQueryVariables, FindBranchDocument, type FindBranchQuery, type FindBranchQueryVariables, FindBranchesByDistanceDocument, type FindBranchesByDistanceQuery, type FindBranchesByDistanceQueryVariables, FindStoreDocument, type FindStoreQuery, type FindStoreQueryVariables, type FragmentType, GET_ALL_BRANCH_LISTS_BY_LIST_ID, GET_ALL_COUNTRIES_QUERY, GET_ALL_LISTS, GET_ALL_PRODUCT_LISTS_BY_LIST_ID, GET_ALL_USERS_QUERY, GET_CATEGORIES_QUERY, GET_CATEGORY_QUERY, GET_FAVORITE_BRANCHES_WITH_PRICE_DATA_QUERY, GET_GROCERY_LIST_ITEMS_QUERY, GET_PRODUCT_NUTRITION_DATA_QUERY, GET_PRODUCT_STOCKS_QUERY, GET_STOCK_BY_ID, GET_STOCK_FROM_PRODUCT_AND_BRANCH_ID_QUERY, GOOGLE_OAUTH_QUERY, GROCERY_LISTS_QUERY, GetAllBranchListsByListIdDocument, type GetAllBranchListsByListIdQuery, type GetAllBranchListsByListIdQueryVariables, GetAllCountriesDocument, type GetAllCountriesQuery, type GetAllCountriesQueryVariables, GetAllListsDocument, type GetAllListsQuery, type GetAllListsQueryVariables, GetAllProductListsByListIdDocument, type GetAllProductListsByListIdQuery, type GetAllProductListsByListIdQueryVariables, GetAllUsersDocument, type GetAllUsersQuery, type GetAllUsersQueryVariables, GetCategoriesDocument, type GetCategoriesQuery, type GetCategoriesQueryVariables, GetCategoryDocument, type GetCategoryQuery, type GetCategoryQueryVariables, GetProductNutritionDataDocument, type GetProductNutritionDataQuery, type GetProductNutritionDataQueryVariables, GetProductStocksDocument, type GetProductStocksQuery, type GetProductStocksQueryVariables, GetStockFromProductAndBranchIdDocument, type GetStockFromProductAndBranchIdQuery, type GetStockFromProductAndBranchIdQueryVariables, GetStorefrontBannerDocument, type GetStorefrontBannerQuery, type GetStorefrontBannerQueryVariables, GoogleOAuthDocument, type GoogleOAuthQuery, type GoogleOAuthQueryVariables, type GroceryList, type GroceryListItem, GroceryListItemsDocument, type GroceryListItemsFilters, type GroceryListItemsQuery, type GroceryListItemsQueryVariables, GroceryListsDocument, type GroceryListsQuery, type GroceryListsQueryVariables, IP_TO_ADDRESS_QUERY, type Incremental, type InputMaybe, IpToAddressDocument, type IpToAddressQuery, type IpToAddressQueryVariables, type KrogerGetProductInput, LOGIN_INTERNAL_QUERY, LOGOUT_MUTATION, type List, ListType, type LocationInput, LoginInternalDocument, type LoginInternalQuery, type LoginInternalQueryVariables, LogoutDocument, type LogoutMutation, type LogoutMutationVariables, MARK_GROCERY_ITEM_MUTATION, ME_QUERY, MY_PRODUCT_BILLING_DATA_QUERY, MY_PRODUCT_VIEW_HISTORY_QUERY, MY_SEARCH_HISTORY_QUERY, type MakeEmpty, type MakeMaybe, type MakeOptional, MarkGroceryListItemDocument, type MarkGroceryListItemMutation, type MarkGroceryListItemMutationVariables, type Maybe, MeDocument, type MeQuery, type MeQueryVariables, type Mutation, type MutationAcceptPendingStoreUserInviteArgs, type MutationAddBranchToListArgs, type MutationAddGroceryListItemArgs, type MutationAddToListArgs, type MutationAdminRemoveAuthSessionArgs, type MutationAppendStorefrontBannerItemsArgs, type MutationBulkAddBranchesToListArgs, type MutationBusinessSingUpFormArgs, type MutationCreateAccountArgs, type MutationCreateBranchArgs, type MutationCreateBranchWithFullAddressArgs, type MutationCreateCategoryArgs, type MutationCreateListArgs, type MutationCreateOnlineItemArgs, type MutationCreatePriceArgs, type MutationCreateProductAndSanitizeArgs, type MutationCreateProductArgs, type MutationCreateStoreArgs, type MutationCreateStoreUserAdminArgs, type MutationCreateStoreWithBusinessFormArgs, type MutationCreateStorefrontBannerItemsArgs, type MutationCreateStorefrontFlyerArgs, type MutationCreateStorefrontFlyerPageArgs, type MutationDeclinePendingStoreUserInviteArgs, type MutationDeleteAllStorefrontBannerItemsArgs, type MutationDeleteGroceryListItemArgs, type MutationDeleteListArgs, type MutationDeleteSearchByIdArgs, type MutationDeleteStorefrontBannerItemArgs, type MutationExtractAndCreateProductArgs, type MutationMarkGroceryListItemArgs, type MutationPublishDraftStorefrontFlyerArgs, type MutationRegisterExpoPushTokenArgs, type MutationRemoveBranchFromListArgs, type MutationRemoveFromListArgs, type MutationRemoveFromListWithProductIdArgs, type MutationRequestPasswordResetArgs, type MutationResendEmailVerificationCodeArgs, type MutationSanitizeProductArgs, type MutationSavePendingProductArgs, type MutationSaveProductsFromUpcItemDbArgs, type MutationUpdateBranchArgs, type MutationUpdateGroceryListItemArgs, type MutationUpdatePasswordWithResetCodeArgs, type MutationUpdateProductArgs, type MutationUpdateProductNutritionDataArgs, type MutationUpdateProfileArgs, type MutationUpdateStoreArgs, type MutationUpdateStorefrontBannerItemArgs, type MutationUpdateUserByIdArgs, type MutationVerifyEmailArgs, MyProductBillingDataDocument, type MyProductBillingDataQuery, type MyProductBillingDataQueryVariables, MyProductViewHistoryDocument, type MyProductViewHistoryQuery, type MyProductViewHistoryQueryVariables, MySearchHistoryDocument, type MySearchHistoryQuery, type MySearchHistoryQueryVariables, MyStoreUserDocument, type MyStoreUserQuery, type MyStoreUserQueryVariables, type OnlineAddress, type OnlineItem, OrderByType, PAGINATED_ADMIN_AUTH_SESSIONS_QUERY, PAGINATED_ADMIN_PRODUCT_VIEW_ENTRIES, PAGINATED_PENDING_CRAWLED_PRODUCTS_QUERY, POPULAR_PRODUCTS_QUERY, POPULAR_SEARCH_KEYWORDS_QUERY, POST_AUTH_USER_DATA_QUERIES, PRICE_CHANGE_HISTORY_QUERY, PRODUCT_BILLING_DATA_BY_USER_ID_QUERY, PRODUCT_BY_ID_QUERY, PRODUCT_SEARCH_QUERY, PRODUCT_SUMMARY_QUERY, PaginatedAdminAuthSessionsDocument, type PaginatedAdminAuthSessionsQuery, type PaginatedAdminAuthSessionsQueryVariables, PaginatedAdminProductViewEntriesDocument, type PaginatedAdminProductViewEntriesQuery, type PaginatedAdminProductViewEntriesQueryVariables, type PaginatedAuthSessions, type PaginatedBranches, type PaginatedCategoriesWithProducts, type PaginatedPendingCrawledProducts, PaginatedPendingCrawledProductsDocument, type PaginatedPendingCrawledProductsQuery, type PaginatedPendingCrawledProductsQueryVariables, type PaginatedPriceHistory, type PaginatedProductBilling, type PaginatedProductViews, type PaginatedProducts, type PaginatedSearch, type PaginatedSearchKeywords, type PaginatedStocks, type PaginatedStorefrontFlyers, type PaginatedStores, type PaginatedUsers, type Paginator, type PaginatorInput, type PendingCrawledProduct, PopularProductsDocument, type PopularProductsQuery, type PopularProductsQueryVariables, PopularSearchKeywordsDocument, type PopularSearchKeywordsQuery, type PopularSearchKeywordsQueryVariables, PostAuthUserDataDocument, type PostAuthUserDataQuery, type PostAuthUserDataQueryVariables, type Price, PriceChangeHistoryDocument, type PriceChangeHistoryQuery, type PriceChangeHistoryQueryVariables, type PriceHistoryFilter, type Product, type ProductBilling, ProductBillingDataByUserIdDocument, type ProductBillingDataByUserIdQuery, type ProductBillingDataByUserIdQueryVariables, ProductDocument, type ProductExtractionFields, type ProductExtractionResponse, type ProductList, type ProductNutriment, type ProductNutrition, type ProductQuery, type ProductQueryVariables, type ProductReferrer, type ProductSearch, ProductSearchDocument, type ProductSearchFilters, type ProductSearchQuery, type ProductSearchQueryVariables, type ProductSimple, type ProductSummary, type ProductSummaryBranchInput, ProductSummaryDocument, type ProductSummaryQuery, type ProductSummaryQueryVariables, type ProductView, type ProductViewerMetadata, type ProductWeightComponents, PublishDraftStorefrontFlyerDocument, type PublishDraftStorefrontFlyerMutation, type PublishDraftStorefrontFlyerMutationVariables, type Query, type QueryAllBranchesArgs, type QueryAllBrandsArgs, type QueryAllProductsArgs, type QueryAllStoresArgs, type QueryAmazonProductArgs, type QueryAppleOAuthArgs, type QueryBarcodeScanArgs, type QueryBestBuyProductArgs, type QueryBranchesWithProductsArgs, type QueryCategoriesWithProductsArgs, type QueryCategorySearchArgs, type QueryCheckAppVersionArgs, type QueryCountGroceryListItemsArgs, type QueryDefaultGroceryListItemsArgs, type QueryExtractProductFieldsArgs, type QueryFindBranchArgs, type QueryFindBranchesByDistanceArgs, type QueryFindStoreArgs, type QueryGetAllBranchListsByListIdArgs, type QueryGetAllListsArgs, type QueryGetAllProductListsByListIdArgs, type QueryGetAllUsersArgs, type QueryGetCategoriesArgs, type QueryGetCategoryArgs, type QueryGetFavoriteBranchesWithPricesArgs, type QueryGetProductNutritionDataArgs, type QueryGetProductStocksArgs, type QueryGetStockFromProductAndBranchIdArgs, type QueryGetStorefrontBannerArgs, type QueryGoogleOAuthArgs, type QueryGroceryListArgs, type QueryGroceryListItemsArgs, type QueryIpToAddressArgs, type QueryKrogerProductArgs, type QueryLoginArgs, type QueryMyProductBillingDataArgs, type QueryMyProductViewHistoryArgs, type QueryMySearchHistoryArgs, type QueryPaginatedAdminAuthSessionsArgs, type QueryPaginatedAdminProductViewEntriesArgs, type QueryPaginatedPendingCrawledProductsArgs, type QueryPopularProductsArgs, type QueryPopularSearchKeywordsArgs, type QueryPriceChangeHistoryArgs, type QueryProductArgs, type QueryProductBillingDataByUserIdArgs, type QueryProductSearchArgs, type QueryProductSummaryArgs, type QuerySearchKeywordsArgs, type QueryStockArgs, type QueryStoreSlugAvailabilityArgs, type QueryStoreUserAuthorizedArgs, type QueryStorefrontFlyerArgs, type QueryStorefrontFlyersArgs, type QueryVerifyPasswordResetCodeArgs, type QueryWalmartProductArgs, type QueryWeightComponentsFromCategoryIdArgs, type QueryYahooOAuthArgs, REGISTER_EXPO_PUSH_TOKEN, REMOVE_BRANCH_FROM_LIST_MUTATION, REMOVE_FROM_LIST_BY_PRODUCT_ID_MUTATION, REMOVE_FROM_LIST_MUTATION, REQUEST_RESET_PASSWORD_MUTATION, RESEND_VERIFICATION_MUTATION, RegisterExpoPushTokenDocument, type RegisterExpoPushTokenMutation, type RegisterExpoPushTokenMutationVariables, RemoveBranchFromListDocument, type RemoveBranchFromListMutation, type RemoveBranchFromListMutationVariables, RemoveFromListDocument, type RemoveFromListMutation, type RemoveFromListMutationVariables, RemoveFromListWithProductIdDocument, type RemoveFromListWithProductIdMutation, type RemoveFromListWithProductIdMutationVariables, RequestResetPasswordDocument, type RequestResetPasswordMutation, type RequestResetPasswordMutationVariables, ResendVerificationDocument, type ResendVerificationMutation, type ResendVerificationMutationVariables, SANITIZE_PRODUCT_MUTATION, SAVE_PENDING_PRODUCT_MUTATION, SEARCH_KEYWORDS_QUERY, STORE_SLUG_AVAILABILITY_QUERY, SanitizeProductDocument, type SanitizeProductMutation, type SanitizeProductMutationVariables, type SaveExternalProductInput, SavePendingProductDocument, type SavePendingProductMutation, type SavePendingProductMutationVariables, type Scalars, type SearchHistory, SearchKeywordsDocument, type SearchKeywordsQuery, type SearchKeywordsQueryVariables, type SearchResult, type Stock, StockDocument, type StockQuery, type StockQueryVariables, type StockSimple, type Store, StoreSlugAvailabilityDocument, type StoreSlugAvailabilityQuery, type StoreSlugAvailabilityQueryVariables, type StoreUser, StoreUserAuthorizedDocument, type StoreUserAuthorizedQuery, type StoreUserAuthorizedQueryVariables, type StoreUserData, StoreUserRole, type StorefrontBanner, type StorefrontBannerItem, type StorefrontFlyer, StorefrontFlyerDocument, type StorefrontFlyerInput, type StorefrontFlyerItem, type StorefrontFlyerItemInput, type StorefrontFlyerPage, type StorefrontFlyerPageInput, type StorefrontFlyerQuery, type StorefrontFlyerQueryVariables, type StorefrontFlyerSection, type StorefrontFlyerSectionInput, StorefrontFlyerStatus, StorefrontFlyersDocument, type StorefrontFlyersQuery, type StorefrontFlyersQueryVariables, type TimestampRangeBetween, UPDATE_BRANCH_MUTATION, UPDATE_GROCERY_LIST_ITEMS_MUTATION, UPDATE_PASSWORD_WITH_RESET_CODE_MUTATION, UPDATE_PRODUCT_MUTATION, UPDATE_PRODUCT_NUTRITION_MUTATION, UPDATE_PROFILE_MUTATION, UPDATE_STORE_MUTATION, UPDATE_USER_BY_ID_MUTATION, type UpdateBranch, UpdateBranchDocument, type UpdateBranchMutation, type UpdateBranchMutationVariables, UpdateGroceryListItemDocument, type UpdateGroceryListItemMutation, type UpdateGroceryListItemMutationVariables, UpdatePasswordWithResetCodeDocument, type UpdatePasswordWithResetCodeMutation, type UpdatePasswordWithResetCodeMutationVariables, type UpdateProduct, UpdateProductDocument, type UpdateProductMutation, type UpdateProductMutationVariables, UpdateProductNutritionDataDocument, type UpdateProductNutritionDataMutation, type UpdateProductNutritionDataMutationVariables, UpdateProfileDocument, type UpdateProfileMutation, type UpdateProfileMutationVariables, type UpdateStore, UpdateStoreDocument, type UpdateStoreMutation, type UpdateStoreMutationVariables, UpdateStorefrontBannerItemDocument, type UpdateStorefrontBannerItemInput, type UpdateStorefrontBannerItemMutation, type UpdateStorefrontBannerItemMutationVariables, type UpdateUser, UpdateUserByIdDocument, type UpdateUserByIdMutation, type UpdateUserByIdMutationVariables, type UpdateUserFull, type UpdatedByUser, type User, type UserFieldsFragment, UserFieldsFragmentDoc, type UserFilter, UserFragment, UserRole, type UserShallow, VERIFY_EMAIL_MUTATION, VERIFY_PASSWORD_RESET_CODE_QUERY, VerifyEmailDocument, type VerifyEmailMutation, type VerifyEmailMutationVariables, VerifyPasswordResetCodeDocument, type VerifyPasswordResetCodeQuery, type VerifyPasswordResetCodeQueryVariables, type ViewerTrailInput, WEIGHT_COMPONENTS_FROM_CATEGORY_ID_QUERY, type WalmartGetProductInput, WeightComponentsFromCategoryIdDocument, type WeightComponentsFromCategoryIdQuery, type WeightComponentsFromCategoryIdQueryVariables, YAHOO_OAUTH_QUERY, YahooOAuthDocument, type YahooOAuthQuery, type YahooOAuthQueryVariables, graphql, isFragmentReady, makeFragmentData, useFragment };
