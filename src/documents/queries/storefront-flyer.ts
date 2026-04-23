@@ -1,5 +1,38 @@
 import { gql } from "@apollo/client"
 
+export const STOREFRONT_FLYER_SIMPLE_QUERY = gql(`
+  query StorefrontFlyerSimple($uid: String!) {
+    storefrontFlyerSimple(uid: $uid) {
+      id
+      uid
+      storeId
+      store {
+        id
+        slug
+        name
+        logo
+      }
+      branchId
+      branch {
+        id
+        slug
+        name
+        type
+        addressId
+        onlineAddressId
+      }
+      title
+      description
+      flyerImageId
+      flyerStyles
+      status
+      createdAt
+      startsAt
+      expiresAt
+    }
+  }
+`);
+
 export const STOREFRONT_FLYER_QUERY = gql(`
   query StorefrontFlyer($uid: String!) {
     storefrontFlyer(uid: $uid) {
