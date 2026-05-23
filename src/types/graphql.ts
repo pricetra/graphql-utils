@@ -1891,11 +1891,11 @@ export type StorefrontFlyerPage = {
 };
 
 export type StorefrontFlyerPageInput = {
-  bgImage?: InputMaybe<Scalars['Upload']['input']>;
+  bgImage?: InputMaybe<Scalars['String']['input']>;
   description?: InputMaybe<Scalars['String']['input']>;
-  heroImage?: InputMaybe<Scalars['Upload']['input']>;
+  heroImage?: InputMaybe<Scalars['String']['input']>;
   layout?: InputMaybe<Scalars['String']['input']>;
-  pageImage: Scalars['Upload']['input'];
+  pageImage: Scalars['String']['input'];
   sections: Array<StorefrontFlyerSectionInput>;
   storefrontFlyerId: Scalars['ID']['input'];
   styles?: InputMaybe<Scalars['String']['input']>;
@@ -1917,9 +1917,9 @@ export type StorefrontFlyerSection = {
 };
 
 export type StorefrontFlyerSectionInput = {
-  bgImage?: InputMaybe<Scalars['Upload']['input']>;
+  bgImage?: InputMaybe<Scalars['String']['input']>;
   description?: InputMaybe<Scalars['String']['input']>;
-  heroImage?: InputMaybe<Scalars['Upload']['input']>;
+  heroImage?: InputMaybe<Scalars['String']['input']>;
   items: Array<StorefrontFlyerItemInput>;
   layout?: InputMaybe<Scalars['String']['input']>;
   sortOrder: Scalars['Int']['input'];
