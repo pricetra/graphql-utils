@@ -24,6 +24,25 @@ export const CREATE_STOREFRONT_FLYER_MUTATION = gql(`
   }
 `);
 
+export const UPDATE_STOREFRONT_FLYER_MUTATION = gql(`
+  mutation UpdateStorefrontFlyer($input: StorefrontFlyerUpdateInput!) {
+    updateStorefrontFlyer(input: $input) {
+      id
+      uid
+      storeId
+      branchId
+      title
+      description
+      flyerImageId
+      flyerStyles
+      status
+      createdAt
+      startsAt
+      expiresAt
+    }
+  }
+`);
+
 export const CREATE_STOREFRONT_FLYER_PAGE_MUTATION = gql(`
   mutation CreateStorefrontFlyerPage($input: StorefrontFlyerPageInput!) {
     createStorefrontFlyerPage(input: $input) {
