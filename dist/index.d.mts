@@ -1585,12 +1585,12 @@ type StorefrontFlyerItem = {
     id: Scalars['ID']['output'];
     label?: Maybe<Scalars['String']['output']>;
     layout?: Maybe<Scalars['String']['output']>;
-    price: Price;
+    price?: Maybe<Price>;
     priceId: Scalars['ID']['output'];
-    product: Product;
+    product?: Maybe<Product>;
     productId: Scalars['ID']['output'];
     sortOrder: Scalars['Int']['output'];
-    stock: Stock;
+    stock?: Maybe<Stock>;
     stockId: Scalars['ID']['output'];
     storefrontFlyerSectionId: Scalars['ID']['output'];
     styles?: Maybe<Scalars['String']['output']>;
@@ -1634,7 +1634,7 @@ type StorefrontFlyerSection = {
     description?: Maybe<Scalars['String']['output']>;
     heroImageId?: Maybe<Scalars['String']['output']>;
     id: Scalars['ID']['output'];
-    items: Array<StorefrontFlyerItem>;
+    items?: Maybe<Array<StorefrontFlyerItem>>;
     layout?: Maybe<Scalars['String']['output']>;
     sortOrder: Scalars['Int']['output'];
     storefrontFlyerPageId: Scalars['ID']['output'];
@@ -2651,7 +2651,7 @@ type CreateStorefrontFlyerPageMutation = {
             styles?: string | null;
             layout?: string | null;
             sortOrder: number;
-            items: Array<{
+            items?: Array<{
                 __typename?: 'StorefrontFlyerItem';
                 id: number;
                 storefrontFlyerSectionId: number;
@@ -2659,7 +2659,7 @@ type CreateStorefrontFlyerPageMutation = {
                 productId: number;
                 stockId: number;
                 priceId: number;
-                product: {
+                product?: {
                     __typename?: 'Product';
                     id: number;
                     name: string;
@@ -2678,8 +2678,8 @@ type CreateStorefrontFlyerPageMutation = {
                     createdAt: any;
                     updatedAt: any;
                     views: number;
-                };
-                stock: {
+                } | null;
+                stock?: {
                     __typename?: 'Stock';
                     id: number;
                     productId: number;
@@ -2687,8 +2687,8 @@ type CreateStorefrontFlyerPageMutation = {
                     branchId: number;
                     latestPriceId: number;
                     available: boolean;
-                };
-                price: {
+                } | null;
+                price?: {
                     __typename?: 'Price';
                     id: number;
                     productId: number;
@@ -2704,8 +2704,8 @@ type CreateStorefrontFlyerPageMutation = {
                     unitType: string;
                     outOfStock: boolean;
                     verified: boolean;
-                };
-            }>;
+                } | null;
+            }> | null;
         }>;
     };
 };
@@ -5244,18 +5244,22 @@ type StorefrontFlyerQuery = {
                 title?: string | null;
                 description?: string | null;
                 bgImageId?: string | null;
+                heroImageId?: string | null;
                 styles?: string | null;
                 layout?: string | null;
                 sortOrder: number;
-                items: Array<{
+                items?: Array<{
                     __typename?: 'StorefrontFlyerItem';
                     id: number;
                     storefrontFlyerSectionId: number;
                     sortOrder: number;
                     productId: number;
+                    label?: string | null;
+                    styles?: string | null;
+                    layout?: string | null;
                     stockId: number;
                     priceId: number;
-                    product: {
+                    product?: {
                         __typename?: 'Product';
                         id: number;
                         name: string;
@@ -5274,8 +5278,8 @@ type StorefrontFlyerQuery = {
                         createdAt: any;
                         updatedAt: any;
                         views: number;
-                    };
-                    stock: {
+                    } | null;
+                    stock?: {
                         __typename?: 'Stock';
                         id: number;
                         productId: number;
@@ -5283,8 +5287,8 @@ type StorefrontFlyerQuery = {
                         branchId: number;
                         latestPriceId: number;
                         available: boolean;
-                    };
-                    price: {
+                    } | null;
+                    price?: {
                         __typename?: 'Price';
                         id: number;
                         productId: number;
@@ -5300,8 +5304,8 @@ type StorefrontFlyerQuery = {
                         unitType: string;
                         outOfStock: boolean;
                         verified: boolean;
-                    };
-                }>;
+                    } | null;
+                }> | null;
             }>;
         }>;
     };
@@ -5933,7 +5937,7 @@ type Documents = {
     "\n  query FindStore($storeId: ID, $storeSlug: String) {\n    findStore(id: $storeId, slug: $storeSlug) {\n      id\n      slug\n      name\n      logo\n      website\n    }\n  }\n": typeof FindStoreDocument;
     "\n  query StoreSlugAvailability($store: String!) {\n    storeSlugAvailability(store: $store)\n  }\n": typeof StoreSlugAvailabilityDocument;
     "\n  query StorefrontFlyerSimple($uid: String!) {\n    storefrontFlyerSimple(uid: $uid) {\n      id\n      uid\n      storeId\n      store {\n        id\n        slug\n        name\n        logo\n      }\n      branchId\n      branch {\n        id\n        slug\n        name\n        type\n        addressId\n        onlineAddressId\n      }\n      title\n      description\n      flyerImageId\n      flyerStyles\n      status\n      createdAt\n      startsAt\n      expiresAt\n    }\n  }\n": typeof StorefrontFlyerSimpleDocument;
-    "\n  query StorefrontFlyer($uid: String!) {\n    storefrontFlyer(uid: $uid) {\n      id\n      uid\n      storeId\n      store {\n        id\n        slug\n        name\n        logo\n      }\n      branchId\n      branch {\n        id\n        slug\n        name\n      }\n      title\n      description\n      flyerImageId\n      flyerStyles\n      status\n      createdAt\n      startsAt\n      expiresAt\n      pages {\n        id\n        storefrontFlyerId\n        pageNumber\n        title\n        description\n        pageImageId\n        heroImageId\n        bgImageId\n        styles\n        layout\n        sections {\n          id\n          storefrontFlyerPageId\n          title\n          description\n          bgImageId\n          styles\n          layout\n          sortOrder\n          items {\n            id\n            storefrontFlyerSectionId\n            sortOrder\n            productId\n            product {\n              id\n              name\n              image\n              description\n              brand\n              code\n              model\n              categoryId\n              approximateWeight\n              netWeight\n              weightValue\n              weightType\n              quantityValue\n              quantityType\n              createdAt\n              updatedAt\n              views\n            }\n            stockId\n            stock {\n              id\n              productId\n              storeId\n              branchId\n              latestPriceId\n              available\n            }\n            priceId\n            price {\n              id\n              productId\n              branchId\n              storeId\n              amount\n              currencyCode\n              createdAt\n              sale\n              originalPrice\n              condition\n              expiresAt\n              unitType\n              outOfStock\n              verified\n            }\n          }\n        }\n      }\n    }\n  }\n": typeof StorefrontFlyerDocument;
+    "\n  query StorefrontFlyer($uid: String!) {\n    storefrontFlyer(uid: $uid) {\n      id\n      uid\n      storeId\n      store {\n        id\n        slug\n        name\n        logo\n      }\n      branchId\n      branch {\n        id\n        slug\n        name\n      }\n      title\n      description\n      flyerImageId\n      flyerStyles\n      status\n      createdAt\n      startsAt\n      expiresAt\n      pages {\n        id\n        storefrontFlyerId\n        pageNumber\n        title\n        description\n        pageImageId\n        heroImageId\n        bgImageId\n        styles\n        layout\n        sections {\n          id\n          storefrontFlyerPageId\n          title\n          description\n          bgImageId\n          heroImageId\n          styles\n          layout\n          sortOrder\n          items {\n            id\n            storefrontFlyerSectionId\n            sortOrder\n            productId\n            label\n            styles\n            layout\n            product {\n              id\n              name\n              image\n              description\n              brand\n              code\n              model\n              categoryId\n              approximateWeight\n              netWeight\n              weightValue\n              weightType\n              quantityValue\n              quantityType\n              createdAt\n              updatedAt\n              views\n            }\n            stockId\n            stock {\n              id\n              productId\n              storeId\n              branchId\n              latestPriceId\n              available\n            }\n            priceId\n            price {\n              id\n              productId\n              branchId\n              storeId\n              amount\n              currencyCode\n              createdAt\n              sale\n              originalPrice\n              condition\n              expiresAt\n              unitType\n              outOfStock\n              verified\n            }\n          }\n        }\n      }\n    }\n  }\n": typeof StorefrontFlyerDocument;
     "\n  query StorefrontFlyers($storeId: ID!, $branchId: ID, $paginator: PaginatorInput!) {\n    storefrontFlyers(storeId: $storeId, branchId: $branchId, paginator: $paginator) {\n      flyers {\n        id\n        uid\n        storeId\n        branchId\n        title\n        description\n        flyerImageId\n        flyerStyles\n        status\n        createdAt\n        startsAt\n        expiresAt\n      }\n      paginator {\n        next\n        page\n        prev\n        limit\n        total\n        numPages\n      }\n    }\n  }\n": typeof StorefrontFlyersDocument;
     "\n  query GetStorefrontBanner($storeId: ID!, $branchId: ID) {\n    getStorefrontBanner(storeId: $storeId, branchId: $branchId) {\n      id\n      storeId\n      branchId\n      bannerItems {\n        id\n        bannerId\n        imageId\n        link\n        isExternal\n        title\n        description\n        sortOrder\n        createdAt\n        updatedAt\n      }\n      createdAt\n      updatedAt\n    }\n  }\n": typeof GetStorefrontBannerDocument;
     "\n  fragment UserFields on User {\n    id\n    name\n    email\n    avatar\n    createdAt\n    updatedAt\n    active\n    authDevice\n    authPlatform\n    authStateId\n    role\n  }\n": typeof UserFieldsFragmentDoc;
@@ -6355,7 +6359,7 @@ declare function graphql(source: "\n  query StorefrontFlyerSimple($uid: String!)
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-declare function graphql(source: "\n  query StorefrontFlyer($uid: String!) {\n    storefrontFlyer(uid: $uid) {\n      id\n      uid\n      storeId\n      store {\n        id\n        slug\n        name\n        logo\n      }\n      branchId\n      branch {\n        id\n        slug\n        name\n      }\n      title\n      description\n      flyerImageId\n      flyerStyles\n      status\n      createdAt\n      startsAt\n      expiresAt\n      pages {\n        id\n        storefrontFlyerId\n        pageNumber\n        title\n        description\n        pageImageId\n        heroImageId\n        bgImageId\n        styles\n        layout\n        sections {\n          id\n          storefrontFlyerPageId\n          title\n          description\n          bgImageId\n          styles\n          layout\n          sortOrder\n          items {\n            id\n            storefrontFlyerSectionId\n            sortOrder\n            productId\n            product {\n              id\n              name\n              image\n              description\n              brand\n              code\n              model\n              categoryId\n              approximateWeight\n              netWeight\n              weightValue\n              weightType\n              quantityValue\n              quantityType\n              createdAt\n              updatedAt\n              views\n            }\n            stockId\n            stock {\n              id\n              productId\n              storeId\n              branchId\n              latestPriceId\n              available\n            }\n            priceId\n            price {\n              id\n              productId\n              branchId\n              storeId\n              amount\n              currencyCode\n              createdAt\n              sale\n              originalPrice\n              condition\n              expiresAt\n              unitType\n              outOfStock\n              verified\n            }\n          }\n        }\n      }\n    }\n  }\n"): (typeof documents)["\n  query StorefrontFlyer($uid: String!) {\n    storefrontFlyer(uid: $uid) {\n      id\n      uid\n      storeId\n      store {\n        id\n        slug\n        name\n        logo\n      }\n      branchId\n      branch {\n        id\n        slug\n        name\n      }\n      title\n      description\n      flyerImageId\n      flyerStyles\n      status\n      createdAt\n      startsAt\n      expiresAt\n      pages {\n        id\n        storefrontFlyerId\n        pageNumber\n        title\n        description\n        pageImageId\n        heroImageId\n        bgImageId\n        styles\n        layout\n        sections {\n          id\n          storefrontFlyerPageId\n          title\n          description\n          bgImageId\n          styles\n          layout\n          sortOrder\n          items {\n            id\n            storefrontFlyerSectionId\n            sortOrder\n            productId\n            product {\n              id\n              name\n              image\n              description\n              brand\n              code\n              model\n              categoryId\n              approximateWeight\n              netWeight\n              weightValue\n              weightType\n              quantityValue\n              quantityType\n              createdAt\n              updatedAt\n              views\n            }\n            stockId\n            stock {\n              id\n              productId\n              storeId\n              branchId\n              latestPriceId\n              available\n            }\n            priceId\n            price {\n              id\n              productId\n              branchId\n              storeId\n              amount\n              currencyCode\n              createdAt\n              sale\n              originalPrice\n              condition\n              expiresAt\n              unitType\n              outOfStock\n              verified\n            }\n          }\n        }\n      }\n    }\n  }\n"];
+declare function graphql(source: "\n  query StorefrontFlyer($uid: String!) {\n    storefrontFlyer(uid: $uid) {\n      id\n      uid\n      storeId\n      store {\n        id\n        slug\n        name\n        logo\n      }\n      branchId\n      branch {\n        id\n        slug\n        name\n      }\n      title\n      description\n      flyerImageId\n      flyerStyles\n      status\n      createdAt\n      startsAt\n      expiresAt\n      pages {\n        id\n        storefrontFlyerId\n        pageNumber\n        title\n        description\n        pageImageId\n        heroImageId\n        bgImageId\n        styles\n        layout\n        sections {\n          id\n          storefrontFlyerPageId\n          title\n          description\n          bgImageId\n          heroImageId\n          styles\n          layout\n          sortOrder\n          items {\n            id\n            storefrontFlyerSectionId\n            sortOrder\n            productId\n            label\n            styles\n            layout\n            product {\n              id\n              name\n              image\n              description\n              brand\n              code\n              model\n              categoryId\n              approximateWeight\n              netWeight\n              weightValue\n              weightType\n              quantityValue\n              quantityType\n              createdAt\n              updatedAt\n              views\n            }\n            stockId\n            stock {\n              id\n              productId\n              storeId\n              branchId\n              latestPriceId\n              available\n            }\n            priceId\n            price {\n              id\n              productId\n              branchId\n              storeId\n              amount\n              currencyCode\n              createdAt\n              sale\n              originalPrice\n              condition\n              expiresAt\n              unitType\n              outOfStock\n              verified\n            }\n          }\n        }\n      }\n    }\n  }\n"): (typeof documents)["\n  query StorefrontFlyer($uid: String!) {\n    storefrontFlyer(uid: $uid) {\n      id\n      uid\n      storeId\n      store {\n        id\n        slug\n        name\n        logo\n      }\n      branchId\n      branch {\n        id\n        slug\n        name\n      }\n      title\n      description\n      flyerImageId\n      flyerStyles\n      status\n      createdAt\n      startsAt\n      expiresAt\n      pages {\n        id\n        storefrontFlyerId\n        pageNumber\n        title\n        description\n        pageImageId\n        heroImageId\n        bgImageId\n        styles\n        layout\n        sections {\n          id\n          storefrontFlyerPageId\n          title\n          description\n          bgImageId\n          heroImageId\n          styles\n          layout\n          sortOrder\n          items {\n            id\n            storefrontFlyerSectionId\n            sortOrder\n            productId\n            label\n            styles\n            layout\n            product {\n              id\n              name\n              image\n              description\n              brand\n              code\n              model\n              categoryId\n              approximateWeight\n              netWeight\n              weightValue\n              weightType\n              quantityValue\n              quantityType\n              createdAt\n              updatedAt\n              views\n            }\n            stockId\n            stock {\n              id\n              productId\n              storeId\n              branchId\n              latestPriceId\n              available\n            }\n            priceId\n            price {\n              id\n              productId\n              branchId\n              storeId\n              amount\n              currencyCode\n              createdAt\n              sale\n              originalPrice\n              condition\n              expiresAt\n              unitType\n              outOfStock\n              verified\n            }\n          }\n        }\n      }\n    }\n  }\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

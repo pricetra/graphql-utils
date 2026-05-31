@@ -76,6 +76,7 @@ export const STOREFRONT_FLYER_QUERY = gql(`
           title
           description
           bgImageId
+          heroImageId
           styles
           layout
           sortOrder
@@ -84,6 +85,9 @@ export const STOREFRONT_FLYER_QUERY = gql(`
             storefrontFlyerSectionId
             sortOrder
             productId
+            label
+            styles
+            layout
             product {
               id
               name
