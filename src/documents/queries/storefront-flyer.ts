@@ -112,7 +112,18 @@ export const STOREFRONT_FLYER_QUERY = gql(`
               id
               productId
               storeId
+              store {
+                id
+                slug
+                name
+                logo
+              }
               branchId
+              branch {
+                id
+                name
+                slug
+              }
               latestPriceId
               available
             }
