@@ -121,6 +121,12 @@ export const CREATE_STOREFRONT_FLYER_PAGE_MUTATION = gql(`
   }
 `);
 
+export const DELETE_STOREFRONT_FLYER_PAGE_MUTATION = gql(`
+  mutation DeleteStorefrontFlyerPage($flyerId: ID!, $pageNumber: Int!) {
+    deleteStorefrontFlyerPage(flyerId: $flyerId, pageNumber: $pageNumber)
+  }
+`);
+
 export const PUBLISH_DRAFT_STOREFRONT_FLYER_MUTATION = gql(`
   mutation PublishDraftStorefrontFlyer($id: ID!) {
     publishDraftStorefrontFlyer(id: $id) {
