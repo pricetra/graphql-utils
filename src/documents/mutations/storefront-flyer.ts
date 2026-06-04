@@ -43,6 +43,12 @@ export const UPDATE_STOREFRONT_FLYER_MUTATION = gql(`
   }
 `);
 
+export const DELETE_STOREFRONT_FLYER_MUTATION = gql(`
+  mutation DeleteStorefrontFlyer($flyerId: ID!) {
+    deleteStorefrontFlyer(flyerId: $flyerId)
+  }
+`);
+
 export const CREATE_STOREFRONT_FLYER_PAGE_MUTATION = gql(`
   mutation CreateStorefrontFlyerPage($input: StorefrontFlyerPageInput!) {
     createStorefrontFlyerPage(input: $input) {
