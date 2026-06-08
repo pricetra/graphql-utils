@@ -187,9 +187,10 @@ type BusinessForm = {
     firstName: Scalars['String']['output'];
     id: Scalars['String']['output'];
     lastName: Scalars['String']['output'];
+    onlineAddressUrl?: Maybe<Scalars['String']['output']>;
     phoneNumber?: Maybe<Scalars['String']['output']>;
     store?: Maybe<Store>;
-    storeAddress: Scalars['String']['output'];
+    storeAddress?: Maybe<Scalars['String']['output']>;
     storeId?: Maybe<Scalars['ID']['output']>;
     storeLogo: Scalars['String']['output'];
     storeName: Scalars['String']['output'];
@@ -200,15 +201,16 @@ type BusinessFormInput = {
     email: Scalars['String']['input'];
     firstName: Scalars['String']['input'];
     lastName: Scalars['String']['input'];
+    onlineAddressUrl?: InputMaybe<Scalars['String']['input']>;
     phoneNumber?: InputMaybe<Scalars['String']['input']>;
-    storeAddress: Scalars['String']['input'];
+    storeAddress?: InputMaybe<Scalars['String']['input']>;
     storeLogo: Scalars['String']['input'];
     storeName: Scalars['String']['input'];
     storeUrl: Scalars['String']['input'];
 };
 type BusinessFormSignedUp = {
     __typename?: 'BusinessFormSignedUp';
-    branch: Branch;
+    branches: Array<Branch>;
     businessForm: BusinessForm;
     store: Store;
 };
@@ -1873,7 +1875,7 @@ type CreateStoreWithBusinessFormMutation = {
             email: string;
             phoneNumber?: string | null;
             storeName: string;
-            storeAddress: string;
+            storeAddress?: string | null;
             storeUrl: string;
             storeLogo: string;
             additionalInformation?: string | null;
@@ -1887,7 +1889,7 @@ type CreateStoreWithBusinessFormMutation = {
             logo: string;
             website: string;
         };
-        branch: {
+        branches: Array<{
             __typename?: 'Branch';
             id: number;
             slug: string;
@@ -1902,7 +1904,7 @@ type CreateStoreWithBusinessFormMutation = {
                 latitude: number;
                 longitude: number;
             } | null;
-        };
+        }>;
     };
 };
 type CreateBranchFromFullAddressMutationVariables = Exact<{
@@ -2481,7 +2483,7 @@ type BusinessSingUpFormMutation = {
         email: string;
         phoneNumber?: string | null;
         storeName: string;
-        storeAddress: string;
+        storeAddress?: string | null;
         storeUrl: string;
         storeLogo: string;
         additionalInformation?: string | null;
@@ -5881,7 +5883,7 @@ type Documents = {
     "\n  mutation UpdateUserById($userId: ID!, $input: UpdateUserFull!) {\n    updateUserById(userId: $userId, input: $input) {\n      id\n      email\n      phoneNumber\n      name\n      avatar\n      birthDate\n      bio\n      active\n      role\n      createdAt\n      updatedAt\n    }\n  }\n": typeof UpdateUserByIdDocument;
     "\n  mutation CreateStoreUserAdmin($input: CreateStoreUserAdmin!) {\n    createStoreUserAdmin(input:$input) {\n      id\n      storeId\n      branchId\n      userId\n      user {\n        id\n        name\n        avatar\n      }\n      legalName\n      email\n      employeeId\n      role\n      approved\n      createdBy {\n        id\n        name\n        avatar\n        active\n      }\n      createdAt\n      encodedId\n    }\n  }\n": typeof CreateStoreUserAdminDocument;
     "\n  mutation AdminRemoveAuthSession($authStateId: String!) {\n    adminRemoveAuthSession(authStateId: $authStateId)\n  }\n": typeof AdminRemoveAuthSessionDocument;
-    "\n  mutation CreateStoreWithBusinessForm($id: String!) {\n    createStoreWithBusinessForm(id: $id) {\n      businessForm {\n        id\n        firstName\n        lastName\n        email\n        phoneNumber\n        storeName\n        storeAddress\n        storeUrl\n        storeLogo\n        additionalInformation\n        storeId\n      }\n      store {\n        id\n        slug\n        name\n        logo\n        website\n      }\n      branch {\n        id\n        slug\n        name\n        addressId\n        address {\n          id\n          fullAddress\n          latitude\n          longitude\n        }\n        storeId\n        storeSlug\n      }\n    }\n  }\n": typeof CreateStoreWithBusinessFormDocument;
+    "\n  mutation CreateStoreWithBusinessForm($id: String!) {\n    createStoreWithBusinessForm(id: $id) {\n      businessForm {\n        id\n        firstName\n        lastName\n        email\n        phoneNumber\n        storeName\n        storeAddress\n        storeUrl\n        storeLogo\n        additionalInformation\n        storeId\n      }\n      store {\n        id\n        slug\n        name\n        logo\n        website\n      }\n      branches {\n        id\n        slug\n        name\n        addressId\n        address {\n          id\n          fullAddress\n          latitude\n          longitude\n        }\n        storeId\n        storeSlug\n      }\n    }\n  }\n": typeof CreateStoreWithBusinessFormDocument;
     "\n  mutation CreateBranchFromFullAddress($storeId: ID!, $fullAddress: String!) {\n    createBranchWithFullAddress(storeId: $storeId, fullAddress: $fullAddress) {\n      id\n      name\n      storeId\n      addressId\n      address {\n        id\n        latitude\n        longitude\n        mapsLink\n        fullAddress\n        street\n        city\n        administrativeDivision\n        countryCode\n        country\n        zipCode\n      }\n    }\n  }\n": typeof CreateBranchFromFullAddressDocument;
     "\n  mutation CreateBranch($input: CreateBranch!) {\n    createBranch(input: $input) {\n      id\n      name\n      storeId\n      addressId\n      address {\n        id\n        latitude\n        longitude\n        mapsLink\n        fullAddress\n        street\n        city\n        administrativeDivision\n        countryCode\n        country\n        zipCode\n      }\n      onlineAddressId\n      onlineAddress {\n        id\n        storeId\n        url\n        itemUrlTemplate\n        referralCode\n        referralQueryParam\n      }\n    }\n  }\n": typeof CreateBranchDocument;
     "\n  mutation UpdateBranch($storeId: ID!, $branchId: ID!, $input: UpdateBranch!) {\n    updateBranch(storeId: $storeId, branchId: $branchId, input: $input) {\n      id\n      slug\n      name\n      type\n      storeId\n      addressId\n      address {\n        id\n        latitude\n        longitude\n        mapsLink\n        fullAddress\n        street\n        city\n        administrativeDivision\n        countryCode\n        country\n        zipCode\n      }\n      onlineAddressId\n      onlineAddress {\n        id\n        storeId\n        url\n        itemUrlTemplate\n        referralCode\n        referralQueryParam\n      }\n    }\n  }\n": typeof UpdateBranchDocument;
@@ -6020,7 +6022,7 @@ declare function graphql(source: "\n  mutation AdminRemoveAuthSession($authState
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-declare function graphql(source: "\n  mutation CreateStoreWithBusinessForm($id: String!) {\n    createStoreWithBusinessForm(id: $id) {\n      businessForm {\n        id\n        firstName\n        lastName\n        email\n        phoneNumber\n        storeName\n        storeAddress\n        storeUrl\n        storeLogo\n        additionalInformation\n        storeId\n      }\n      store {\n        id\n        slug\n        name\n        logo\n        website\n      }\n      branch {\n        id\n        slug\n        name\n        addressId\n        address {\n          id\n          fullAddress\n          latitude\n          longitude\n        }\n        storeId\n        storeSlug\n      }\n    }\n  }\n"): (typeof documents)["\n  mutation CreateStoreWithBusinessForm($id: String!) {\n    createStoreWithBusinessForm(id: $id) {\n      businessForm {\n        id\n        firstName\n        lastName\n        email\n        phoneNumber\n        storeName\n        storeAddress\n        storeUrl\n        storeLogo\n        additionalInformation\n        storeId\n      }\n      store {\n        id\n        slug\n        name\n        logo\n        website\n      }\n      branch {\n        id\n        slug\n        name\n        addressId\n        address {\n          id\n          fullAddress\n          latitude\n          longitude\n        }\n        storeId\n        storeSlug\n      }\n    }\n  }\n"];
+declare function graphql(source: "\n  mutation CreateStoreWithBusinessForm($id: String!) {\n    createStoreWithBusinessForm(id: $id) {\n      businessForm {\n        id\n        firstName\n        lastName\n        email\n        phoneNumber\n        storeName\n        storeAddress\n        storeUrl\n        storeLogo\n        additionalInformation\n        storeId\n      }\n      store {\n        id\n        slug\n        name\n        logo\n        website\n      }\n      branches {\n        id\n        slug\n        name\n        addressId\n        address {\n          id\n          fullAddress\n          latitude\n          longitude\n        }\n        storeId\n        storeSlug\n      }\n    }\n  }\n"): (typeof documents)["\n  mutation CreateStoreWithBusinessForm($id: String!) {\n    createStoreWithBusinessForm(id: $id) {\n      businessForm {\n        id\n        firstName\n        lastName\n        email\n        phoneNumber\n        storeName\n        storeAddress\n        storeUrl\n        storeLogo\n        additionalInformation\n        storeId\n      }\n      store {\n        id\n        slug\n        name\n        logo\n        website\n      }\n      branches {\n        id\n        slug\n        name\n        addressId\n        address {\n          id\n          fullAddress\n          latitude\n          longitude\n        }\n        storeId\n        storeSlug\n      }\n    }\n  }\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

@@ -76,7 +76,7 @@ export const CREATE_STORE_WITH_BUSINESS_FORM_MUTATION = gql(`
         logo
         website
       }
-      branch {
+      branches {
         id
         slug
         name
