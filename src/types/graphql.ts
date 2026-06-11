@@ -1800,6 +1800,7 @@ export type StoreUser = {
 export type StoreUserData = {
   __typename?: 'StoreUserData';
   email: Scalars['String']['output'];
+  fullName: Scalars['String']['output'];
   storeUserId: Scalars['ID']['output'];
 };
 
