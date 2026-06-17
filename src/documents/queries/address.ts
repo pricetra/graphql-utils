@@ -19,8 +19,8 @@ export const IP_TO_ADDRESS_QUERY = gql(`
 `);
 
 export const ADDRESS_AUTOCOMPLETE_QUERY = gql(`
-  query AddressAutocomplete($input:String!) {
-    addressAutocomplete(input:$input) {
+  query AddressAutocomplete($input: String!, $locationBias: LocationInput) {
+    addressAutocomplete(input: $input, locationBias: $locationBias) {
       place
       placeId
       addressText

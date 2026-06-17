@@ -2951,6 +2951,7 @@ type IpToAddressQuery = {
 };
 type AddressAutocompleteQueryVariables = Exact<{
     input: Scalars['String']['input'];
+    locationBias?: InputMaybe<LocationInput>;
 }>;
 type AddressAutocompleteQuery = {
     __typename?: 'Query';
@@ -6008,7 +6009,7 @@ type Documents = {
     "\n  mutation UpdatePasswordWithResetCode($email: String!, $code: String!, $newPassword: String!) {\n    updatePasswordWithResetCode(\n      email: $email\n      code: $code\n      newPassword: $newPassword\n    )\n  }\n": typeof UpdatePasswordWithResetCodeDocument;
     "\n  mutation RegisterExpoPushToken($expoPushToken: String!) {\n    registerExpoPushToken(expoPushToken: $expoPushToken) {\n      id\n      name\n      email\n      avatar\n      createdAt\n      updatedAt\n      active\n      authPlatform\n      authStateId\n      expoPushToken\n      role\n      addressId\n      address {\n        id\n        latitude\n        longitude\n        mapsLink\n        fullAddress\n        street\n        city\n        administrativeDivision\n        countryCode\n        country\n        zipCode\n      }\n    }\n  }\n": typeof RegisterExpoPushTokenDocument;
     "\n  query IpToAddress($ipAddress: String!) {\n    ipToAddress(ipAddress: $ipAddress) {\n      id\n      latitude\n      longitude\n      mapsLink\n      fullAddress\n      street\n      city\n      administrativeDivision\n      zipCode\n      countryCode\n      country\n    }\n  }\n": typeof IpToAddressDocument;
-    "\n  query AddressAutocomplete($input:String!) {\n    addressAutocomplete(input:$input) {\n      place\n      placeId\n      addressText\n    }\n  }\n": typeof AddressAutocompleteDocument;
+    "\n  query AddressAutocomplete($input: String!, $locationBias: LocationInput) {\n    addressAutocomplete(input: $input, locationBias: $locationBias) {\n      place\n      placeId\n      addressText\n    }\n  }\n": typeof AddressAutocompleteDocument;
     "\n  query AddressFromRawString($fullAddress: String!) {\n    addressFromRawString(fullAddress: $fullAddress) {\n      id\n      latitude\n      longitude\n      mapsLink\n      fullAddress\n      street\n      city\n      administrativeDivision\n      zipCode\n      countryCode\n      country\n    }\n  }\n": typeof AddressFromRawStringDocument;
     "\n  query AddressFromPlaceId($placeId: String!) {\n    addressFromPlaceId(placeId: $placeId) {\n      id\n      latitude\n      longitude\n      mapsLink\n      fullAddress\n      street\n      city\n      administrativeDivision\n      zipCode\n      countryCode\n      country\n    }\n  }\n": typeof AddressFromPlaceIdDocument;
     "\n  query GetAllUsers($paginator: PaginatorInput!, $filters: UserFilter) {\n    getAllUsers(paginator:$paginator, filters:$filters) {\n      users {\n        id\n        email\n        phoneNumber\n        name\n        avatar\n        birthDate\n        bio\n        active\n        role\n        createdAt\n        updatedAt\n      }\n      paginator {\n        next\n        page\n        prev\n        limit\n        total\n        numPages\n      }\n    }\n  }\n": typeof GetAllUsersDocument;
@@ -6300,7 +6301,7 @@ declare function graphql(source: "\n  query IpToAddress($ipAddress: String!) {\n
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-declare function graphql(source: "\n  query AddressAutocomplete($input:String!) {\n    addressAutocomplete(input:$input) {\n      place\n      placeId\n      addressText\n    }\n  }\n"): (typeof documents)["\n  query AddressAutocomplete($input:String!) {\n    addressAutocomplete(input:$input) {\n      place\n      placeId\n      addressText\n    }\n  }\n"];
+declare function graphql(source: "\n  query AddressAutocomplete($input: String!, $locationBias: LocationInput) {\n    addressAutocomplete(input: $input, locationBias: $locationBias) {\n      place\n      placeId\n      addressText\n    }\n  }\n"): (typeof documents)["\n  query AddressAutocomplete($input: String!, $locationBias: LocationInput) {\n    addressAutocomplete(input: $input, locationBias: $locationBias) {\n      place\n      placeId\n      addressText\n    }\n  }\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
