@@ -63,3 +63,21 @@ export const ADDRESS_FROM_PLACE_ID = gql(`
     }
   }
 `);
+
+export const ADDRESS_FROM_LAT_LON = gql(`
+  query AddressFromLatLon($latitude: Float!, $longitude: Float!) {
+    addressFromLatLon(latitude: $latitude, longitude: $longitude) {
+      id
+      latitude
+      longitude
+      mapsLink
+      fullAddress
+      street
+      city
+      administrativeDivision
+      zipCode
+      countryCode
+      country
+    }
+  }
+`);
