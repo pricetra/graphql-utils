@@ -28,21 +28,3 @@ export const CHECK_APP_VERSION_QUERY = gql(`
     checkAppVersion(platform: $platform, version: $version)
   }
 `);
-
-export const IP_TO_ADDRESS_QUERY = gql(`
-  query IpToAddress($ipAddress: String!) {
-    ipToAddress(ipAddress: $ipAddress) {
-      id
-      latitude
-      longitude
-      mapsLink
-      fullAddress
-      street
-      city
-      administrativeDivision
-      zipCode
-      countryCode
-      country
-    }
-  }
-`);
