@@ -30,6 +30,7 @@ export const FIND_STORE_QUERY = gql(`
       name
       logo
       website
+      branchCount
     }
   }
 `);
@@ -37,5 +38,16 @@ export const FIND_STORE_QUERY = gql(`
 export const STORE_SLUG_AVAILABILITY_QUERY = gql(`
   query StoreSlugAvailability($store: String!) {
     storeSlugAvailability(store: $store)
+  }
+`);
+
+export const STOREFRONT_SETUP_TASKS = gql(`
+  query StorefrontSetupTasks($storeId: ID!, $branchId: ID) {
+    storefrontSetupTasks(storeId: $storeId, branchId: $branchId) {
+      taskType
+      title
+      description
+      taskProgressPercent
+    }
   }
 `);
