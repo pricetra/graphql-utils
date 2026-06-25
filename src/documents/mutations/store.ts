@@ -39,3 +39,21 @@ export const UPDATE_STORE_MUTATION = gql(`
     }
   }
 `);
+
+export const EDIT_BUSINESS_SIGN_UP_FORM_MUTATION = gql(`
+  mutation EditBusinessForm($businessFormId: String!, $input: UpdateBusinessFormInput!) {
+    editBusinessForm(businessFormId: $businessFormId, input: $input) {
+      id
+      firstName
+      lastName
+      email
+      phoneNumber
+      storeName
+      storeAddress
+      storeUrl
+      storeLogo
+      additionalInformation
+      storeId
+    }
+  }
+`);

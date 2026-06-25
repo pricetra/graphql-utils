@@ -51,3 +51,38 @@ export const STOREFRONT_SETUP_TASKS = gql(`
     }
   }
 `);
+
+export const ALL_BUSINESS_FORM_SIGN_UPS_QUERY = gql(`
+  query AllBusinessFormSignUps($paginator: PaginatorInput!, $showCompleted: Boolean) {
+    allBusinessFormSignUps(paginator: $paginator, showCompleted: $showCompleted) {
+      businessForms {
+        id
+        firstName
+        lastName
+        email
+        phoneNumber
+        storeName
+        storeAddress
+        onlineAddressUrl
+        storeUrl
+        storeLogo
+        additionalInformation
+        storeId
+        store {
+          id
+          name
+          logo
+          slug
+        }
+      }
+      paginator {
+        next
+        page
+        prev
+        total
+        limit
+        numPages
+      }
+    }
+  }
+`);
