@@ -14,7 +14,7 @@ export const GET_CATEGORIES_QUERY = gql(`
 `);
 
 export const CATEGORY_SEARCH_QUERY = gql(`
-  query CategorySearch($search: String!, $quickSearchMode: Boolean, $filters: ProductSearchFilters) {
+  query CategorySearch($search: String!, $quickSearchMode: Boolean, $filters: ProductSearch) {
     categorySearch(search: $search, quickSearchMode: $quickSearchMode, filters: $filters) {
       id
       name

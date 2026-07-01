@@ -1240,7 +1240,7 @@ type QueryAllBranchesArgs = {
     storeSlug?: InputMaybe<Scalars['String']['input']>;
 };
 type QueryAllBrandsArgs = {
-    filters?: InputMaybe<ProductSearchFilters>;
+    filters?: InputMaybe<ProductSearch>;
     joinStock?: InputMaybe<Scalars['Boolean']['input']>;
 };
 type QueryAllBusinessFormSignUpsArgs = {
@@ -1284,7 +1284,7 @@ type QueryCategoriesWithProductsArgs = {
     productLimit: Scalars['Int']['input'];
 };
 type QueryCategorySearchArgs = {
-    filters?: InputMaybe<ProductSearchFilters>;
+    filters?: InputMaybe<ProductSearch>;
     quickSearchMode?: InputMaybe<Scalars['Boolean']['input']>;
     search: Scalars['String']['input'];
 };
@@ -3706,7 +3706,7 @@ type FavoriteBranchesWithPricesQuery = {
 };
 type AllBrandsQueryVariables = Exact<{
     joinStock?: InputMaybe<Scalars['Boolean']['input']>;
-    filters?: InputMaybe<ProductSearchFilters>;
+    filters?: InputMaybe<ProductSearch>;
 }>;
 type AllBrandsQuery = {
     __typename?: 'Query';
@@ -3735,7 +3735,7 @@ type GetCategoriesQuery = {
 type CategorySearchQueryVariables = Exact<{
     search: Scalars['String']['input'];
     quickSearchMode?: InputMaybe<Scalars['Boolean']['input']>;
-    filters?: InputMaybe<ProductSearchFilters>;
+    filters?: InputMaybe<ProductSearch>;
 }>;
 type CategorySearchQuery = {
     __typename?: 'Query';
@@ -6184,9 +6184,9 @@ type Documents = {
     "\n  query FindBranchesByDistance($lat: Float!, $lon: Float!, $radiusMeters: Int!) {\n    findBranchesByDistance(lat: $lat, lon: $lon, radiusMeters: $radiusMeters) {\n      id\n      type\n      slug\n      name\n      storeId\n      storeSlug\n      store {\n        id\n        slug\n        name\n        website\n        logo\n      }\n      addressId\n      address {\n        id\n        distance\n        latitude\n        longitude\n        mapsLink\n        fullAddress\n        street\n        city\n        administrativeDivision\n        countryCode\n        country\n        zipCode\n      }\n      onlineAddressId\n      onlineAddress {\n        id\n        storeId\n        url\n        itemUrlTemplate\n        referralCode\n        referralQueryParam\n      }\n    }\n  }\n": typeof FindBranchesByDistanceDocument;
     "\n  query BranchesWithProducts($paginator: PaginatorInput!, $productLimit: Int!, $filters: ProductSearch) {\n    branchesWithProducts(\n      paginator: $paginator\n      productLimit: $productLimit\n      filters: $filters\n    ) {\n      branches {\n        id\n        type\n        slug\n        name\n        storeId\n        storeSlug\n        store {\n          id\n          slug\n          name\n          logo\n        }\n        addressId\n        address {\n          id\n          distance\n          latitude\n          longitude\n          mapsLink\n          fullAddress\n          street\n          city\n          administrativeDivision\n          countryCode\n          country\n          zipCode\n        }\n        onlineAddressId\n        onlineAddress {\n          id\n          storeId\n          url\n          itemUrlTemplate\n          referralCode\n          referralQueryParam\n        }\n        products {\n          id\n          name\n          image\n          description\n          brand\n          code\n          model\n          categoryId\n          category {\n            id\n            name\n            expandedPathname\n            path\n          }\n          stock {\n            id\n            productId\n            storeId\n            branchId\n            latestPriceId\n            latestPrice {\n              id\n              productId\n              branchId\n              storeId\n              amount\n              currencyCode\n              createdAt\n              sale\n              originalPrice\n              condition\n              expiresAt\n              unitType\n              outOfStock\n              verified\n            }\n            available\n            createdBy {\n              id\n              name\n              avatar\n            }\n            updatedBy {\n              id\n              name\n              avatar\n            }\n          }\n          approximateWeight\n          netWeight\n          weightValue\n          weightType\n          quantityValue\n          quantityType\n          createdAt\n          updatedAt\n          views\n        }\n      }\n      paginator {\n        next\n        page\n        prev\n        limit\n        total\n        numPages\n      }\n    }\n  }\n": typeof BranchesWithProductsDocument;
     "\n  query FavoriteBranchesWithPrices($productId: ID!) {\n    getFavoriteBranchesWithPrices(productId: $productId) {\n      id\n      branchId\n      branch {\n        id\n        type\n        slug\n        name\n        storeId\n        storeSlug\n        store {\n          id\n          slug\n          name\n          logo\n        }\n        addressId\n        address {\n          id\n          distance\n          latitude\n          longitude\n          mapsLink\n          fullAddress\n          street\n          city\n          administrativeDivision\n          countryCode\n          country\n          zipCode\n        }\n        onlineAddressId\n        onlineAddress {\n          id\n          storeId\n          url\n          itemUrlTemplate\n          referralCode\n          referralQueryParam\n        }\n      }\n      stock {\n        id\n        productId\n        storeId\n        branchId\n        latestPriceId\n        latestPrice {\n          id\n          productId\n          branchId\n          storeId\n          amount\n          currencyCode\n          createdAt\n          sale\n          originalPrice\n          condition\n          expiresAt\n          unitType\n          outOfStock\n          verified\n          createdBy {\n            id\n            name\n            avatar\n          }\n        }\n        available\n        onlineItem {\n          id\n          storeId\n          productId\n          itemId\n          url\n        }\n      }\n      approximatePrice\n    }\n  }\n": typeof FavoriteBranchesWithPricesDocument;
-    "\n  query AllBrands($joinStock: Boolean, $filters: ProductSearchFilters) {\n    allBrands(joinStock: $joinStock, filters: $filters) {\n      brand\n      products\n    }\n  }\n": typeof AllBrandsDocument;
+    "\n  query AllBrands($joinStock: Boolean, $filters: ProductSearch) {\n    allBrands(joinStock: $joinStock, filters: $filters) {\n      brand\n      products\n    }\n  }\n": typeof AllBrandsDocument;
     "\n  query GetCategories($depth: Int, $parentId: ID) {\n    getCategories(depth: $depth, parentId: $parentId) {\n      id\n      name\n      path\n      expandedPathname\n      categoryAlias\n      depth\n    }\n  }\n": typeof GetCategoriesDocument;
-    "\n  query CategorySearch($search: String!, $quickSearchMode: Boolean, $filters: ProductSearchFilters) {\n    categorySearch(search: $search, quickSearchMode: $quickSearchMode, filters: $filters) {\n      id\n      name\n    }\n  }\n": typeof CategorySearchDocument;
+    "\n  query CategorySearch($search: String!, $quickSearchMode: Boolean, $filters: ProductSearch) {\n    categorySearch(search: $search, quickSearchMode: $quickSearchMode, filters: $filters) {\n      id\n      name\n    }\n  }\n": typeof CategorySearchDocument;
     "\n  query GetCategory($id: ID!) {\n    getCategory(id: $id) {\n      id\n      name\n      path\n      expandedPathname\n      categoryAlias\n    }\n  }\n": typeof GetCategoryDocument;
     "\n  query CategoriesWithProducts($paginator: PaginatorInput!, $productLimit: Int!, $filters: ProductSearch) {\n    categoriesWithProducts(\n      paginator: $paginator\n      productLimit: $productLimit\n      filters: $filters\n    ) {\n      categories {\n        id\n        name\n        path\n        expandedPathname\n        categoryAlias\n        products {\n          id\n          name\n          image\n          description\n          brand\n          code\n          model\n          categoryId\n          category {\n            id\n            name\n            expandedPathname\n            path\n          }\n          stock {\n            id\n            productId\n            storeId\n            branchId\n            latestPriceId\n            latestPrice {\n              id\n              productId\n              branchId\n              storeId\n              amount\n              currencyCode\n              createdAt\n              sale\n              originalPrice\n              condition\n              expiresAt\n              unitType\n              outOfStock\n              verified\n            }\n            available\n            createdBy {\n              id\n              name\n              avatar\n            }\n            updatedBy {\n              id\n              name\n              avatar\n            }\n          }\n          approximateWeight\n          netWeight\n          weightValue\n          weightType\n          quantityValue\n          quantityType\n          createdAt\n          updatedAt\n          views\n        }\n      }\n      paginator {\n        next\n        page\n        prev\n        limit\n        total\n        numPages\n      }\n    }\n  }\n": typeof CategoriesWithProductsDocument;
     "\n  query GroceryLists {\n    groceryLists {\n      id\n      name\n      default\n      createdAt\n    }\n  }\n": typeof GroceryListsDocument;
@@ -6525,7 +6525,7 @@ declare function graphql(source: "\n  query FavoriteBranchesWithPrices($productI
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-declare function graphql(source: "\n  query AllBrands($joinStock: Boolean, $filters: ProductSearchFilters) {\n    allBrands(joinStock: $joinStock, filters: $filters) {\n      brand\n      products\n    }\n  }\n"): (typeof documents)["\n  query AllBrands($joinStock: Boolean, $filters: ProductSearchFilters) {\n    allBrands(joinStock: $joinStock, filters: $filters) {\n      brand\n      products\n    }\n  }\n"];
+declare function graphql(source: "\n  query AllBrands($joinStock: Boolean, $filters: ProductSearch) {\n    allBrands(joinStock: $joinStock, filters: $filters) {\n      brand\n      products\n    }\n  }\n"): (typeof documents)["\n  query AllBrands($joinStock: Boolean, $filters: ProductSearch) {\n    allBrands(joinStock: $joinStock, filters: $filters) {\n      brand\n      products\n    }\n  }\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
@@ -6533,7 +6533,7 @@ declare function graphql(source: "\n  query GetCategories($depth: Int, $parentId
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-declare function graphql(source: "\n  query CategorySearch($search: String!, $quickSearchMode: Boolean, $filters: ProductSearchFilters) {\n    categorySearch(search: $search, quickSearchMode: $quickSearchMode, filters: $filters) {\n      id\n      name\n    }\n  }\n"): (typeof documents)["\n  query CategorySearch($search: String!, $quickSearchMode: Boolean, $filters: ProductSearchFilters) {\n    categorySearch(search: $search, quickSearchMode: $quickSearchMode, filters: $filters) {\n      id\n      name\n    }\n  }\n"];
+declare function graphql(source: "\n  query CategorySearch($search: String!, $quickSearchMode: Boolean, $filters: ProductSearch) {\n    categorySearch(search: $search, quickSearchMode: $quickSearchMode, filters: $filters) {\n      id\n      name\n    }\n  }\n"): (typeof documents)["\n  query CategorySearch($search: String!, $quickSearchMode: Boolean, $filters: ProductSearch) {\n    categorySearch(search: $search, quickSearchMode: $quickSearchMode, filters: $filters) {\n      id\n      name\n    }\n  }\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
