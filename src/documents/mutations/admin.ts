@@ -53,6 +53,23 @@ export const ADMIN_REMOVE_AUTH_SESSION_MUTATION = gql(`
   }
 `);
 
+export const REMOVE_STOCK_MUTATION = gql(`
+  mutation RemoveStock($stockId: ID!) {
+    removeStock(stockId: $stockId) {
+      id
+      productId
+      storeId
+      branchId
+      latestPriceId
+      available
+      createdAt
+      updatedAt
+      createdById
+      updatedById
+    }
+  }
+`);
+
 export const CREATE_STORE_WITH_BUSINESS_FORM_MUTATION = gql(`
   mutation CreateStoreWithBusinessForm($id: String!) {
     createStoreWithBusinessForm(id: $id) {

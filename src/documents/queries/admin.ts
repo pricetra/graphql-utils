@@ -145,3 +145,78 @@ export const PAGINATED_ADMIN_PRODUCT_VIEW_ENTRIES = gql(`
     }
   }
 `);
+
+export const PAGINATED_STOCKS_QUERY = gql(`
+  query PaginatedStocks($paginator: PaginatorInput!, $filters: StockFilters!) {
+    paginatedStocks(paginator: $paginator, filters: $filters) {
+      stocks {
+        id
+        productId
+        product {
+          id
+          code
+          name
+          image
+          brand
+          category {
+            id
+            name
+            expandedPathname
+            path
+          }
+          createdAt
+          updatedAt
+        }
+        storeId
+        store {
+          id
+          name
+          logo
+        }
+        branchId
+        branch {
+          id
+          name
+          type
+          slug
+        }
+        latestPriceId
+        latestPrice {
+          id
+          amount
+          sale
+          expiresAt
+          createdAt
+        }
+        available
+        onlineItem {
+          id
+          itemId
+          url
+        }
+        createdAt
+        updatedAt
+        createdById
+        createdBy {
+          id
+          name
+          avatar
+        }
+        updatedById
+        updatedBy {
+          id
+          name
+          avatar
+        }
+      }
+      paginator {
+        next
+        page
+        prev
+        limit
+        total
+        numPages
+      }
+    }
+  }
+`);
