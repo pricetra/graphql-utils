@@ -147,7 +147,7 @@ export const PAGINATED_ADMIN_PRODUCT_VIEW_ENTRIES = gql(`
 `);
 
 export const PAGINATED_STOCKS_QUERY = gql(`
-  query PaginatedStocks($paginator: PaginatorInput!, $filters: StockFilters!) {
+  query PaginatedStocks($paginator: PaginatorInput!, $filters: StockFilters) {
     paginatedStocks(paginator: $paginator, filters: $filters) {
       stocks {
         id
@@ -170,6 +170,7 @@ export const PAGINATED_STOCKS_QUERY = gql(`
         storeId
         store {
           id
+          slug
           name
           logo
         }
