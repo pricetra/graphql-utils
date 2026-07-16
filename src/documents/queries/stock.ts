@@ -1,8 +1,8 @@
 import { gql } from "@apollo/client";
 
 export const GET_STOCK_BY_ID = gql(`
-  query Stock($stockId: ID!) {
-    stock(stockId: $stockId) {
+  query Stock($stockId: ID!, $viewerTrail: ViewerTrailInput) {
+    stock(stockId: $stockId, viewerTrail: $viewerTrail) {
       id
       productId
       storeId
@@ -84,8 +84,8 @@ export const GET_STOCK_BY_ID = gql(`
 `);
 
 export const GET_STOCK_FROM_PRODUCT_AND_BRANCH_ID_QUERY = gql(`
-  query GetStockFromProductAndBranchId($productId: ID!, $branchId: ID!) {
-    getStockFromProductAndBranchId(productId: $productId, branchId: $branchId) {
+  query GetStockFromProductAndBranchId($productId: ID!, $branchId: ID!, $viewerTrail: ViewerTrailInput) {
+    getStockFromProductAndBranchId(productId: $productId, branchId: $branchId, viewerTrail: $viewerTrail) {
       id
       productId
       storeId

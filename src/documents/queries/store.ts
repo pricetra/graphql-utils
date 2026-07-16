@@ -23,8 +23,8 @@ export const ALL_STORES_QUERY = gql(`
 `);
 
 export const FIND_STORE_QUERY = gql(`
-  query FindStore($storeId: ID, $storeSlug: String) {
-    findStore(id: $storeId, slug: $storeSlug) {
+  query FindStore($storeId: ID, $storeSlug: String, $viewerTrail: ViewerTrailInput) {
+    findStore(id: $storeId, slug: $storeSlug, viewerTrail: $viewerTrail) {
       id
       slug
       name

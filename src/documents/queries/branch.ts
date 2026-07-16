@@ -69,8 +69,20 @@ export const ALL_BRANCHES_QUERY = gql(`
 `);
 
 export const BRANCH_QUERY = gql(`
-  query Branch($branchId: ID, $branchSlug: String, $storeId: ID, $storeSlug: String) {
-    findBranch(id: $branchId, slug: $branchSlug, storeId: $storeId, storeSlug: $storeSlug) {
+  query Branch(
+    $branchId: ID
+    $branchSlug: String
+    $storeId: ID
+    $storeSlug: String
+    $viewerTrail: ViewerTrailInput
+  ) {
+    findBranch(
+      id: $branchId
+      slug: $branchSlug
+      storeId: $storeId
+      storeSlug: $storeSlug
+      viewerTrail: $viewerTrail
+    ) {
       id
       type
       slug
