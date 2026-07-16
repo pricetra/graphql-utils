@@ -35,11 +35,17 @@ export const GET_CATEGORY_QUERY = gql(`
 `);
 
 export const CATEGORIES_WITH_PRODUCTS_QUERY = gql(`
-  query CategoriesWithProducts($paginator: PaginatorInput!, $productLimit: Int!, $filters: ProductSearch) {
+  query CategoriesWithProducts(
+    $paginator: PaginatorInput!
+    $productLimit: Int!
+    $filters: ProductSearch
+    $viewerTrail: ViewerTrailInput
+  ) {
     categoriesWithProducts(
       paginator: $paginator
       productLimit: $productLimit
       filters: $filters
+      viewerTrail: $viewerTrail
     ) {
       categories {
         id

@@ -114,7 +114,7 @@ export const BRANCH_QUERY = gql(`
       }
     }
 
-    findStore(id: $storeId, slug: $storeSlug) {
+    findStore(id: $storeId, slug: $storeSlug, viewerTrail: $viewerTrail) {
       id
       slug
       name
@@ -205,11 +205,17 @@ export const FIND_BRANCHES_BY_DISTANCE_QUERY = gql(`
 `);
 
 export const BRANCHES_WITH_PRODUCTS_QUERY = gql(`
-  query BranchesWithProducts($paginator: PaginatorInput!, $productLimit: Int!, $filters: ProductSearch) {
+  query BranchesWithProducts(
+    $paginator: PaginatorInput!
+    $productLimit: Int!
+    $filters: ProductSearch
+    $viewerTrail: ViewerTrailInput
+  ) {
     branchesWithProducts(
       paginator: $paginator
       productLimit: $productLimit
       filters: $filters
+      viewerTrail: $viewerTrail
     ) {
       branches {
         id

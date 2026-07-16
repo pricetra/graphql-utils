@@ -87,8 +87,8 @@ export const PRODUCT_BY_ID_QUERY = gql(`
 `);
 
 export const ALL_PRODUCTS_QUERY = gql(`
-  query AllProducts($paginator: PaginatorInput!, $search: ProductSearch) {
-    allProducts(paginator: $paginator, search: $search) {
+  query AllProducts($paginator: PaginatorInput!, $search: ProductSearch, $viewerTrail: ViewerTrailInput) {
+    allProducts(paginator: $paginator, search: $search, viewerTrail: $viewerTrail) {
       products {
         id
         name
