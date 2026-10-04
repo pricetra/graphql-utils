@@ -220,6 +220,14 @@ export const PRODUCT_SUMMARY_QUERY = gql(`
       description
       brand
       code
+      weightValue
+      weightType
+      quantityValue
+      quantityType
+      categoryId
+      categoryName
+      categoryExpandedPathname
+      categoryPath
       stockId
       store
       storeId
